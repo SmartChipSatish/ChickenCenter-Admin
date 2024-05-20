@@ -1,0 +1,50 @@
+import React, { Suspense } from 'react'
+import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import Login from '../modules/authentication/Login/Login';
+import { MainLayout, DashBoard, OrderPage, PaymentPage } from './pages';
+
+
+
+export default function AppRoutes() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            <Login />
+          } />
+        <Route
+          path=""
+          element={
+            <Suspense>
+              <MainLayout />
+            </Suspense>
+
+          }>
+          <Route path="dashboard"
+            element={
+              <Suspense>
+                <DashBoard />
+              </Suspense>
+            }>
+          </Route>
+          <Route path="orders"
+            element={
+              <Suspense>
+                <OrderPage />
+              </Suspense>
+            }>
+          </Route>
+          <Route path="payment"
+            element={
+              <Suspense>
+                <PaymentPage />
+              </Suspense>
+            }>
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  )
+}
