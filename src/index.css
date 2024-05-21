@@ -13,11 +13,24 @@
   -moz-osx-font-smoothing: grayscale;
   --headerHeight: 61px;
   --headerWidth: 100%;
-  --appSiderbarWidth : 200px;
+  --appSiderbarWidth: 200px;
   --appTheam: #F38B07;
-  --appTextColor: '#fffff',
+  --appTextColor: '#fffff';
+  --appTitleColor: #00000094;
+  --appSubTitleColor : #00000078
 }
 
-body , #root {
+body,
+#root {
   height: 100vh;
+}
+
+.pageTile {
+  font-size: 24px;
+  font-weight: bold;
+  color: #00000078;
+}
+.card {
+  border: var(--bs-card-border-width) solid #5352521a;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }

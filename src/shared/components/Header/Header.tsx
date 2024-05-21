@@ -1,4 +1,7 @@
-import './Header.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './Header.scss';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
+
 const Header = () => {
 
     return <><div className="mainHeader text-white">
@@ -9,7 +12,9 @@ const Header = () => {
                     <p className='brand'>MALASA</p>
                 </div>
                 
-                <div className="d-flex">
+                <div>
+                    {/* <FontAwesomeIcon icon={faBell} className=''></FontAwesomeIcon> */}
+                {/* fa-bell */}
                     {/* <img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250" alt="" /> */}
                 </div>
             </div>

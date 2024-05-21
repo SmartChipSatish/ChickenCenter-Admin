@@ -1,0 +1,83 @@
+.dashboard {
+    height: 40%;
+
+    &-canvasChart {
+        height: 100%;
+        // border: var(--bs-card-border-width) solid black;
+    }
+
+    &-title {
+        padding-left: 12px;
+        padding-top: 12px;
+        color: var(--appTitleColor);
+    }
+
+    &-body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &-reviews {
+        padding: 12px 12px;
+
+        &-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            &-viewall {
+                color: var(--appTheam);
+            }
+        }
+
+        &-card {
+            padding: 12px 12px;
+            height: 178px;
+            min-height: 178px;
+            max-height: 178px;
+
+        }
+
+        p {
+            margin-bottom: 0;
+        }
+
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+
+        }
+
+        &-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--appTitleColor);
+        }
+
+        &-name {
+            font-size: 16px;
+            font-weight: 500;
+
+        }
+
+        &-time {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--appSubTitleColor);
+
+
+        }
+
+        &-comment {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            position: absolute;
+            width: 84%;
+
+        }
+
+    }
+}

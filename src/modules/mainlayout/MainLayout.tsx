@@ -17,7 +17,7 @@ const MainLayout = () => {
                 <div className="main-sidebar">
                     <SideBar></SideBar>
                 </div>
-                <div ><Outlet /></div>
+                <div className="p-2 w-100"><Outlet /></div>
             </div>
         </div>
     </>

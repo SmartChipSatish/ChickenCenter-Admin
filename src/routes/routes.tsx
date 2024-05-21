@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import Login from '../modules/authentication/Login/Login';
-import { MainLayout, DashBoard, OrderPage, PaymentPage } from './pages';
+import { MainLayout, DashBoard, OrderPage, PaymentPage, DashBoardPage } from './pages';
 
 
 
@@ -28,6 +28,13 @@ export default function AppRoutes() {
                 <DashBoard />
               </Suspense>
             }>
+            <Route path=""
+              element={
+                <Suspense>
+                  <DashBoardPage></DashBoardPage>
+                </Suspense>
+              }>
+            </Route>
           </Route>
           <Route path="orders"
             element={

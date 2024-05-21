@@ -3,6 +3,7 @@ import { lazy } from 'react';
 const MainLayout = lazy(() => import('../modules/mainlayout/MainLayout'))
 // Dashboard
 const DashBoard =  lazy(() => import('../modules/dashboard/DashboardLayout/DashboardLayout')) ;
+const DashBoardPage = lazy(()=> import('../modules/dashboard/pages/DashboardPage/Dashboardpage'))
 
 // Order Page 
 const OrderPage = lazy(()=> import('../modules/orders/OrderLayout/OrderLayout'));
@@ -14,5 +15,6 @@ export {
     MainLayout,
     DashBoard,
     OrderPage,
-    PaymentPage
+    PaymentPage,
+    DashBoardPage
 }
