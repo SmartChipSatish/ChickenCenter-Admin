@@ -11,9 +11,11 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --headerHeight: 50px;
+  --headerHeight: 61px;
   --headerWidth: 100%;
   --appSiderbarWidth : 200px;
+  --appTheam: #F38B07;
+  --appTextColor: '#fffff',
 }
 
 body , #root {

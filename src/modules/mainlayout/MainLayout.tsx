@@ -11,7 +11,7 @@ const MainLayout = () => {
     }, [])
 
     return <>
-        <div className="main h-100">
+        <div className="main bg-white h-100">
             <Header></Header>
             <div className="main-container">
                 <div className="main-sidebar">

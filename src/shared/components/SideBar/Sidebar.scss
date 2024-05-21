@@ -1,0 +1,20 @@
+.appSidebar {
+    background: var(--appTheam);
+    border-top: 2px solid #ffa70573;
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.module {
+    margin-bottom: 0;
+    display: flex;
+    align-items: baseline;
+    padding: 18px 0;
+
+    &-appIcon {
+        margin-right: 9px;
+
+    }
+}
