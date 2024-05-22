@@ -15,19 +15,19 @@ const BranchesPage = () => {
         </thead>
         <tbody>
             <tr>
-                <td>1</td>
-                <td><p className="BranchesPage-id">Hi Tech City</p></td>
-                <td>25</td>
-                <td>51-2-37, Hi-tech city, HYD</td>
+                <td className="tableItem">1</td>
+                <td className="tableItem"><p className="BranchesPage-id">Hi Tech City</p></td>
+                <td className="tableItem">25</td>
+                <td className="tableItem">51-2-37, Hi-tech city, HYD</td>
                 <td ><FontAwesomeIcon icon={faEye} className="BranchesPage-actions BranchesPage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="BranchesPage-actions"></FontAwesomeIcon></td>
             </tr>
 
             <tr>
-                <td>2</td>
-                <td><p className="BranchesPage-id">Durgam Cheruvu</p></td>
-                <td>35</td>
-                <td>144-2-137, Durgam Cheruvu, HYD</td>
-                <td ><FontAwesomeIcon icon={faEye} className="BranchesPage-actions BranchesPage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="BranchesPage-actions"></FontAwesomeIcon></td>
+                <td className="tableItem">2</td>
+                <td className="tableItem"><p className="BranchesPage-id">Durgam Cheruvu</p></td>
+                <td className="tableItem">35</td>
+                <td className="tableItem">144-2-137, Durgam Cheruvu, HYD</td>
+                <td className="tableItem"><FontAwesomeIcon icon={faEye} className="BranchesPage-actions BranchesPage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="BranchesPage-actions"></FontAwesomeIcon></td>
             </tr>
 
 

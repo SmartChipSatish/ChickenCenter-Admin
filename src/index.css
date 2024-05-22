@@ -18,9 +18,9 @@
   --appSiderbarWidth: 200px;
   --appTheam: #F38B07;
   --appTextColor: white;
-  --appTitleColor: #f5eeee94;
-  --appSubTitleColor: #00000078;
-  --appPageTitleColor: #00000078;
+  --appPageTitleColor: var(--bs-gray-700);
+  --appTitleColor: var(--bs-gray-700);
+  --appSubTitleColor: var(--bs-gray-500);
 
 }
 
@@ -53,23 +53,14 @@ p {
     --bs-btn-disabled-border-color: #0d6efd; */
 }
 
-.pageTile {
-  font-size: 24px;
-  font-weight: bold;
-  color: var(--appPageTitleColor);
-}
+
 
 .card {
   border: var(--bs-card-border-width) solid #5352521a;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-.tableTitle {
-  color: var(--appPageTitleColor);
-}
-
 .btn-outline-primary {
-
   --bs-btn-color: var(--appTheam);
   --bs-btn-border-color: var(--appTheam);
   --bs-btn-hover-color: var(--appTextColor);
@@ -83,4 +74,31 @@ p {
   --bs-btn-disabled-color: var(--appTheam);
   --bs-btn-disabled-bg: transparent;
   --bs-btn-disabled-border-color: var(--appTheam);
+}
+
+/* Custome Css */
+.elementSpace {
+  margin-right: 12px;
+}
+
+.tableTitle {
+  color: var(--appPageTitleColor);
+}
+
+
+
+.pageTile {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--appPageTitleColor);
+}
+
+.pageTitleSpace {
+  padding-bottom: 14px;
+}
+
+.tableItem {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--bs-gray-600) !important;
 }

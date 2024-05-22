@@ -3,6 +3,7 @@
 
     &-canvasChart {
         height: 100%;
+        
         // border: var(--bs-card-border-width) solid black;
     }
 
@@ -10,6 +11,7 @@
         padding-left: 12px;
         padding-top: 12px;
         color: var(--appTitleColor);
+        font-size: 18px;
     }
 
     &-body {
@@ -52,14 +54,16 @@
         }
 
         &-title {
-            font-size: 1.25rem;
             font-weight: 500;
             color: var(--appTitleColor);
+            font-size: 18px;
+
         }
 
         &-name {
             font-size: 16px;
             font-weight: 500;
+            color: var(--bs-gray-600);
 
         }
 
@@ -77,6 +81,7 @@
             text-overflow: ellipsis;
             position: absolute;
             width: 84%;
+            font-size: 15px;
 
         }
 

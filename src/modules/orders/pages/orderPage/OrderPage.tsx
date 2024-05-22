@@ -25,18 +25,19 @@ const OrderPage = () => {
             </thead>
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td><p className="Orderpage-id">#35463</p></td>
-                    <td>Aug 17, 2020, 5:48 (ET)</td>
-                    <td>Jase Marley</td>
-                    <td>Paid</td>
-                    <td>Fulfilled</td>
-                    <td>Cash</td>
+                    <td className="tableItem">1</td>
+                    <td className="tableItem"><p className="Orderpage-id">#35463</p></td>
+                    <td className="tableItem">Aug 17, 2020, 5:48 (ET)</td>
+                    <td className="tableItem">Jase Marley</td>
+                    <td className="tableItem">Paid</td>
+                    <td className="tableItem">Fulfilled</td>
+                    <td className="tableItem">Cash</td>
                     <td> <DropdownButton
                         as={ButtonGroup}
+                        // variant="outline-primary"
                         key={'Primary'}
                         id={`dropdown-variants-${'Primary'}`}
-                        variant={'Primary'.toLowerCase()}
+                        variant={'outline-primary'}
                         title={'Malasa'}
                     >
                         <Dropdown.Item eventKey="1">Hi-City</Dropdown.Item>
@@ -48,18 +49,18 @@ const OrderPage = () => {
                     <td ><FontAwesomeIcon icon={faEye} className="Orderpage-actions Orderpage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="Orderpage-actions"></FontAwesomeIcon></td>
                 </tr>
                 <tr>
-                    <td>2</td>
-                    <td><p className="Orderpage-id">#65463</p></td>
-                    <td>Aug 17, 2020, 5:48 (ET)</td>
-                    <td>Jase Marley</td>
-                    <td>Paid</td>
-                    <td>Fulfilled</td>
-                    <td>Cash</td>
+                    <td className="tableItem">2</td>
+                    <td className="tableItem"><p className="Orderpage-id">#65463</p></td>
+                    <td className="tableItem">Aug 17, 2020, 5:48 (ET)</td>
+                    <td className="tableItem">Jase Marley</td>
+                    <td className="tableItem">Paid</td>
+                    <td className="tableItem">Fulfilled</td>
+                    <td className="tableItem">Cash</td>
                     <td> <DropdownButton
                         as={ButtonGroup}
                         key={'Primary'}
                         id={`dropdown-variants-${'Primary'}`}
-                        variant={'Primary'.toLowerCase()}
+                        variant={'outline-primary'}
                         title={'Malasa'}
                     >
                         <Dropdown.Item eventKey="1">Hi-City</Dropdown.Item>
@@ -71,18 +72,18 @@ const OrderPage = () => {
                     <td ><FontAwesomeIcon icon={faEye} className="Orderpage-actions Orderpage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="Orderpage-actions"></FontAwesomeIcon></td>
                 </tr>
                 <tr>
-                    <td>3</td>
-                    <td><p className="Orderpage-id">#25463</p></td>
-                    <td>Aug 17, 2020, 5:48 (ET)</td>
-                    <td>Mathew Gustaffson</td>
-                    <td>Pending</td>
-                    <td>Unfulfilled</td>
-                    <td>Cash</td>
+                    <td className="tableItem">3</td>
+                    <td className="tableItem"><p className="Orderpage-id">#25463</p></td>
+                    <td className="tableItem">Aug 17, 2020, 5:48 (ET)</td>
+                    <td className="tableItem">Mathew Gustaffson</td>
+                    <td className="tableItem">Pending</td>
+                    <td className="tableItem">Unfulfilled</td>
+                    <td className="tableItem">Cash</td>
                     <td> <DropdownButton
                         as={ButtonGroup}
                         key={'Primary'}
                         id={`dropdown-variants-${'Primary'}`}
-                        variant={'Primary'.toLowerCase()}
+                        variant={'outline-primary'}
                         title={'Malasa'}
                     >
                         <Dropdown.Item eventKey="1">Hi-City</Dropdown.Item>

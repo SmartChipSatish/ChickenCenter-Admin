@@ -4,7 +4,7 @@ export const branchesSlice = createSlice({
     name: 'branches',
     initialState: {
         isBrannch: true
-    },
+    } as any,
     reducers: {
         isBrannch: (state, action) => {
             state.isBrannch = action.payload

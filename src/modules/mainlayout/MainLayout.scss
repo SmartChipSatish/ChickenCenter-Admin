@@ -1,11 +1,18 @@
 .main {
     width: 100%;
     background: #65646466;
+
     &-container {
         height: calc(100% - var(--headerHeight));
         display: flex;
     }
-    &-sidebar{
+
+    &-sidebar {
         width: var(--appSiderbarWidth);
+    }
+
+    &-placeholder {
+        padding-top: 14px !important;
+        padding-left: 20px !important;
     }
 }
