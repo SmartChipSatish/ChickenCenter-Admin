@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom"
-import { CardComponent } from "../components/CardComponent/CardComponent";
 
 
 const DashBoardLayout = () => {

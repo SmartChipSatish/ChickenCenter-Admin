@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
 
 
-const OrderLayout = () =>{
+const OrderLayout = () => {
    return <>
-    <p>OrderLayout</p>
-     <Outlet/>
+      <p className="pageTile">Orders</p>
+      <Outlet />
    </>
 }
 

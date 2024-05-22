@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import Login from '../modules/authentication/Login/Login';
-import { MainLayout, DashBoard, OrderPage, PaymentPage, DashBoardPage } from './pages';
+import { MainLayout, DashBoard, OrderLayOut, OrderPage, PaymentPage, DashBoardPage } from './pages';
 
 
 
@@ -39,9 +39,17 @@ export default function AppRoutes() {
           <Route path="orders"
             element={
               <Suspense>
-                <OrderPage />
+                <OrderLayOut />
               </Suspense>
             }>
+            <Route path=""
+              element={
+                <Suspense>
+                  <OrderPage />
+                </Suspense>
+              }>
+
+            </Route>
           </Route>
           <Route path="payment"
             element={

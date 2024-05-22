@@ -1,0 +1,16 @@
+.Orderpage {
+    &-id {
+        color: var(--appTheam);
+        margin-bottom: 0;
+    }
+    &-actions {
+        color: #00000069;
+       
+    }
+    &-eye {
+        margin-right: 12px;
+    }
+    &-title {
+        color: var(--appPageTitleColor);
+    }
+}

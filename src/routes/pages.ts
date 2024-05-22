@@ -6,7 +6,8 @@ const DashBoard =  lazy(() => import('../modules/dashboard/DashboardLayout/Dashb
 const DashBoardPage = lazy(()=> import('../modules/dashboard/pages/DashboardPage/Dashboardpage'))
 
 // Order Page 
-const OrderPage = lazy(()=> import('../modules/orders/OrderLayout/OrderLayout'));
+const OrderLayOut = lazy(()=> import('../modules/orders/OrderLayout/OrderLayout'));
+const OrderPage = lazy(()=> import('../modules/orders/pages/orderPage/OrderPage'))
 
 //Payment Page
 const PaymentPage = lazy(()=> import('../modules/payments/PaymentLayout/Paymentlayout'))
@@ -14,7 +15,8 @@ const PaymentPage = lazy(()=> import('../modules/payments/PaymentLayout/Paymentl
 export {
     MainLayout,
     DashBoard,
-    OrderPage,
+    OrderLayOut,
     PaymentPage,
-    DashBoardPage
+    DashBoardPage,
+    OrderPage
 }

@@ -17,20 +17,31 @@
   --appTheam: #F38B07;
   --appTextColor: '#fffff';
   --appTitleColor: #00000094;
-  --appSubTitleColor : #00000078
+  --appSubTitleColor : #00000078;
+  --appPageTitleColor: #00000078;
 }
 
 body,
 #root {
   height: 100vh;
 }
+p{
+  margin-bottom: 0;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+  /* background-color: var(--appTheam); */
+}
 
 .pageTile {
   font-size: 24px;
   font-weight: bold;
-  color: #00000078;
+  color: var(--appPageTitleColor);
 }
 .card {
   border: var(--bs-card-border-width) solid #5352521a;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.tableTitle {
+  color: var(--appPageTitleColor);
 }
