@@ -17,7 +17,7 @@ const MainLayout = () => {
                 <div className="main-sidebar">
                     <SideBar></SideBar>
                 </div>
-                <div className="p-2 w-100 main-placeholder"><Outlet /></div>
+                <div className="p-2 w-100 main-placeholder overflow-y"><Outlet /></div>
             </div>
         </div>
     </>

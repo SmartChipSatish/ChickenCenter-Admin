@@ -5,9 +5,12 @@ import './OrderPage.scss'
 import DropdownButton from "react-bootstrap/esm/DropdownButton";
 import ButtonGroup from "react-bootstrap/esm/ButtonGroup";
 import Dropdown from "react-bootstrap/esm/Dropdown";
-// FontAwesomeIcon
-// fa-eye
+import { useNavigate } from "react-router-dom";
 const OrderPage = () => {
+    const navigation = useNavigate();
+    const getOrderDetails = () => {
+        navigation('orderDetails')
+    }
     return (<>
         <Table striped bordered hover className="Orderpage">
             <thead>
@@ -46,7 +49,9 @@ const OrderPage = () => {
                             Durgam Cheruvu
                         </Dropdown.Item>
                     </DropdownButton></td>
-                    <td ><FontAwesomeIcon icon={faEye} className="Orderpage-actions Orderpage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="Orderpage-actions"></FontAwesomeIcon></td>
+                    <td ><FontAwesomeIcon icon={faEye} className="Orderpage-actions Orderpage-eye" onClick={() => {
+                        getOrderDetails();
+                    }}></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="Orderpage-actions"></FontAwesomeIcon></td>
                 </tr>
                 <tr>
                     <td className="tableItem">2</td>
