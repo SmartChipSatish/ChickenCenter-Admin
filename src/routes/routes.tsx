@@ -1,7 +1,8 @@
 import React, { Suspense } from 'react'
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import Login from '../modules/authentication/Login/Login';
-import { MainLayout, DashBoard, OrderLayOut, OrderPage, PaymentPage, DashBoardPage } from './pages';
+import { MainLayout, DashBoard, OrderLayOut, OrderPage, PaymentPage, DashBoardPage, BranchLayout, BranchesPage } from './pages';
+import CreateBranchPage from '../modules/branches/pages/CreateBranchPage/CreateBranchPage';
 
 
 
@@ -58,6 +59,28 @@ export default function AppRoutes() {
               </Suspense>
             }>
           </Route>
+          <Route path="branches"
+            element={
+              <Suspense>
+                <BranchLayout />
+              </Suspense>
+            }>
+            <Route path=""
+              element={
+                <Suspense>
+                  <BranchesPage />
+                </Suspense>
+              }>
+            </Route>
+            <Route path="create"
+              element={
+                <Suspense>
+                  <CreateBranchPage />
+                </Suspense>
+              }>
+            </Route>
+          </Route>
+          {/* BranchLayout */}
         </Route>
       </Routes>
     </BrowserRouter>

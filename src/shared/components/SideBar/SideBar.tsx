@@ -17,10 +17,10 @@ const SideBar = () => {
                     navigation('orders')
                 }}> <FontAwesomeIcon icon={faFirstOrder} className="module-appIcon" /> Orders</p>
                 <p className="module" onClick={() => {
-                    navigation('payment')
+                    navigation('branches')
                 }}><FontAwesomeIcon icon={faBuilding} className="module-appIcon" /> Branches</p>
                 <p className="module" onClick={() => {
-                    navigation('payment')
+                    navigation('branches')
                 }}><FontAwesomeIcon icon={faUser} className="module-appIcon" /> Users</p>
                 <p className="module" onClick={() => {
                     navigation('payment')
