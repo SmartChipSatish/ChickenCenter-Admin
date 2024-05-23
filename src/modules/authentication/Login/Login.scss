@@ -1,0 +1,18 @@
+.login {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+    background-repeat: no-repeat;
+    background-size: 100%;
+
+    .logo {
+        width: 57px;
+    }
+
+    .loginButton {
+        border-radius: 26px;
+        height: 50px;
+    }
+}
