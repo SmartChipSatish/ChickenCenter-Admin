@@ -23,7 +23,7 @@ const SideBar = () => {
                     navigation('inventory')
                     // 
                 }}><FontAwesomeIcon icon={faStore} className="module-appIcon" />Inventory</p>
-                <p className="module" onClick={() => {
+                {/* <p className="module" onClick={() => {
                     navigation('users')
                 }}><FontAwesomeIcon icon={faUser} className="module-appIcon" /> Users</p>
                 <p className="module" onClick={() => {
@@ -31,7 +31,7 @@ const SideBar = () => {
                 }}><FontAwesomeIcon icon={faCreditCard} className="module-appIcon" /> Payment</p>
                 <p className="module" onClick={() => {
                     navigation('payment')
-                }}><FontAwesomeIcon icon={faCogs} className="module-appIcon" /> Settings</p>
+                }}><FontAwesomeIcon icon={faCogs} className="module-appIcon" /> Settings</p> */}
             </div>
             <div>
                 <p className="appVersion">App Version 0.0.1</p>

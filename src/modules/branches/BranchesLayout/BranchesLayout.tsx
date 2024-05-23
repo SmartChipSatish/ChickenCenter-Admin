@@ -19,14 +19,7 @@ const BranchLayout = () => {
     }
    
     return <>
-        {isBranch && <div className="brancheslayout-titleDiv">
-            <p className="pageTile">Branches</p>
-            <Button variant="outline-primary" onClick={() => {
-                createBranch()
-            }}><FontAwesomeIcon icon={faPlus} ></FontAwesomeIcon> Add</Button>
-        </div>}
-
-
+     
         <Outlet />
     </>
 }

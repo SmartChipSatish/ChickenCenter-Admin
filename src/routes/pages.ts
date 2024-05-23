@@ -20,7 +20,13 @@ const CreateBranchPage = lazy(()=>import('../modules/branches/pages/CreateBranch
 
 //Users 
 const UsersLayout = lazy(() => import('../modules/users/UserLayout/UserLayout'));
-const UsersPage = lazy(()=>import('../modules/users/pages/UsersPage/UsersPage'))
+const UsersPage = lazy(()=>import('../modules/users/pages/UsersPage/UsersPage'));
+
+
+// Inventory 
+const InventoryLayout = lazy(()=>import('../modules/inventory/inventoryLayout/inventoryLayout'));
+const ItemsPage = lazy(()=> import('../modules/inventory/pages/ItemsPage/ItemsPage'));
+const AddItemPage = lazy(()=>import('../modules/inventory/pages/AddItemPage/AddItemPage'))
 export {
     MainLayout,
     DashBoard,
@@ -33,5 +39,8 @@ export {
     CreateBranchPage,
     OrderDetailPage,
     UsersLayout,
-    UsersPage
+    UsersPage,
+    InventoryLayout,
+    ItemsPage,
+    AddItemPage
 }

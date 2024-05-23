@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import Login from '../modules/authentication/Login/Login';
-import { MainLayout, DashBoard, OrderLayOut, OrderPage, PaymentPage, DashBoardPage, BranchLayout, BranchesPage, OrderDetailPage, UsersLayout, UsersPage } from './pages';
+import { MainLayout, DashBoard, OrderLayOut, OrderPage, PaymentPage, DashBoardPage, BranchLayout, BranchesPage, OrderDetailPage, UsersLayout, UsersPage, InventoryLayout, ItemsPage, AddItemPage } from './pages';
 import CreateBranchPage from '../modules/branches/pages/CreateBranchPage/CreateBranchPage';
 
 
@@ -43,7 +43,7 @@ export default function AppRoutes() {
                 <OrderLayOut />
               </Suspense>
             }>
-              {/* OrderDetailPage */}
+            {/* OrderDetailPage */}
             <Route path=""
               element={
                 <Suspense>
@@ -109,6 +109,30 @@ export default function AppRoutes() {
                 </Suspense>
               }>
             </Route>
+
+          </Route>
+          <Route path="inventory"
+            element={
+              <Suspense>
+                <InventoryLayout />
+              </Suspense>
+            }>
+
+            <Route path=""
+              element={
+                <Suspense>
+                  <ItemsPage />
+                </Suspense>
+              }>
+            </Route>
+            <Route path="addItem"
+              element={
+                <Suspense>
+                  <AddItemPage />
+                </Suspense>
+              }>
+            </Route>
+
           </Route>
           {/* BranchLayout */}
         </Route>
