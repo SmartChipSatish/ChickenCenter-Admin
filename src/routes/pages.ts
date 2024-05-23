@@ -16,7 +16,11 @@ const PaymentPage = lazy(()=> import('../modules/payments/PaymentLayout/Paymentl
 //Branches 
 const BranchLayout = lazy(()=> import('../modules/branches/BranchesLayout/BranchesLayout'));
 const BranchesPage = lazy(()=>import('../modules/branches/pages/BranchesPage/BranchesPage'))
-const CreateBranchPage = lazy(()=>import('../modules/branches/pages/CreateBranchPage/CreateBranchPage'))
+const CreateBranchPage = lazy(()=>import('../modules/branches/pages/CreateBranchPage/CreateBranchPage'));
+
+//Users 
+const UsersLayout = lazy(() => import('../modules/users/UserLayout/UserLayout'));
+const UsersPage = lazy(()=>import('../modules/users/pages/UsersPage/UsersPage'))
 export {
     MainLayout,
     DashBoard,
@@ -27,5 +31,7 @@ export {
     BranchLayout,
     BranchesPage,
     CreateBranchPage,
-    OrderDetailPage
+    OrderDetailPage,
+    UsersLayout,
+    UsersPage
 }

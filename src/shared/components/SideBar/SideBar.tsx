@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import './Sidebar.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBuilding, faCogs, faCreditCard, faHouse, faUser, } from "@fortawesome/free-solid-svg-icons";
+import { faBuilding, faCogs, faCreditCard, faHouse, faStore, faUser, } from "@fortawesome/free-solid-svg-icons";
 import { faFirstOrder } from "@fortawesome/free-brands-svg-icons";
 
 
@@ -20,7 +20,11 @@ const SideBar = () => {
                     navigation('branches')
                 }}><FontAwesomeIcon icon={faBuilding} className="module-appIcon" /> Branches</p>
                 <p className="module" onClick={() => {
-                    navigation('branches')
+                    navigation('inventory')
+                    // 
+                }}><FontAwesomeIcon icon={faStore} className="module-appIcon" />Inventory</p>
+                <p className="module" onClick={() => {
+                    navigation('users')
                 }}><FontAwesomeIcon icon={faUser} className="module-appIcon" /> Users</p>
                 <p className="module" onClick={() => {
                     navigation('payment')
