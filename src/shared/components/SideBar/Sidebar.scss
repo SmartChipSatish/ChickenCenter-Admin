@@ -20,7 +20,10 @@
     }
     &:hover {
       background: var(--appTextColor);
-      color: black;
+      color: var(--appTitleColor);
       
     }
+}
+.appVersion {
+    text-align: center;
 }

@@ -22,6 +22,7 @@ const OrderPage = () => {
                     <th><p className="tableTitle">Payment Status</p></th>
                     <th><p className="tableTitle">Fulfillment Status</p></th>
                     <th><p className="tableTitle">Payment Method</p></th>
+                    <th><p className="tableTitle">Address</p></th>
                     <th><p className="tableTitle">Transfer</p></th>
                     <th><p className="tableTitle">Actions</p></th>
                 </tr>
@@ -35,6 +36,7 @@ const OrderPage = () => {
                     <td className="tableItem">Paid</td>
                     <td className="tableItem">Fulfilled</td>
                     <td className="tableItem">Cash</td>
+                    <td className="tableItem">144-2-137, Durgam Cheruvu, HYD</td>
                     <td> <DropdownButton
                         as={ButtonGroup}
                         // variant="outline-primary"
@@ -61,6 +63,7 @@ const OrderPage = () => {
                     <td className="tableItem">Paid</td>
                     <td className="tableItem">Fulfilled</td>
                     <td className="tableItem">Cash</td>
+                    <td className="tableItem">144-2-137, Durgam Cheruvu, HYD</td>
                     <td> <DropdownButton
                         as={ButtonGroup}
                         key={'Primary'}
@@ -84,6 +87,7 @@ const OrderPage = () => {
                     <td className="tableItem">Pending</td>
                     <td className="tableItem">Unfulfilled</td>
                     <td className="tableItem">Cash</td>
+                    <td className="tableItem">144-2-137, Durgam Cheruvu, HYD</td>
                     <td> <DropdownButton
                         as={ButtonGroup}
                         key={'Primary'}

@@ -30,7 +30,7 @@ const SideBar = () => {
                 }}><FontAwesomeIcon icon={faCogs} className="module-appIcon" /> Settings</p>
             </div>
             <div>
-                <p>App Version 0.0.1</p>
+                <p className="appVersion">App Version 0.0.1</p>
             </div>
 
         </div>

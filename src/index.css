@@ -76,6 +76,16 @@ p {
   --bs-btn-disabled-border-color: var(--appTheam);
 }
 
+.dropdown-item.active,
+.dropdown-item:active {
+  color: var(--appTextColor);
+  background-color: var(--appTheam);
+}
+
+.dropdown-item {
+  font-size: 14px;
+}
+
 /* Custome Css */
 .elementSpace {
   margin-right: 12px;
@@ -101,5 +111,5 @@ p {
   font-size: 14px;
   font-weight: 400;
   color: var(--bs-gray-600) !important;
-  
+
 }
