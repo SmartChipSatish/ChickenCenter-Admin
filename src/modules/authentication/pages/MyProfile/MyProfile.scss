@@ -1,4 +1,4 @@
-.addItemPage {
+.myProfile {
     --imageWidht: 146px;
     padding: 0 270px;
 
@@ -43,4 +43,11 @@
 
 .form-select {
     line-height: 2.7;
+}
+
+.address {
+    margin-bottom: 9px;
+    font-weight: 500;
+    color: var(--bs-gray-600);
+    font-size: 17px;
 }

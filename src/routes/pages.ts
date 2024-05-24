@@ -26,7 +26,11 @@ const UsersPage = lazy(()=>import('../modules/users/pages/UsersPage/UsersPage'))
 // Inventory 
 const InventoryLayout = lazy(()=>import('../modules/inventory/inventoryLayout/inventoryLayout'));
 const ItemsPage = lazy(()=> import('../modules/inventory/pages/ItemsPage/ItemsPage'));
-const AddItemPage = lazy(()=>import('../modules/inventory/pages/AddItemPage/AddItemPage'))
+const AddItemPage = lazy(()=>import('../modules/inventory/pages/AddItemPage/AddItemPage'));
+
+//My Profile 
+
+const MyProfilePage = lazy(()=> import('../modules/authentication/pages/MyProfile/MyProfile'))
 export {
     MainLayout,
     DashBoard,
@@ -42,5 +46,6 @@ export {
     UsersPage,
     InventoryLayout,
     ItemsPage,
-    AddItemPage
+    AddItemPage,
+    MyProfilePage
 }

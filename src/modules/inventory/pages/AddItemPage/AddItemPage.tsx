@@ -89,19 +89,26 @@ const AddItemPage = () => {
 
                                 <Col>
                                     <Form.Select aria-label="Default select example">
+                                        <option>Part Type</option>
+                                        <option value="Leg Piece">Leg Piece</option>
+                                        <option value="Wings">Wings</option>
+                                        <option value="liver">Liver</option>
+                                        <option value="Boneless">Boneless</option>
+                                        <option value="withBone">With Bone</option>
+                                    </Form.Select>
+                                </Col>
+                                <Col>
+                                    <Form.Select aria-label="Default select example">
                                         <option>Meat Type</option>
                                         <option value="Chicken">Chicken</option>
                                         <option value="Mutton">Mutton</option>
                                         <option value="Eggs">Eggs</option>
                                     </Form.Select>
                                 </Col>
-                                <Col>
-
-                                </Col>
 
 
                             </Row>
-                            <div className="d-flex justify-content-end actionbtns">
+                            <div className="d-flex justify-content-end actionbtn">
                                 <Button variant="outline-secondary" className="elementSpace" onClick={() => {
                                     navigate('/inventory')
                                 }}>Cancel</Button>

@@ -13,9 +13,9 @@ img {
     width: 100%;
     justify-content: space-between;
     height: 100%;
-    align-items: baseline;
     background: var(--appTheam);
 }
+
 .brand {
     font-size: 25px;
     font-weight: bold;
@@ -23,7 +23,39 @@ img {
     margin-bottom: 0;
 }
 
-.appbrand{
-    padding: 2px 10px;
+.appbrand {
+    padding: 6px 10px;
     align-items: center;
+}
+
+.profileImage {
+    width: 35px;
+    height: 35px;
+}
+
+.profileOptions {
+    margin-right: 10px;
+}
+
+.notification {
+    font-size: 19px;
+    margin-right: 12px;
+}
+
+.notificationCount {
+    background: red;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 10px;
+    padding: 0;
+    height: 16px;
+    width: 16px;
+    position: absolute;
+    top: -6px;
+    left: 10px;
+}
+
+#dropdown-split-basic {
+    background: transparent;
+    border: 0px;
 }
