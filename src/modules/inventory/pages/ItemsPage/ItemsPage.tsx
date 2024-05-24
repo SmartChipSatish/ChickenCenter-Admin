@@ -51,7 +51,7 @@ const ItemsPage = () => {
 
                                 <td className="tableItem"><FontAwesomeIcon icon={faEdit} className="itemEdit" onClick={() => {
                                     // getOrderDetails();
-                                }}></FontAwesomeIcon> <FontAwesomeIcon icon={faTrash} className="text-danger" onClick={() => {
+                                }}></FontAwesomeIcon> <FontAwesomeIcon icon={faTrash} className=" itemEdit text-danger" onClick={() => {
                                     handleShow()
                                 }}></FontAwesomeIcon></td>
                             </tr>
