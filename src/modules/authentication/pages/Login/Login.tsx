@@ -21,54 +21,54 @@ const Login = () => {
                                 {/* <form action="#!"> */}
                                 <Form>
                                     {/* <div className="row gy-2 overflow-hidden"> */}
-                                        {/* <div className="col-12">
+                                    {/* <div className="col-12">
                                             
                                         </div> */}
-                                        {/* <div className="col-12">
+                                    {/* <div className="col-12">
                                             <div className="form-floating mb-3">
                                                 <input type="password" className="form-control" name="password" id="password" value="" placeholder="Password" required />
                                                 <label for="password" className="form-label">Password</label>
                                             </div>
                                         </div> */}
-                                        <FloatingLabel
-                                                controlId="floatingInput"
-                                                label="User Name"
-                                                className="mb-3"
-                                            >
-                                                <Form.Control type="text" placeholder="User Name" />
-                                            </FloatingLabel>
-                                            <FloatingLabel
-                                                controlId="floatingInput"
-                                                label="Password"
-                                                className="mb-3"
-                                            >
-                                                <Form.Control type="password" placeholder="Password" />
-                                            </FloatingLabel>
+                                    <FloatingLabel
+                                        controlId="floatingInput"
+                                        label="User Name"
+                                        className="mb-3"
+                                    >
+                                        <Form.Control type="text" placeholder="User Name" />
+                                    </FloatingLabel>
+                                    <FloatingLabel
+                                        controlId="floatingInput"
+                                        label="Password"
+                                        className="mb-3"
+                                    >
+                                        <Form.Control type="password" placeholder="Password" />
+                                    </FloatingLabel>
 
 
-                                        <div className="col-12">
-                                            <div className="d-grid my-3">
-                                                <Button variant="outline-primary" className="loginButton" onClick={() => {
-                                                    navigation('/dashboard')
-                                                }}>
-                                                    Log in
-                                                </Button>
-                                                {/* <button className="btn btn-primary btn-lg" type="submit">Log in</button> */}
-                                            </div>
+                                    <div className="col-12">
+                                        <div className="d-grid my-3">
+                                            <Button variant="outline-primary" className="loginButton" onClick={() => {
+                                                navigation('/dashboard')
+                                            }}>
+                                                Log in
+                                            </Button>
+                                            {/* <button className="btn btn-primary btn-lg" type="submit">Log in</button> */}
                                         </div>
+                                    </div>
                                 </Form>
 
-                                {/* <div className="col-12">
-                          <p className="m-0 text-secondary text-center">Don't have an account? <a href="#!" className="link-primary text-decoration-none">Sign up</a></p>
-                        </div> */}
-                            {/* </div> */}
-                            {/* </form> */}
+                                <div className="col-12">
+                                    <p className="m-0 text-secondary text-center">Don't have an account? <a href="#!" className="text-decoration-none register">Sign up</a></p>
+                                </div>
+                                {/* </div> */}
+                                {/* </form> */}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section ></>)
+        </section ></>)
 
 
 }

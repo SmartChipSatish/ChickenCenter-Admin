@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import './Sidebar.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBuilding, faHouse, faStore } from "@fortawesome/free-solid-svg-icons";
+import { faBuilding, faCartPlus, faHouse, faStore } from "@fortawesome/free-solid-svg-icons";
 import { faFirstOrder } from "@fortawesome/free-brands-svg-icons";
 import { useCallback, useEffect } from "react";
 
@@ -20,13 +20,13 @@ const SideBar = () => {
             <div>
                 <p className={`module ${isActivePath('dashboard')}`} onClick={() => {
                     navigation('dashboard')
-                }}><FontAwesomeIcon icon={faHouse} className="module-appIcon" />DashBoard</p>
+                }}><FontAwesomeIcon icon={faHouse} className="module-appIcon" />Dashboard</p>
                 <p className={`module ${isActivePath('orders')}`} onClick={() => {
                     navigation('orders')
-                }}> <FontAwesomeIcon icon={faFirstOrder} className="module-appIcon" /> Orders</p>
+                }}> <FontAwesomeIcon icon={faCartPlus} className="module-appIcon" />Orders</p>
                 <p className={`module ${isActivePath('branches')}`} onClick={() => {
                     navigation('branches')
-                }}><FontAwesomeIcon icon={faBuilding} className="module-appIcon" /> Branches</p>
+                }}><FontAwesomeIcon icon={faBuilding} className="module-appIcon" />Branches</p>
                 <p className={`module ${isActivePath('inventory')}`} onClick={() => {
                     navigation('inventory')
                     // 

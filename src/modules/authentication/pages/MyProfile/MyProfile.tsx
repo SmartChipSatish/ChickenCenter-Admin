@@ -21,7 +21,7 @@ import './MyProfile.scss'
 
 const MyProfilePage = () => {
     const inputRef = useRef<any>(null);
-    const [imgUrl, SetImgUrl] = useState('https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=')
+    const [imgUrl, SetImgUrl] = useState('https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250')
     const navigate = useNavigate();
 
     const selectFile = () => {
