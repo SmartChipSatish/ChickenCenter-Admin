@@ -1,13 +1,25 @@
 .itemsPage {
     height: 93%;
+
     .itemImg {
         width: 69px;
+        height: 50px;
+        width: 50px;
     }
+
     .itemEdit {
         margin-right: 9px;
         cursor: pointer;
     }
-    // .pageDetails {
-    //     height: %;
-    // }
+
+}
+
+
+
+.indexWidth {
+    width: 50px;
+}
+
+.imgWidth {
+    width: 75px;
 }

@@ -9,14 +9,27 @@ import Form from "react-bootstrap/esm/Form";
 import Card from "react-bootstrap/esm/Card";
 import './CreateBranchPage.scss'
 import { Col, FloatingLabel, Row } from "react-bootstrap";
+import { useCreateFranchisesMutation } from "../../store/branchesEndPoint";
+
 const CreateBranchPage = () => {
+    const [updateContact] = useCreateFranchisesMutation();
     const dispatch = useDispatch();
     const navigation = useNavigate();
     const back = () => {
         dispatch(isBrannch(true));
         navigation('/branches')
-
     }
+    const submit = () => {
+        updateContact({
+            "name": "Durgam Cheruvu",
+            "createdBy": "664de740835b08b634646081",
+            "updatedBy": "664de740835b08b634646081",
+            "address": {
+                "name": "Durgam Cheruvu, HYD"
+            }
+        })
+    }
+
     return (<>
         <p className="pageTile pageTitleSpace">Create Branch</p>
         <Card className="createBranch">
@@ -109,8 +122,8 @@ const CreateBranchPage = () => {
                         <Button variant="outline-secondary" className="elementSpace" onClick={() => {
                             back()
                         }}>Cancel</Button>
-                        <Button variant="outline-primary" type="submit" onClick={() => {
-                            back()
+                        <Button variant="outline-primary" onClick={() => {
+                            submit()
                         }}>
                             Submit
                         </Button>

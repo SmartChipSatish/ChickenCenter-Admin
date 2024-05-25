@@ -21,7 +21,7 @@
   --appPageTitleColor: var(--bs-gray-700);
   --appTitleColor: var(--bs-gray-700);
   --appSubTitleColor: var(--bs-gray-500);
-  --appPageHeaderHeight : 6%;
+  --appPageHeaderHeight: 6%;
   --appPageHeaderSpace: 14px;
 
 }
@@ -98,5 +98,12 @@ p {
 
 .tableAction {
   vertical-align: middle;
+
+}
+
+.errorlabel {
+  font-size: 79%;
+  color: #ff0000fa;
+  padding: 2px 0;
 
 }

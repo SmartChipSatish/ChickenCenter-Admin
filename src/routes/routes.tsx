@@ -132,6 +132,13 @@ export default function AppRoutes() {
                 </Suspense>
               }>
             </Route>
+            <Route path="updateItem/:id"
+              element={
+                <Suspense>
+                  <AddItemPage />
+                </Suspense>
+              }>
+            </Route>
 
           </Route>
           <Route path="account"
