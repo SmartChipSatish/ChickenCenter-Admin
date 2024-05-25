@@ -107,3 +107,7 @@ p {
   padding: 2px 0;
 
 }
+
+.curserPointer {
+  cursor: pointer;
+}
