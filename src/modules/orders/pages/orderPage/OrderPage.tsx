@@ -2,25 +2,44 @@ import { faEdit, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Table from "react-bootstrap/esm/Table"
 import './OrderPage.scss'
-import DropdownButton from "react-bootstrap/esm/DropdownButton";
-import ButtonGroup from "react-bootstrap/esm/ButtonGroup";
-import Dropdown from "react-bootstrap/esm/Dropdown";
 import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/esm/Card";
-import { useLazyGetAllOrdersQuery } from "../../Store/ordersEndpoints";
+import { useLazyGetAllOrdersQuery, useUpdateOrderTranferMutation } from "../../Store/ordersEndpoints";
 import { useEffect } from "react";
 import { Order } from "../../util/ordersInterfaces";
+import { useGetAllFranchisesQuery } from "../../../branches/store/branchesEndPoint";
+import { IBranch } from "../../../branches/utils/BranchesInterfaces";
+import Form from "react-bootstrap/esm/Form";
+import { successToast } from "../../../../shared/utils/appToaster";
+
 
 const OrderPage = () => {
     const navigation = useNavigate();
     const [getAllorders, { data, isLoading, error }] = useLazyGetAllOrdersQuery();
+    const { data: franchies, isLoading: franchiesLoading, isError: franchiesError } = useGetAllFranchisesQuery(undefined);
+    const [updateOrderTranfer, { data: updateOrderData, isLoading: updateOrderisLoading, isError: updateOrderError }] = useUpdateOrderTranferMutation()
     const getOrderDetails = () => {
         navigation('orderDetails')
     }
 
+    const orderTransfer = async (data: { id: string, franchiseId: string }) => {
+        try {
+            const orderTransfer = await updateOrderTranfer(data);
+            successToast('Order transfered succesfully');
+        } catch (e) {
+            console.log('e', e)
+        }
+
+    }
+
+
     useEffect(() => {
         getAllorders(undefined)
-    }, [data, isLoading, error])
+    }, [data, isLoading, error]);
+
+    useEffect(() => { }, [franchiesLoading, franchiesError])
+
+    useEffect(() => { }, [updateOrderData, updateOrderisLoading, updateOrderError])
     return (<>
         <div className="Orderpage">
             <Card className="h-100">
@@ -46,26 +65,23 @@ const OrderPage = () => {
 
                             {data && data?.map((order: Order, index: number) => <tr>
                                 <td className="tableItem ">{index + 1}</td>
-                                <td className="tableItem curserPointer"><p className="Orderpage-id">{`#${order.id}`}</p></td>
-                                <td className="tableItem">{order.date}</td>
-                                <td className="tableItem">{order.userId.name}</td>
-                                <td className="tableItem">{order.orderStatus}</td>
-                                <td className="tableItem">{order.userId.primaryNumber}</td>
-                                <td className="tableItem">{order.userId.primaryAddress.name}, {order.userId.primaryAddress.houseNo}, {order.userId.primaryAddress.streetName}</td>
-                                <td className="tableItem"> <DropdownButton
-                                    as={ButtonGroup}
-                                    // variant="outline-primary"
-                                    key={'Primary'}
-                                    id={`dropdown-variants-${'Primary'}`}
-                                    variant={'outline-primary'}
-                                    title={'Malasa'}
-                                >
-                                    <Dropdown.Item eventKey="1">Hi-City</Dropdown.Item>
-                                    <Dropdown.Item eventKey="2">Madhapur</Dropdown.Item>
-                                    <Dropdown.Item eventKey="3" active>
-                                        Durgam Cheruvu
-                                    </Dropdown.Item>
-                                </DropdownButton></td>
+                                <td className="tableItem curserPointer" onClick={() => {
+                                    getOrderDetails();
+                                }}><p className="Orderpage-id">{`#${order?.id}`}</p></td>
+                                <td className="tableItem">{order?.date}</td>
+                                <td className="tableItem">{order.userId?.name}</td>
+                                <td className="tableItem">{order?.orderStatus}</td>
+                                <td className="tableItem">{order?.userId?.primaryNumber}</td>
+                                <td className="tableItem">{order?.userId?.primaryAddress?.name}, {order?.userId?.primaryAddress?.houseNo}, {order?.userId?.primaryAddress?.streetName}</td>
+                                <td className="tableItem">
+                                    <Form.Select aria-label="Order Transfer" onChange={(data) => {
+                                        orderTransfer({ id: order.id, franchiseId: data?.target?.value })
+                                    }}>
+                                        {franchies && franchies?.map((branch: IBranch) => <option value={branch._id} selected={order?.franchiseId === branch._id}>{branch?.name}</option>)}
+                                    </Form.Select>
+
+
+                                </td>
                                 <td ><FontAwesomeIcon icon={faEye} className="Orderpage-actions Orderpage-eye" onClick={() => {
                                     getOrderDetails();
                                 }}></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="Orderpage-actions"></FontAwesomeIcon></td>

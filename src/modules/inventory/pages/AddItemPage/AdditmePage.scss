@@ -54,3 +54,8 @@
     font-weight: 500;
     color: var(--bs-gray-600);
 }
+
+.form-check-input:checked {
+    background-color: var(--appTheam);
+    border-color: var(--appTheam);
+}

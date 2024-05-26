@@ -16,7 +16,8 @@ export interface Order {
             streetName: string,
         }
     }
-    id: string
+    id: string,
+    franchiseId:string
     // items: AddItem[
     //     // {
     //     //     "itemId": "66509e96f5b94b86a246d963",

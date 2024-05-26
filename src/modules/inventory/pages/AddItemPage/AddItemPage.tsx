@@ -23,7 +23,7 @@ const AddItemPage = () => {
         register,
         handleSubmit,
         reset,
-        formState: { errors },
+        formState: { defaultValues, errors },
     } = useForm<AddItem>({});
 
     const [createItem, { isLoading }] = useCreateItemMutation();
@@ -34,7 +34,6 @@ const AddItemPage = () => {
     const inputRef = useRef<any>(null);
     const [selectedFile, SetSelectedFile] = useState<File | null>(null);
     const [imgUrl, SetImgUrl] = useState('https://as2.ftcdn.net/v2/jpg/02/41/38/73/1000_F_241387314_Sr3d8fVbXw0tWHQvZlKvbwY5YnEDC91V.jpg')
-
 
     const selectFile = () => {
         if (inputRef?.current) {
@@ -52,7 +51,6 @@ const AddItemPage = () => {
 
     const addUpdateItemPage = async (data: AddItem) => {
         try {
-
             let fileUrl = ''
             if (selectedFile) {
                 fileUrl = await fileUpload(selectedFile) as string;
@@ -62,7 +60,7 @@ const AddItemPage = () => {
                 createdBy: getItemFromLocalStorage('userId'),
                 updatedBy: getItemFromLocalStorage('userId'),
                 imageUrl: fileUrl || imgUrl,
-                globalItemStatus: true,
+                globalItemStatus: defaultValues?.globalItemStatus ? true : false,
             });
 
             if (id) {
@@ -103,6 +101,8 @@ const AddItemPage = () => {
 
     useEffect(() => { }, [updateError, updateLoading]);
     useEffect(() => { }, [getItemError, getItemLoading, getItemData])
+    useEffect(() => {
+    }, [defaultValues])
 
     return (<>
         <p className="pageTile pageTitleSpace">{!id ? 'Add Item' : 'Update Item'}</p>
@@ -170,6 +170,60 @@ const AddItemPage = () => {
                                         <option value="Mutton">Mutton</option>
                                         <option value="Eggs">Eggs</option>
                                     </Form.Select>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Form.Label className="fromLabel">Availability</Form.Label>
+                                    <br></br>
+                                    <Form.Check
+                                        inline
+                                        label="Available"
+                                        type={'radio'}
+                                        id={`inline-${'radio'}-1`}
+                                        {...register("globalItemStatus", { required: true })}
+                                        value="1"
+                                        checked={!defaultValues || defaultValues.globalItemStatus === true}
+                                        onChange={() => {
+                                            if (defaultValues) {
+                                                reset({ ...defaultValues, globalItemStatus: true })
+                                            } else {
+                                                reset({ globalItemStatus: true })
+                                            }
+                                        }}
+                                    />
+                                    <Form.Check
+                                        inline
+                                        label="Out of stock"
+                                        type={'radio'}
+                                        id={`inline-${'radio'}-2`}
+                                        {...register("globalItemStatus", { required: true })}
+                                        value="0"
+                                        checked={defaultValues?.globalItemStatus === false}
+                                        onChange={() => {
+                                            if (defaultValues) {
+                                                reset({ ...defaultValues, globalItemStatus: false })
+                                            } else {
+                                                reset({ globalItemStatus: false })
+                                            }
+
+                                            console.log('change2')
+                                        }}
+                                    />
+                                    {/* <div className="form-check">
+                                        <input className="form-check-input" type="radio" id="flexRadioDefault1"  {...register("globalItemStatus", { required: true })}/>
+                                            <label className="form-check-label" for="flexRadioDefault1">
+                                                Default radio
+                                            </label>
+                                    </div>
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="radio"  {...register("globalItemStatus", { required: true })} id="flexRadioDefault2" checked />
+                                            <label className="form-check-label" for="flexRadioDefault2">
+                                                Default checked radio
+                                            </label>
+                                    </div> */}
+                                </Col>
+                                <Col>
                                 </Col>
                             </Row>
                             <div className="d-flex justify-content-end actionbtn">

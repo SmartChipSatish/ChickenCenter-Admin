@@ -32,7 +32,7 @@ const ItemsPage = () => {
 
     return (<>
         <div className="d-flex justify-content-between pageTitleSpace">
-            <p className="pageTile">Inventory</p>
+            <p className="pageTile">Items</p>
             <Button variant="outline-primary" onClick={() => {
                 addItem()
             }}><FontAwesomeIcon icon={faPlus} ></FontAwesomeIcon> Add</Button>
@@ -47,7 +47,7 @@ const ItemsPage = () => {
                                 <th ><p className="tableTitle"></p></th>
                                 <th> <p className="tableTitle">Name</p></th>
                                 <th> <p className="tableTitle">Price/Quantity</p></th>
-                                <th><p className="tableTitle">Stock</p></th>
+                                <th><p className="tableTitle">Status</p></th>
                                 <th><p className="tableTitle">Actions</p></th>
                             </tr>
                         </thead>
@@ -63,10 +63,10 @@ const ItemsPage = () => {
                                     <td className="tableItem imgWidth"> <Image className="itemImg" src={item.imageUrl || "https://www.licious.in/blog/wp-content/uploads/2022/03/Chicken-Curry-Cut-min-1.png"} roundedCircle /></td>
                                     <td className="tableItem">{item.itemName}</td>
                                     <td className="tableItem">{item.itemPrice}/100 gram</td>
-                                    <td className="tableItem">{item.itemQty || '0 kgs'}</td>
+                                    <td className="tableItem">{item.globalItemStatus ? 'Available' : 'Out of stock'}</td>
                                     <td className="tableItem"><FontAwesomeIcon icon={faEdit} className="itemEdit" onClick={() => {
                                         navigation(`updateItem/${item?._id}`)
-                                    }}></FontAwesomeIcon> <FontAwesomeIcon icon={faTrash} className=" itemEdit text-danger" onClick={() => {
+                                    }}></FontAwesomeIcon> <FontAwesomeIcon icon={faTrash} className=" itemEdit" onClick={() => {
                                         handleShow()
                                     }}></FontAwesomeIcon></td>
                                 </tr>

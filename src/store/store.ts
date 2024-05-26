@@ -15,5 +15,5 @@ export default configureStore({
         [OrdersApi.reducerPath]: OrdersApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(InventoryApi.middleware, BranchesApi.middleware)
+        getDefaultMiddleware().concat(InventoryApi.middleware, BranchesApi.middleware, OrdersApi.middleware)
 });

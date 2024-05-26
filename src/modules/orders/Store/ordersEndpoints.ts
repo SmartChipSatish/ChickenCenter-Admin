@@ -12,11 +12,11 @@ export const OrdersEndPoints = OrdersApi.injectEndpoints({
             query: (id: string) => `orders/getOrdersByUserId?orderId=${id}`,
         }),
 
-        updateOrder: builder.mutation({
+        updateOrderTranfer: builder.mutation({
             query: (body) => ({
                 url: `orders/updateOrder?orderId=${body.id}`,
                 method: 'POST',
-                body: body
+                body: {franchiseId:body.franchiseId}
             }),
             invalidatesTags: ['getAllOrders'],
         }),
@@ -26,5 +26,5 @@ export const OrdersEndPoints = OrdersApi.injectEndpoints({
 export const {
     useLazyGetAllOrdersQuery,
     useGetOrderByIdQuery,
-    useUpdateOrderMutation
+    useUpdateOrderTranferMutation
 } = OrdersEndPoints;
