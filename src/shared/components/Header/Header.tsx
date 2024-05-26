@@ -17,21 +17,23 @@ const Header = () => {
                 </div>
                 <div className='d-flex appbrand'>
                     <div className='position-relative'>
-                       <FontAwesomeIcon icon={faBell} className='notification'></FontAwesomeIcon>
-                       <div className='notificationCount'>2</div>
+                        <FontAwesomeIcon icon={faBell} className='notification'></FontAwesomeIcon>
+                        <div className='notificationCount'>2</div>
                     </div>
-                   
-                    <Dropdown as={ButtonGroup}>
-                        <img className="profileImage" src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250" />
 
-                        <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
+                    <Dropdown as={ButtonGroup}>
+
+
+                        <Dropdown.Toggle split variant="success" id="dropdown-split-basic">
+                            <img className="profileImage" src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250" />
+                        </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-                            <Dropdown.Item href="#" onClick={()=>{
+                            <Dropdown.Item href="#" onClick={() => {
                                 // account
                                 navigation("account")
                             }}><FontAwesomeIcon icon={faUser} className='profileOptions' ></FontAwesomeIcon> My Profile</Dropdown.Item>
-                            <Dropdown.Item href="#" onClick={()=>{
+                            <Dropdown.Item href="#" onClick={() => {
                                 // account
                                 navigation("login")
                             }}> <FontAwesomeIcon icon={faSignOut} className='profileOptions'></FontAwesomeIcon>  Logout</Dropdown.Item>

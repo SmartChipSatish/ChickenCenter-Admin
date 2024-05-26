@@ -1,6 +1,6 @@
 .appSidebar {
-    background: var(--appTheam);
-    border-top: 2px solid #ffa70573;
+    // background: var(--appTheam);
+    // border-top: 2px solid #ffa70573;
     padding: 16px 0;
     display: flex;
     flex-direction: column;
@@ -14,18 +14,23 @@
     align-items: baseline;
     padding: 12px 11px;
     cursor: pointer;
+    color: var(--appTheam);
 
     &-appIcon {
         margin-right: 9px;
         font-size: 15px;
 
     }
-    &:hover, &-active {
-      background: var(--appTextColor);
-      color: var(--appTitleColor);
-      
+
+    &:hover,
+    &-active {
+        background: var(--appTheam);
+        color: var(--appTextColor);
+
     }
 }
+
 .appVersion {
     text-align: center;
+    color: var(--appTheam);
 }
