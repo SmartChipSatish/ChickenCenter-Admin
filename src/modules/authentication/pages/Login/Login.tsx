@@ -3,8 +3,45 @@ import Form from "react-bootstrap/esm/Form";
 import './Login.scss'
 import Button from "react-bootstrap/esm/Button";
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
+import { useLazyGetUserQuery, useLoginMutation } from "../../store/authenticateEndPoints";
+import { useForm } from "react-hook-form";
+import { errorToast, successToast } from "../../../../shared/utils/appToaster";
+import { setItemToLocalStorage } from "../../../../utils/localStorage";
+import { useDispatch } from "react-redux";
+import { adduserInfo } from "../../store/userInfoSlice";
 const Login = () => {
+    const {
+        register,
+        handleSubmit,
+    } = useForm<any>({});
+    const [login, { isLoading, }] = useLoginMutation();
+    const [getUser] = useLazyGetUserQuery();
+    const dispatch = useDispatch();
     const navigation = useNavigate();
+
+    const getUsers = () => {
+        getUser(undefined).then((userInfo) => {
+            dispatch(adduserInfo(userInfo.data))
+            navigation('/dashboard')
+        }).catch(() => {
+            errorToast('something went wrong!')
+        })
+    }
+    const authenticate = async (data: any) => {
+        try {
+            const loginUser = await login(data);
+            if (loginUser?.error) {
+                errorToast('Please enter valid credentials')
+                return
+            }
+            successToast(loginUser?.data?.message || 'Logged in succesfully')
+            setItemToLocalStorage('accessToken', loginUser?.data?.accessToken);
+            getUsers()
+        } catch (e) {
+            errorToast('something went wrong, try again!')
+        }
+    }
+
     return (<>
         <section className="bg-light py-3 py-md-5 login">
             <div className="container">
@@ -19,41 +56,28 @@ const Login = () => {
                                 </div>
                                 <h2 className="fs-6 fw-normal text-center text-secondary mb-4">Sign in to your account</h2>
                                 {/* <form action="#!"> */}
-                                <Form>
-                                    {/* <div className="row gy-2 overflow-hidden"> */}
-                                    {/* <div className="col-12">
-                                            
-                                        </div> */}
-                                    {/* <div className="col-12">
-                                            <div className="form-floating mb-3">
-                                                <input type="password" className="form-control" name="password" id="password" value="" placeholder="Password" required />
-                                                <label for="password" className="form-label">Password</label>
-                                            </div>
-                                        </div> */}
+                                <Form onSubmit={handleSubmit(authenticate)}>
                                     <FloatingLabel
                                         controlId="floatingInput"
                                         label="User Name"
                                         className="mb-3"
                                     >
-                                        <Form.Control type="text" placeholder="User Name" />
+                                        <Form.Control type="text" placeholder="User Name"  {...register("email", { required: true })} />
                                     </FloatingLabel>
                                     <FloatingLabel
                                         controlId="floatingInput"
                                         label="Password"
                                         className="mb-3"
                                     >
-                                        <Form.Control type="password" placeholder="Password" />
+                                        <Form.Control type="password" placeholder="Password"  {...register("password", { required: true })} />
                                     </FloatingLabel>
 
 
                                     <div className="col-12">
                                         <div className="d-grid my-3">
-                                            <Button variant="outline-primary" className="loginButton" onClick={() => {
-                                                navigation('/dashboard')
-                                            }}>
+                                            <Button variant="outline-primary" className="loginButton" disabled={isLoading} type="submit">
                                                 Log in
                                             </Button>
-                                            {/* <button className="btn btn-primary btn-lg" type="submit">Log in</button> */}
                                         </div>
                                     </div>
                                 </Form>
@@ -61,8 +85,6 @@ const Login = () => {
                                 <div className="col-12">
                                     <p className="m-0 text-secondary text-center">Don't have an account? <a href="#!" className="text-decoration-none register">Sign up</a></p>
                                 </div>
-                                {/* </div> */}
-                                {/* </form> */}
                             </div>
                         </div>
                     </div>

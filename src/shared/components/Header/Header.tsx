@@ -3,9 +3,17 @@ import './Header.scss';
 import { faBell, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 const Header = () => {
-    const navigation = useNavigate()
+    const navigation = useNavigate();
+    // const userInfo = useSelector((state:any) => state?.userInfoSlice);
+    const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo)
+    // console.log('userInfo', userInfo);
+    useEffect(() => {
+        console.log('userInfo', userInfo)
+    }, [userInfo])
     return <>
 
         <div className="mainHeader text-white">
@@ -25,7 +33,10 @@ const Header = () => {
 
 
                         <Dropdown.Toggle split variant="success" id="dropdown-split-basic">
-                            <img className="profileImage" src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250" />
+                            <img className="profileImage" src={
+                                userInfo?.imageUrl 
+                                || 'https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250"'} />
+                            {/* <span>{userInfo.name}</span> */}
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>

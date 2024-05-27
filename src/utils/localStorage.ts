@@ -4,8 +4,9 @@ export const setItemToLocalStorage = (key: string, data: any) => {
 
 export const getItemFromLocalStorage = (key: string) => {
     const getItem = localStorage.getItem(key);
-    if (getItem) {
+    console.log('getItem', getItem)
+    if (getItem != undefined ) {
         return JSON.parse(getItem);
     }
-    return null;
+    return getItem;
 }

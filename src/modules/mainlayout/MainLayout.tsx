@@ -3,12 +3,18 @@ import { Header, SideBar } from "../../shared"
 import './MainLayout.scss'
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useGetUserQuery, useLazyGetUserQuery } from "../authentication/store/authenticateEndPoints";
 
 const MainLayout = () => {
-    const navigate = useNavigate();
-    useEffect(() => {
-        navigate('/dashboard')
-    }, [])
+    // const [getUser, {data, isLoading, isError}] = useLazyGetUserQuery();
+    // const {data, isLoading} = useGetUserQuery(undefined)
+    // console.log('data main layout',data, isLoading, isError), 
+    // useEffect(()=>{
+    //     console.log('data main layout',data)
+    //     // getUser(undefined)
+    // }, [data])
+
+
 
     return <>
         <div className="main bg-white h-100">

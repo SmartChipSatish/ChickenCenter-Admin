@@ -1,7 +1,7 @@
 .appSidebar {
     // background: var(--appTheam);
     // border-top: 2px solid #ffa70573;
-    padding: 16px 0;
+    padding: 16px 8px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -9,16 +9,26 @@
 }
 
 .module {
-    margin-bottom: 0;
+    // margin-bottom: 0;
+    // display: flex;
+    // align-items: baseline;
+    // padding: 12px 11px;
+    // cursor: pointer;
+    // color: var(--appTheam);
+    margin-bottom: 6px;
     display: flex;
-    align-items: baseline;
-    padding: 12px 11px;
+    /* align-items: baseline; */
+    padding: 15px 11px;
     cursor: pointer;
     color: var(--appTheam);
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 11px;
 
     &-appIcon {
-        margin-right: 9px;
-        font-size: 15px;
+        // margin-right: 9px;
+        font-size: 20px;
 
     }
 
@@ -32,5 +42,5 @@
 
 .appVersion {
     text-align: center;
-    color: var(--appTheam);
+    color: var(--bs-gray-600);
 }
