@@ -9,16 +9,25 @@ export const authEndPoints = authApi.injectEndpoints({
 
         login: builder.mutation({
             query: (body) => ({
-                url: `users/login`,
+                url: `franchises/login`,
                 method: 'POST',
                 body: body
             }),
         }),
+        // users/createUser’
+        createUser: builder.mutation({
+            query: (body) => ({
+                url: `users/createUser`,
+                method: 'POST',
+                body: body
+            }),
+        })
     })
 })
 
 export const {
     useLoginMutation,
     useGetUserQuery,
-    useLazyGetUserQuery
+    useLazyGetUserQuery,
+    useCreateUserMutation
 } = authEndPoints;

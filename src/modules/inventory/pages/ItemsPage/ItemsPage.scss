@@ -23,3 +23,12 @@
 .imgWidth {
     width: 75px;
 }
+
+.outofstock {
+    font-weight: 500;
+    color: var(--appOrderPending) !important;
+}
+
+.available {
+    color: var(--appOrderDelivered) !important;
+}

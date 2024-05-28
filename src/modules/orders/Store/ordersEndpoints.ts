@@ -16,15 +16,22 @@ export const OrdersEndPoints = OrdersApi.injectEndpoints({
             query: (body) => ({
                 url: `orders/updateOrder?orderId=${body.id}`,
                 method: 'POST',
-                body: {franchiseId:body.franchiseId}
+                body: { franchiseId: body.franchiseId }
             }),
             invalidatesTags: ['getAllOrders'],
         }),
+        getOrderbyFranchise: builder.query({
+            query: (body) => ({
+                url: `orders/ordersByQuery?franchiseId=${body.franchiseId}`,
+                method: 'GET',
+            }),
+        })
     })
 })
 
 export const {
     useLazyGetAllOrdersQuery,
     useGetOrderByIdQuery,
-    useUpdateOrderTranferMutation
+    useUpdateOrderTranferMutation,
+    useLazyGetOrderbyFranchiseQuery
 } = OrdersEndPoints;

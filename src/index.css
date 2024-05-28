@@ -23,6 +23,8 @@
   --appSubTitleColor: var(--bs-gray-500);
   --appPageHeaderHeight: 6%;
   --appPageHeaderSpace: 14px;
+  --appOrderPending : #d4a143;
+  --appOrderDelivered : #5ead5e;
 
 }
 
@@ -110,4 +112,13 @@ p {
 
 .curserPointer {
   cursor: pointer;
+}
+
+.pending {
+  font-weight: 500;
+  color: var(--appOrderPending) !important;
+}
+
+.completed {
+  color: var(--appOrderDelivered) !important;
 }

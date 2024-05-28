@@ -6,7 +6,7 @@ import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import { useLazyGetUserQuery, useLoginMutation } from "../../store/authenticateEndPoints";
 import { useForm } from "react-hook-form";
 import { errorToast, successToast } from "../../../../shared/utils/appToaster";
-import { setItemToLocalStorage } from "../../../../utils/localStorage";
+import { AppConstants, setItemToLocalStorage } from "../../../../utils/localStorage";
 import { useDispatch } from "react-redux";
 import { adduserInfo } from "../../store/userInfoSlice";
 const Login = () => {
@@ -15,18 +15,9 @@ const Login = () => {
         handleSubmit,
     } = useForm<any>({});
     const [login, { isLoading, }] = useLoginMutation();
-    const [getUser] = useLazyGetUserQuery();
     const dispatch = useDispatch();
     const navigation = useNavigate();
 
-    const getUsers = () => {
-        getUser(undefined).then((userInfo) => {
-            dispatch(adduserInfo(userInfo.data))
-            navigation('/dashboard')
-        }).catch(() => {
-            errorToast('something went wrong!')
-        })
-    }
     const authenticate = async (data: any) => {
         try {
             const loginUser = await login(data);
@@ -34,9 +25,11 @@ const Login = () => {
                 errorToast('Please enter valid credentials')
                 return
             }
-            successToast(loginUser?.data?.message || 'Logged in succesfully')
-            setItemToLocalStorage('accessToken', loginUser?.data?.accessToken);
-            getUsers()
+            successToast(loginUser?.data?.message || 'Logged in succesfully');
+            dispatch(adduserInfo(loginUser.data.userInfo));
+            setItemToLocalStorage(AppConstants.userId, loginUser.data.userInfo.id);
+            setItemToLocalStorage(AppConstants.accessToken, loginUser?.data?.accessToken);
+            navigation('/dashboard')
         } catch (e) {
             errorToast('something went wrong, try again!')
         }
@@ -62,7 +55,7 @@ const Login = () => {
                                         label="User Name"
                                         className="mb-3"
                                     >
-                                        <Form.Control type="text" placeholder="User Name"  {...register("email", { required: true })} />
+                                        <Form.Control type="text" placeholder="User Name"  {...register("userName", { required: true })} />
                                     </FloatingLabel>
                                     <FloatingLabel
                                         controlId="floatingInput"

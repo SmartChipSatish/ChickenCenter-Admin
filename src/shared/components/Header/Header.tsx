@@ -34,7 +34,7 @@ const Header = () => {
 
                         <Dropdown.Toggle split variant="success" id="dropdown-split-basic">
                             <img className="profileImage" src={
-                                userInfo?.imageUrl 
+                                userInfo?.imageUrl
                                 || 'https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250"'} />
                             {/* <span>{userInfo.name}</span> */}
                         </Dropdown.Toggle>
@@ -46,6 +46,7 @@ const Header = () => {
                             }}><FontAwesomeIcon icon={faUser} className='profileOptions' ></FontAwesomeIcon> My Profile</Dropdown.Item>
                             <Dropdown.Item href="#" onClick={() => {
                                 // account
+                                localStorage.clear();
                                 navigation("login")
                             }}> <FontAwesomeIcon icon={faSignOut} className='profileOptions'></FontAwesomeIcon>  Logout</Dropdown.Item>
                         </Dropdown.Menu>

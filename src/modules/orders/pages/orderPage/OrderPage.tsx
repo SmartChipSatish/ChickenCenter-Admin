@@ -4,20 +4,29 @@ import Table from "react-bootstrap/esm/Table"
 import './OrderPage.scss'
 import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/esm/Card";
-import { useLazyGetAllOrdersQuery, useUpdateOrderTranferMutation } from "../../Store/ordersEndpoints";
-import { useEffect } from "react";
-import { Order } from "../../util/ordersInterfaces";
+import { useLazyGetOrderbyFranchiseQuery, useLazyGetAllOrdersQuery, useUpdateOrderTranferMutation } from "../../Store/ordersEndpoints";
+import { useEffect, useState } from "react";
+import { ORDERSTATUS, Order } from "../../util/ordersInterfaces";
 import { useGetAllFranchisesQuery } from "../../../branches/store/branchesEndPoint";
 import { IBranch } from "../../../branches/utils/BranchesInterfaces";
 import Form from "react-bootstrap/esm/Form";
 import { successToast } from "../../../../shared/utils/appToaster";
+import { useSelector } from "react-redux";
+import { UserTypeHook } from "../../../../utils/hooks/userTypeHook";
+import { FRANCHISETYPE } from "../../../../utils/interfaces/appInterfaces";
 
 
 const OrderPage = () => {
     const navigation = useNavigate();
-    const [getAllorders, { data, isLoading, error }] = useLazyGetAllOrdersQuery();
+    const [getAllOrders, { data: allOrdersData, isLoading: allOrdersLoading, error: allOdersError }] = useLazyGetAllOrdersQuery();
+    const [getAllFranchiceorders, { data: franchiseOrdersData, isLoading: franchiseOrdersLoading, error: franchiseOrdersError }] = useLazyGetOrderbyFranchiseQuery();
     const { data: franchies, isLoading: franchiesLoading, isError: franchiesError } = useGetAllFranchisesQuery(undefined);
     const [updateOrderTranfer, { data: updateOrderData, isLoading: updateOrderisLoading, isError: updateOrderError }] = useUpdateOrderTranferMutation()
+    const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
+    const userType = UserTypeHook()
+    const [isLoading, SetLoading] = useState<any>(null);
+    const [data, SetData] = useState<any>(null);
+    const [error, SetError] = useState<any>(null);
     const getOrderDetails = () => {
         navigation('orderDetails')
     }
@@ -34,12 +43,30 @@ const OrderPage = () => {
 
 
     useEffect(() => {
-        getAllorders(undefined)
-    }, [data, isLoading, error]);
+        if (userType === FRANCHISETYPE.FRANCHISE) {
+            getAllFranchiceorders({ franchiseId: userInfo?.id })
+        }
+        if (userType === FRANCHISETYPE.ADMIN) {
+            getAllOrders(undefined)
+        }
 
-    useEffect(() => { }, [franchiesLoading, franchiesError])
+    }, []);
 
-    useEffect(() => { }, [updateOrderData, updateOrderisLoading, updateOrderError])
+    useEffect(() => {
+        SetLoading(allOrdersLoading)
+        SetData(allOrdersData)
+        SetError(allOdersError)
+    }, [allOrdersData, , allOrdersLoading, allOdersError]);
+
+    useEffect(() => {
+        SetLoading(franchiseOrdersLoading)
+        SetData(franchiseOrdersData)
+        SetError(franchiseOrdersError)
+    }, [franchiseOrdersData, , franchiseOrdersLoading, franchiseOrdersError])
+
+    useEffect(() => { }, [updateOrderData, updateOrderisLoading, updateOrderError]);
+    useEffect(() => { }, [franchiesLoading, franchiesError]);
+
     return (<>
         <div className="Orderpage">
             <Card className="h-100">
@@ -54,7 +81,7 @@ const OrderPage = () => {
                                 <th><p className="tableTitle">Order Status</p></th>
                                 <th><p className="tableTitle">Phone</p></th>
                                 <th><p className="tableTitle">Address</p></th>
-                                <th><p className="tableTitle">Transfer</p></th>
+                                {userType === FRANCHISETYPE.ADMIN && <th><p className="tableTitle">Transfer</p></th>}
                                 <th><p className="tableTitle">Actions</p></th>
                             </tr>
                         </thead>
@@ -70,18 +97,17 @@ const OrderPage = () => {
                                 }}><p className="Orderpage-id">{`#${order?.id}`}</p></td>
                                 <td className="tableItem">{order?.date}</td>
                                 <td className="tableItem">{order.userId?.name}</td>
-                                <td className="tableItem">{order?.orderStatus}</td>
+                                <td className="tableItem"><p className={`pending ${(order?.orderStatus === ORDERSTATUS.Completed) && 'completed'}`}>{order?.orderStatus}</p></td>
                                 <td className="tableItem">{order?.userId?.primaryNumber}</td>
                                 <td className="tableItem">{order?.userId?.primaryAddress?.name}, {order?.userId?.primaryAddress?.houseNo}, {order?.userId?.primaryAddress?.streetName}</td>
-                                <td className="tableItem">
+                                {userType === FRANCHISETYPE.ADMIN && <td className="tableItem">
                                     <Form.Select aria-label="Order Transfer" onChange={(data) => {
                                         orderTransfer({ id: order.id, franchiseId: data?.target?.value })
                                     }}>
                                         {franchies && franchies?.map((branch: IBranch) => <option value={branch._id} selected={order?.franchiseId === branch._id}>{branch?.name}</option>)}
                                     </Form.Select>
+                                </td>}
 
-
-                                </td>
                                 <td ><FontAwesomeIcon icon={faEye} className="Orderpage-actions Orderpage-eye" onClick={() => {
                                     getOrderDetails();
                                 }}></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="Orderpage-actions"></FontAwesomeIcon></td>

@@ -1,4 +1,4 @@
-import { faEdit, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlus, faTrash, faRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Card, Modal } from "react-bootstrap";
 import Table from "react-bootstrap/esm/Table";
@@ -62,8 +62,8 @@ const ItemsPage = () => {
                                     <td className="tableItem indexWidth">{index + 1}</td>
                                     <td className="tableItem imgWidth"> <Image className="itemImg" src={item.imageUrl || "https://www.licious.in/blog/wp-content/uploads/2022/03/Chicken-Curry-Cut-min-1.png"} roundedCircle /></td>
                                     <td className="tableItem">{item.itemName}</td>
-                                    <td className="tableItem">{item.itemPrice}/100 gram</td>
-                                    <td className="tableItem">{item.globalItemStatus ? 'Available' : 'Out of stock'}</td>
+                                    <td className="tableItem"> <div className="d-flex"><p className="fw-bold me-1"> <FontAwesomeIcon icon={faRupeeSign} /> {item.itemPrice}</p> / <p className="ms-1">{item.itemQty}</p></div></td>
+                                    <td className="tableItem"><p className={`pending ${item.globalItemStatus && 'completed'}`}>{item.globalItemStatus ? 'Available' : 'Out of stock'}</p> </td>
                                     <td className="tableItem"><FontAwesomeIcon icon={faEdit} className="itemEdit" onClick={() => {
                                         navigation(`updateItem/${item?._id}`)
                                     }}></FontAwesomeIcon> <FontAwesomeIcon icon={faTrash} className=" itemEdit" onClick={() => {

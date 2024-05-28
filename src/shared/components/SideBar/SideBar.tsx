@@ -6,6 +6,7 @@ import { faFirstOrder } from "@fortawesome/free-brands-svg-icons";
 import { useCallback, useEffect } from "react";
 import OverlayTrigger from "react-bootstrap/esm/OverlayTrigger";
 import Tooltip from "react-bootstrap/esm/Tooltip";
+import { useSelector } from "react-redux";
 
 const renderTooltip = (props: any) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -15,7 +16,7 @@ const renderTooltip = (props: any) => (
 const SideBar = () => {
     const navigation = useNavigate();
     const location = useLocation();
-
+    const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
 
     const isActivePath = useCallback((path: string) => {
         return location?.pathname.includes(path) ? 'module-active' : '';
@@ -41,9 +42,11 @@ const SideBar = () => {
                 <p className={`module ${isActivePath('orders')}`} onClick={() => {
                     navigation('orders')
                 }}> <FontAwesomeIcon icon={faCartPlus} className="module-appIcon" /></p>
-                <p className={`module ${isActivePath('branches')}`} onClick={() => {
-                    navigation('branches')
-                }}><FontAwesomeIcon icon={faBuilding} className="module-appIcon" /></p>
+                {userInfo?.userType === 'admin'
+                    && <p className={`module ${isActivePath('branches')}`} onClick={() => {
+                        navigation('branches')
+                    }}><FontAwesomeIcon icon={faBuilding} className="module-appIcon" /></p>}
+
                 <p className={`module ${isActivePath('inventory')}`} onClick={() => {
                     navigation('inventory')
                     // 

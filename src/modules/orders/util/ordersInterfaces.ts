@@ -1,7 +1,8 @@
 import { AddItem } from "../../inventory/Utils/InventoryInterfaces";
 
 export enum ORDERSTATUS {
-    In_Progress = "In Process"
+    In_Progress = "In Process",
+    Completed = 'Completed'
 }
 export interface Order {
     date: string,

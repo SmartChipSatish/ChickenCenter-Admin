@@ -15,7 +15,7 @@ import { AddItem } from "../../Utils/InventoryInterfaces";
 import { getErrorMessage } from "../../Utils/appFuntions";
 import { successToast } from "../../../../shared/utils/appToaster";
 import { fileUpload } from "../../../../shared/utils/appFunctions";
-import { getItemFromLocalStorage } from "../../../../utils/localStorage";
+import { AppConstants, getItemFromLocalStorage } from "../../../../utils/localStorage";
 
 
 const AddItemPage = () => {
@@ -57,8 +57,8 @@ const AddItemPage = () => {
             }
 
             const item = Object.assign(data, {
-                createdBy: getItemFromLocalStorage('userId'),
-                updatedBy: getItemFromLocalStorage('userId'),
+                createdBy: getItemFromLocalStorage(AppConstants.userId),
+                updatedBy: getItemFromLocalStorage(AppConstants.userId),
                 imageUrl: fileUrl || imgUrl,
                 globalItemStatus: defaultValues?.globalItemStatus ? true : false,
             });

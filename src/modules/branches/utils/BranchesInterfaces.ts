@@ -1,5 +1,5 @@
 export interface IBranch {
-    address: { name: string, _id: string },
+    address: { name: string, _id: string, city: string },
     createdAt: string;
     createdBy: string;
     id: string;
@@ -7,5 +7,5 @@ export interface IBranch {
     updatedAt: string;
     updatedBy: string;
     _id: string;
-    currentOrders:number;
+    currentOrders: number;
 }

@@ -16,8 +16,6 @@ export const updateMeetingRestrictionDetails = BranchesApi.injectEndpoints({
                 method: 'POST',
                 body: body
             }),
-            // transformResponse: (response: any) => response,
-            // transformErrorResponse: (response: any) => response?.status,
             invalidatesTags: ['getAll'],
         }),
     })

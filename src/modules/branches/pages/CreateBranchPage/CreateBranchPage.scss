@@ -5,9 +5,58 @@
     }
 
     .address {
+
         margin-bottom: 9px;
         font-weight: 500;
-        color: var(--bs-gray-600);
+        color: var(--bs-gray-700);
         font-size: 17px;
+        margin-top: 26px;
     }
 }
+
+.fromLabel {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--bs-gray-600);
+    margin-top: 12px;
+}
+
+.submitbtns {
+    margin-top: 1%;
+}
+
+// .img {
+//     height: var(--imageWidht);
+//     text-align: center;
+
+// }
+
+// .imgWidth {
+//     width: var(--imageWidht);
+// }
+
+// .editIcon {
+//     position: absolute;
+//     font-size: 18px;
+//     right: 14px;
+//     color: var(--appTheam);
+//     bottom: 16px;
+//     cursor: pointer;
+// }
+
+// .imgContainer {
+//     // border: 1px solid gray;
+//     // border-radius: 50%;
+// }
+
+// .fileselection {
+//     display: none;
+// }
+
+// .itemDetails {
+//     padding: 17px 51px;
+
+//     .actionbtn {
+//         margin-top: 18px;
+//     }
+// }

@@ -21,7 +21,7 @@ const BranchesPage = () => {
     return (
         <>
             <div className="d-flex justify-content-between pageTitleSpace">
-                <p className="pageTile">Branches</p>
+                <p className="pageTile">Franchises</p>
                 <Button variant="outline-primary" onClick={() => {
                     createBranch()
                 }}><FontAwesomeIcon icon={faPlus} ></FontAwesomeIcon> Add</Button>
@@ -49,7 +49,7 @@ const BranchesPage = () => {
                                         <td className="tableItem">{index + 1}</td>
                                         <td className="tableItem"><p className="BranchesPage-id">{branch.name}</p></td>
                                         <td className="tableItem"><p className="BranchesPage-id">{branch?.currentOrders || 0}</p></td>
-                                        <td className="tableItem"><p className="BranchesPage-id">{branch.address.name || '---'}</p></td>
+                                        <td className="tableItem"><p className="BranchesPage-id">{branch.address.name || '---'} ,{branch.address.city}</p></td>
                                         <td ><FontAwesomeIcon icon={faEye} className="BranchesPage-actions BranchesPage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="BranchesPage-actions"></FontAwesomeIcon></td>
                                     </tr>
                                 )}
