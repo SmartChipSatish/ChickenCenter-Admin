@@ -50,7 +50,7 @@ const OrderPage = () => {
             getAllOrders(undefined)
         }
 
-    }, []);
+    }, [userType]);
 
     useEffect(() => {
         SetLoading(allOrdersLoading)
@@ -97,7 +97,7 @@ const OrderPage = () => {
                                 }}><p className="Orderpage-id">{`#${order?.id}`}</p></td>
                                 <td className="tableItem">{order?.date}</td>
                                 <td className="tableItem">{order.userId?.name}</td>
-                                <td className="tableItem"><p className={`pending ${(order?.orderStatus === ORDERSTATUS.Completed) && 'completed'}`}>{order?.orderStatus}</p></td>
+                                <td className="tableItem"><p className={`pending ${(order?.orderStatus === ORDERSTATUS.Delivered) && 'completed'}`}>{order?.orderStatus}</p></td>
                                 <td className="tableItem">{order?.userId?.primaryNumber}</td>
                                 <td className="tableItem">{order?.userId?.primaryAddress?.name}, {order?.userId?.primaryAddress?.houseNo}, {order?.userId?.primaryAddress?.streetName}</td>
                                 {userType === FRANCHISETYPE.ADMIN && <td className="tableItem">

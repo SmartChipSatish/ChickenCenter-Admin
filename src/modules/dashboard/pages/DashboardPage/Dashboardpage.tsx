@@ -1,14 +1,18 @@
-import { Button, Col, Row } from "react-bootstrap"
+import { Col, Row } from "react-bootstrap"
 import { CardComponent } from "../../components/CardComponent/CardComponent"
 import { DashBoardEnum } from "../../../../shared/utils/appInterfaces";
 import Card from 'react-bootstrap/Card';
 import "./DashboardPage.scss"
+import { useGetDashboardDataQuery } from "../../store/dashboardEndPoints";
+
 
 const DashboardPage = () => {
+    const { data } = useGetDashboardDataQuery(undefined);
+
     return (<>
         <Row>
             <Col>
-                <CardComponent type={DashBoardEnum.orders} count={276} title="Total Orders"></CardComponent>
+                <CardComponent type={DashBoardEnum.orders} count={ data?.length > 0 && data[0]?.orderCount || 0} title="Total Orders"></CardComponent>
             </Col>
             <Col>
                 <CardComponent type={DashBoardEnum.deliverd} count={76} title="Total Deliverd"></CardComponent>
@@ -18,7 +22,7 @@ const DashboardPage = () => {
 
             </Col>
             <Col>
-                <CardComponent type={DashBoardEnum.revenue} count={276} title="Total Revenue"></CardComponent>
+                <CardComponent type={DashBoardEnum.revenue} count={data?.length > 0 && data[0]?.totalPayment || 0} title="Total Revenue"></CardComponent>
             </Col>
 
         </Row>
@@ -46,7 +50,6 @@ const DashboardPage = () => {
             </Col>
         </Row>
         <br></br>
-        {/* overflow-x-scroll */}
 
 
         <div className="dashboard-reviews ">

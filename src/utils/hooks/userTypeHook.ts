@@ -6,7 +6,7 @@ export const UserTypeHook = () => {
     const [type, SetType] = useState(FRANCHISETYPE.FRANCHISE)
     const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
     useEffect(() => {
-        SetType(type)
+        SetType(userInfo.userType)
     }, [userInfo.userType])
     return type
 }

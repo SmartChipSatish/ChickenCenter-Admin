@@ -9,6 +9,8 @@ import { errorToast, successToast } from "../../../../shared/utils/appToaster";
 import { AppConstants, setItemToLocalStorage } from "../../../../utils/localStorage";
 import { useDispatch } from "react-redux";
 import { adduserInfo } from "../../store/userInfoSlice";
+import Spinner from "react-bootstrap/esm/Spinner";
+
 const Login = () => {
     const {
         register,
@@ -69,7 +71,7 @@ const Login = () => {
                                     <div className="col-12">
                                         <div className="d-grid my-3">
                                             <Button variant="outline-primary" className="loginButton" disabled={isLoading} type="submit">
-                                                Log in
+                                             { isLoading && <Spinner animation="border" className="me-2" /> }  Log in
                                             </Button>
                                         </div>
                                     </div>
