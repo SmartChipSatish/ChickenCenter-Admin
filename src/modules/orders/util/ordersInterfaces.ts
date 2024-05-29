@@ -2,11 +2,17 @@ import { AddItem } from "../../inventory/Utils/InventoryInterfaces";
 
 export enum ORDERSTATUS {
     In_Progress = "In Process",
-    Delivered = 'Delivered'
+    Success = 'Success'
 }
+export enum PAYMENTSTATUS {
+    In_Progress = "In Process",
+    Success = 'SUCCESS'
+}
+
 export interface Order {
     date: string,
     orderStatus: ORDERSTATUS,
+    paymentStatus: PAYMENTSTATUS
     reviews: [],
     userId: {
         name: string,
@@ -18,7 +24,7 @@ export interface Order {
         }
     }
     id: string,
-    franchiseId:string
+    franchiseId: string
     // items: AddItem[
     //     // {
     //     //     "itemId": "66509e96f5b94b86a246d963",

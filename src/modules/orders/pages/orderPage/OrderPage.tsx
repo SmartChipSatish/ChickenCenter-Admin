@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/esm/Card";
 import { useLazyGetOrderbyFranchiseQuery, useLazyGetAllOrdersQuery, useUpdateOrderTranferMutation } from "../../Store/ordersEndpoints";
 import { useEffect, useState } from "react";
-import { ORDERSTATUS, Order } from "../../util/ordersInterfaces";
+import { ORDERSTATUS, Order, PAYMENTSTATUS } from "../../util/ordersInterfaces";
 import { useGetAllFranchisesQuery } from "../../../branches/store/branchesEndPoint";
 import { IBranch } from "../../../branches/utils/BranchesInterfaces";
 import Form from "react-bootstrap/esm/Form";
@@ -77,8 +77,9 @@ const OrderPage = () => {
                                 <th><p className="tableTitle">#</p></th>
                                 <th ><p className="tableTitle">Order</p></th>
                                 <th> <p className="tableTitle">Date</p></th>
-                                <th> <p className="tableTitle">Customer</p></th>
+                                <th> <p className="tableTitle">Customer Name</p></th>
                                 <th><p className="tableTitle">Order Status</p></th>
+                                <th><p className="tableTitle">Payment Status</p></th>
                                 <th><p className="tableTitle">Phone</p></th>
                                 <th><p className="tableTitle">Address</p></th>
                                 {userType === FRANCHISETYPE.ADMIN && <th><p className="tableTitle">Transfer</p></th>}
@@ -96,9 +97,10 @@ const OrderPage = () => {
                                     getOrderDetails();
                                 }}><p className="Orderpage-id">{`#${order?.id}`}</p></td>
                                 <td className="tableItem">{order?.date}</td>
-                                <td className="tableItem">{order.userId?.name}</td>
-                                <td className="tableItem"><p className={`pending ${(order?.orderStatus === ORDERSTATUS.Delivered) && 'completed'}`}>{order?.orderStatus}</p></td>
-                                <td className="tableItem">{order?.userId?.primaryNumber}</td>
+                                <td className="tableItem text-capitalize">{order.userId?.name || '---'}</td>
+                                <td className="tableItem text-capitalize"><p className={`pending ${(order?.orderStatus === ORDERSTATUS.Success) && 'completed'}`}>{order?.orderStatus}</p></td>
+                                <td className="tableItem text-capitalize"><p className={`pending ${(order?.paymentStatus === PAYMENTSTATUS.Success) && 'completed'}`}>{order?.paymentStatus?.toLocaleLowerCase() || '---'}</p></td>
+                                <td className="tableItem">{order?.userId?.primaryNumber || '---'}</td>
                                 <td className="tableItem">{order?.userId?.primaryAddress?.name}, {order?.userId?.primaryAddress?.houseNo}, {order?.userId?.primaryAddress?.streetName}</td>
                                 {userType === FRANCHISETYPE.ADMIN && <td className="tableItem">
                                     <Form.Select aria-label="Order Transfer" onChange={(data) => {

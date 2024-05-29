@@ -13,5 +13,6 @@ export const getItemFromLocalStorage = (key: string) => {
 
 export const AppConstants = {
     userId : 'userId',
-    accessToken: 'accessToken'
+    accessToken: 'accessToken',
+    userInfo: 'userInfo'
 }

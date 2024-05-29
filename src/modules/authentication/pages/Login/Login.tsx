@@ -30,6 +30,7 @@ const Login = () => {
             successToast(loginUser?.data?.message || 'Logged in succesfully');
             dispatch(adduserInfo(loginUser.data.userInfo));
             setItemToLocalStorage(AppConstants.userId, loginUser.data.userInfo.id);
+            setItemToLocalStorage(AppConstants.userInfo, loginUser.data.userInfo);
             setItemToLocalStorage(AppConstants.accessToken, loginUser?.data?.accessToken);
             navigation('/dashboard')
         } catch (e) {
