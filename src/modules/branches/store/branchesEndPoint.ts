@@ -10,15 +10,16 @@ export const updateMeetingRestrictionDetails = BranchesApi.injectEndpoints({
             query: () => `franchises/getAllFranchises`,
             providesTags:['getAll']
         }),
-        createFranchises:  builder.mutation({
+        createFranchisesOrUser:  builder.mutation({
             query: (body) => ({
-                url: 'franchises/createFranchise',
+                url: 'franchises/createUser',
                 method: 'POST',
                 body: body
             }),
             invalidatesTags: ['getAll'],
         }),
+        
     })
 })
 
-export const { useLazyGetAllFranchisesQuery, useGetAllFranchisesQuery, useCreateFranchisesMutation } = updateMeetingRestrictionDetails;
+export const { useLazyGetAllFranchisesQuery, useGetAllFranchisesQuery, useCreateFranchisesOrUserMutation } = updateMeetingRestrictionDetails;

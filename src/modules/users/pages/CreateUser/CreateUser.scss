@@ -1,0 +1,26 @@
+.createUser {
+    .userFrom {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+
+    .address {
+
+        margin-bottom: 9px;
+        font-weight: 500;
+        color: var(--bs-gray-700);
+        font-size: 17px;
+        margin-top: 26px;
+    }
+}
+
+.fromLabel {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--bs-gray-600);
+    margin-top: 12px;
+}
+
+.submitbtns {
+    margin-top: 1%;
+}

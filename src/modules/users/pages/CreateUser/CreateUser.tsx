@@ -1,24 +1,23 @@
 import { useRef, useState } from "react";
-import { isBrannch } from "../../store/branchesSlice";
 import { useDispatch } from "react-redux";
 import Button from "react-bootstrap/esm/Button";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/esm/Form";
 import Card from "react-bootstrap/esm/Card";
-import './CreateBranchPage.scss'
-import { Col , Row } from "react-bootstrap";
-import { useCreateFranchisesOrUserMutation } from "../../store/branchesEndPoint";
+import { Col, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { AppConstants, getItemFromLocalStorage } from "../../../../utils/localStorage";
 import { errorToast, successToast } from "../../../../shared/utils/appToaster";
+import { useCreateFranchisesOrUserMutation } from "../../../branches/store/branchesEndPoint";
+import './CreateUser.scss'
 
-const CreateBranchPage = () => {
+const CreateUserPage = () => {
     const {
         register,
         handleSubmit,
     } = useForm<any>({});
 
-    const [createBranch, {isLoading}] = useCreateFranchisesOrUserMutation();
+    const [createUser, { isLoading }] = useCreateFranchisesOrUserMutation();
     const dispatch = useDispatch();
     const navigation = useNavigate();
     const inputRef = useRef<any>(null);
@@ -27,7 +26,7 @@ const CreateBranchPage = () => {
         navigation('/branches')
     }
     const submit = async (data: any) => {
-        try { 
+        try {
             const newBranchObj = {
                 name: data.name,
                 userName: data.userName,
@@ -43,10 +42,11 @@ const CreateBranchPage = () => {
                     pincode: data.pincode,
                     landmark: data.landmark,
                     state: data.state,
-                }
+                },
+                userType: 'deliveryAgent'
             }
-            const branchCreaete = await createBranch(newBranchObj);
-            successToast('Franchises Create Successfully');
+            const branchCreaete = await createUser(newBranchObj);
+            successToast('User Create Successfully');
             back();
         } catch (e) {
             console.log('e', e)
@@ -68,9 +68,9 @@ const CreateBranchPage = () => {
     // }
 
     return (<>
-        <p className="pageTile pageTitleSpace">Create Franchises</p>
-        <Card className="createBranch">
-            <Card.Body className="branchFrom">
+        <p className="pageTile pageTitleSpace">Create User</p>
+        <Card className="createUser">
+            <Card.Body className="userFrom">
                 <Form onSubmit={handleSubmit(submit)}>
                     {/* <Row>
                         <Col className="img d-flex justify-content-center">
@@ -86,7 +86,7 @@ const CreateBranchPage = () => {
                     </Row> */}
                     <Row>
                         <Col>
-                            <Form.Label className="fromLabel" >Franchises Name</Form.Label>
+                            <Form.Label className="fromLabel" >Name</Form.Label>
                             <Form.Control type="text" placeholder="Malasa" {...register("name", { required: true })} />
                         </Col>
                         <Col>
@@ -175,4 +175,4 @@ const CreateBranchPage = () => {
     </>)
 }
 
-export default CreateBranchPage;
+export default CreateUserPage;

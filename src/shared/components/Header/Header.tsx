@@ -47,7 +47,8 @@ const Header = () => {
                             <Dropdown.Item href="#" onClick={() => {
                                 // account
                                 localStorage.clear();
-                                navigation("login")
+                                // navigation("login")
+                                window.location.href='/login'
                             }}> <FontAwesomeIcon icon={faSignOut} className='profileOptions'></FontAwesomeIcon>  Logout</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>

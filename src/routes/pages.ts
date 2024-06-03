@@ -21,6 +21,7 @@ const CreateBranchPage = lazy(()=>import('../modules/branches/pages/CreateBranch
 //Users 
 const UsersLayout = lazy(() => import('../modules/users/UserLayout/UserLayout'));
 const UsersPage = lazy(()=>import('../modules/users/pages/UsersPage/UsersPage'));
+const CreateUserPage = lazy(()=>import('../modules/users/pages/CreateUser/CreateUser'))
 
 
 // Inventory 
@@ -47,5 +48,6 @@ export {
     InventoryLayout,
     ItemsPage,
     AddItemPage,
-    MyProfilePage
+    MyProfilePage,
+    CreateUserPage
 }
