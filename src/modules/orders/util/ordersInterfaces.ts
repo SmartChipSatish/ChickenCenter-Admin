@@ -9,6 +9,11 @@ export enum PAYMENTSTATUS {
     Success = 'SUCCESS'
 }
 
+export enum STATUSTYPES {
+    Order = 'Order',
+    Payment = 'Payment'
+}
+
 export interface Order {
     date: string,
     orderStatus: ORDERSTATUS,

@@ -23,8 +23,8 @@
   --appSubTitleColor: var(--bs-gray-500);
   --appPageHeaderHeight: 6%;
   --appPageHeaderSpace: 14px;
-  --appOrderPending : #d4a143;
-  --appOrderDelivered : #5ead5e;
+  --appOrderPending: #d4a143;
+  --appOrderDelivered: #5ead5e;
 
 }
 
@@ -121,4 +121,30 @@ p {
 
 .completed {
   color: var(--appOrderDelivered) !important;
+}
+
+.OrderSucess {
+  color: var(--appOrderDelivered) !important;
+}
+
+.OrderPending {
+  /* color: var(--appTextColor);
+  background: var(--appOrderPending) !important; */
+  color: var(--appOrderPending);
+  background: #d4a1433b !important;
+}
+
+.OrederCompleted {
+  /* color: var(--appTextColor) ;
+  background: var(--appOrderDelivered) !important; */
+  color: var(--appOrderDelivered);
+  background: #5ead5e29 !important;
+}
+.legend-indicator {
+  display: inline-block;
+  width: .5rem;
+  height: .5rem;
+  background-color: #bdc5d1;
+  border-radius: 50%;
+  margin-right: .4375rem;
 }

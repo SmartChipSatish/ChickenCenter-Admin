@@ -10,6 +10,7 @@ import { AppConstants, setItemToLocalStorage } from "../../../../utils/localStor
 import { useDispatch } from "react-redux";
 import { adduserInfo } from "../../store/userInfoSlice";
 import Spinner from "react-bootstrap/esm/Spinner";
+import { OrderStatus } from "../../../../shared/components/OrderStatusComponet/OrderStatusComponent";
 
 const Login = () => {
     const {
@@ -51,7 +52,9 @@ const Login = () => {
                                     </a>
                                 </div>
                                 <h2 className="fs-6 fw-normal text-center text-secondary mb-4">Sign in to your account</h2>
-                                {/* <form action="#!"> */}
+                                {/* <OrderStatus label="Pending" status="OrderPending" />
+                                <OrderStatus label="Delivered" status="Success" /> */}
+                                {/* OrederCompleted <form action="#!"> */}
                                 <Form onSubmit={handleSubmit(authenticate)}>
                                     <FloatingLabel
                                         controlId="floatingInput"
