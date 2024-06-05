@@ -18,8 +18,8 @@ export const OrdersEndPoints = OrdersApi.injectEndpoints({
                 method: 'POST',
                 body: { franchiseId: body.franchiseId }
             }),
-            invalidatesTags: ['getAllOrders'],
         }),
+        
         getOrderbyFranchise: builder.query({
             query: (body) => ({
                 url: `orders/ordersByQuery?franchiseId=${body.franchiseId}`,

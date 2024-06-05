@@ -99,7 +99,7 @@ const OrderPage = () => {
                                 <td className="tableItem curserPointer" onClick={() => {
                                     getOrderDetails();
                                 }}><p className="Orderpage-id">{`#${order?.id}`}</p></td>
-                                <td className="tableItem">{dayjs(order?.date).format('MMMM D, YYYY h:mm A')} </td>
+                                <td className="tableItem text-nowrap">{dayjs(order?.date).format('MMMM D, YYYY h:mm A')} </td>
                                 <td className="tableItem text-capitalize">{order.userId?.name || '---'}</td>
                                 <td className="tableItem text-capitalize"><OrderStatus label={order?.orderStatus} status={order?.orderStatus} type={STATUSTYPES.Order} /></td>
                                 <td className="tableItem text-capitalize"><OrderStatus label={order?.paymentStatus?.toLocaleLowerCase()} status={order?.paymentStatus} type={STATUSTYPES.Payment} />

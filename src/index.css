@@ -69,6 +69,16 @@ p {
   font-size: 14px;
 }
 
+option {
+  padding: 5px;
+  color: var(--appTheam);
+  /* background-color: var(--appTheam); */
+}
+option:hover {
+  color: var(--appTextColor) !important;
+  background-color: var(--appTheam) !important;
+}
+
 /* Custome Css */
 .elementSpace {
   margin-right: 12px;
