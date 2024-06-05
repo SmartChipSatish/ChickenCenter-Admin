@@ -2,11 +2,13 @@ import { AddItem } from "../../inventory/Utils/InventoryInterfaces";
 
 export enum ORDERSTATUS {
     In_Progress = "In Process",
-    Success = 'Success'
+    Success = 'Success',
+    Canceled = "Canceled"
 }
 export enum PAYMENTSTATUS {
     In_Progress = "In Process",
-    Success = 'SUCCESS'
+    Success = 'SUCCESS',
+    
 }
 
 export enum STATUSTYPES {

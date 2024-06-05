@@ -11,7 +11,13 @@ export const OrdersEndPoints = OrdersApi.injectEndpoints({
         getOrderById: builder.query({
             query: (id: string) => `orders/getOrdersByUserId?orderId=${id}`,
         }),
-
+        getAllDeliveryAgents: builder.mutation({
+            query: (body) => ({
+                url: `orders/updateOrder?orderId=${body.id}`,
+                method: 'POST',
+                body: { franchiseId: body.franchiseId }
+            }),
+        }),
         updateOrderTranfer: builder.mutation({
             query: (body) => ({
                 url: `orders/updateOrder?orderId=${body.id}`,
@@ -19,7 +25,7 @@ export const OrdersEndPoints = OrdersApi.injectEndpoints({
                 body: { franchiseId: body.franchiseId }
             }),
         }),
-        
+
         getOrderbyFranchise: builder.query({
             query: (body) => ({
                 url: `orders/ordersByQuery?franchiseId=${body.franchiseId}`,
@@ -33,5 +39,6 @@ export const {
     useLazyGetAllOrdersQuery,
     useGetOrderByIdQuery,
     useUpdateOrderTranferMutation,
-    useLazyGetOrderbyFranchiseQuery
+    useLazyGetOrderbyFranchiseQuery,
+    useGetAllDeliveryAgentsMutation
 } = OrdersEndPoints;

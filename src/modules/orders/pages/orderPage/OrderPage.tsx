@@ -4,7 +4,7 @@ import Table from "react-bootstrap/esm/Table"
 import './OrderPage.scss'
 import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/esm/Card";
-import { useLazyGetOrderbyFranchiseQuery, useLazyGetAllOrdersQuery, useUpdateOrderTranferMutation } from "../../Store/ordersEndpoints";
+import { useLazyGetOrderbyFranchiseQuery, useLazyGetAllOrdersQuery, useUpdateOrderTranferMutation, useGetAllDeliveryAgentsMutation } from "../../Store/ordersEndpoints";
 import { useEffect, useState } from "react";
 import { ORDERSTATUS, Order, PAYMENTSTATUS, STATUSTYPES } from "../../util/ordersInterfaces";
 import { useGetAllFranchisesQuery } from "../../../branches/store/branchesEndPoint";
@@ -22,7 +22,8 @@ const OrderPage = () => {
     const [getAllOrders, { data: allOrdersData, isLoading: allOrdersLoading, error: allOdersError }] = useLazyGetAllOrdersQuery();
     const [getAllFranchiceorders, { data: franchiseOrdersData, isLoading: franchiseOrdersLoading, error: franchiseOrdersError }] = useLazyGetOrderbyFranchiseQuery();
     const { data: franchies, isLoading: franchiesLoading, isError: franchiesError } = useGetAllFranchisesQuery(undefined);
-    const [updateOrderTranfer, { data: updateOrderData, isLoading: updateOrderisLoading, isError: updateOrderError }] = useUpdateOrderTranferMutation()
+    const [updateOrderTranfer, { data: updateOrderData, isLoading: updateOrderisLoading, isError: updateOrderError }] = useUpdateOrderTranferMutation();
+    const [getAllDeliveryAgents, { data: getAllDeliveryAgentsData, isLoading: getAllDeliveryAgentsLoading, error: getAllDeliveryAgentsError }] = useGetAllDeliveryAgentsMutation()
     const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
     const userType = UserTypeHook()
     const [isLoading, SetLoading] = useState<any>(null);
@@ -47,6 +48,7 @@ const OrderPage = () => {
     useEffect(() => {
         if (userType === FRANCHISETYPE.FRANCHISE) {
             getAllFranchiceorders({ franchiseId: userInfo?.id });
+            // getAllDeliveryAgents({ franchiseId: userInfo?.id, userType: userInfo?.userType })
         }
         if (userType === FRANCHISETYPE.ADMIN) {
             getAllOrders(undefined);
@@ -65,6 +67,10 @@ const OrderPage = () => {
         SetData(franchiseOrdersData)
         SetError(franchiseOrdersError)
     }, [franchiseOrdersData, , franchiseOrdersLoading, franchiseOrdersError])
+   
+    useEffect(() => {
+        console.log('getAllDeliveryAgentsData, getAllDeliveryAgentsLoading, getAllDeliveryAgentsError', getAllDeliveryAgentsData, getAllDeliveryAgentsLoading, getAllDeliveryAgentsError)
+    }, [getAllDeliveryAgentsData, getAllDeliveryAgentsLoading, getAllDeliveryAgentsError])
 
     useEffect(() => { }, [updateOrderData, updateOrderisLoading, updateOrderError]);
     useEffect(() => { }, [franchiesLoading, franchiesError]);
@@ -106,7 +112,7 @@ const OrderPage = () => {
                                 </td>
                                 <td className="tableItem">{order?.userId?.primaryNumber || '---'}</td>
                                 <td className="tableItem">{order?.userId?.primaryAddress?.name}, {order?.userId?.primaryAddress?.houseNo}, {order?.userId?.primaryAddress?.streetName}</td>
-                                
+
                                 {/* Admin */}
                                 {isAdmin && <td className="tableItem">
                                     <Form.Select aria-label="Order Transfer" onChange={(data) => {
@@ -117,15 +123,19 @@ const OrderPage = () => {
                                 </td>}
 
                                 {/* Franchise  */}
-                                {!isAdmin && <th className="tableItem"><Form.Select aria-label="Order Transfer" onChange={(data) => {
-                                    orderTransfer({ id: order.id, franchiseId: data?.target?.value })
-                                }}>
-                                    {franchies && franchies?.map((branch: IBranch) => <option value={branch._id} selected={order?.franchiseId === branch._id}>{branch?.name}</option>)}
-                                </Form.Select></th>}
+                                {!isAdmin && <th className="tableItem">
+                                    <Form.Select aria-label="Order Transfer" onChange={(data) => {
+                                        orderTransfer({ id: order.id, franchiseId: data?.target?.value })
+                                    }}>
+                                        {franchies && franchies?.map((branch: IBranch) => <option value={branch._id} selected={order?.franchiseId === branch._id}>{branch?.name}</option>)}
+                                    </Form.Select>
+                                </th>}
 
                                 <td ><FontAwesomeIcon icon={faEye} className="Orderpage-actions Orderpage-eye" onClick={() => {
                                     getOrderDetails();
-                                }}></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="Orderpage-actions"></FontAwesomeIcon></td>
+                                }}></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="Orderpage-actions" onClick={() => {
+                                    getOrderDetails();
+                                }}></FontAwesomeIcon></td>
                             </tr>)}
                         </tbody>
                     </Table>

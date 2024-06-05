@@ -69,15 +69,15 @@ p {
   font-size: 14px;
 }
 
-option {
+/* option {
   padding: 5px;
   color: var(--appTheam);
-  /* background-color: var(--appTheam); */
 }
+
 option:hover {
   color: var(--appTextColor) !important;
   background-color: var(--appTheam) !important;
-}
+} */
 
 /* Custome Css */
 .elementSpace {
@@ -149,6 +149,11 @@ option:hover {
   background: var(--appOrderDelivered) !important; */
   color: var(--appOrderDelivered);
   background: #5ead5e29 !important;
+}
+
+.OrderCanceled {
+  color: red;
+  background: #ff000038 !important;
 }
 .legend-indicator {
   display: inline-block;

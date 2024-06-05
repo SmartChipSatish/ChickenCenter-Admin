@@ -1,4 +1,5 @@
 export enum FRANCHISETYPE {
     ADMIN = "admin",
-    FRANCHISE = 'franchise'
+    FRANCHISE = 'franchise',
+    DELIVERYAGENTS='deliveryAgent'
 }
