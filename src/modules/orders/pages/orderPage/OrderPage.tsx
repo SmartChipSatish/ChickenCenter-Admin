@@ -17,6 +17,8 @@ import { FRANCHISETYPE } from "../../../../utils/interfaces/appInterfaces";
 import { OrderStatus } from "../../../../shared/components/OrderStatusComponet/OrderStatusComponent";
 import dayjs from 'dayjs';
 import { IUser } from "../../../users/utils/userInterfaces";
+import { isAdmin, isFranchiese, isUser } from "../../../../utils/appConstants";
+import Button from "react-bootstrap/esm/Button";
 
 const OrderPage = () => {
     const navigation = useNavigate();
@@ -31,13 +33,13 @@ const OrderPage = () => {
     const [isLoading, SetLoading] = useState<any>(null);
     const [data, SetData] = useState<any>(null);
     const [error, SetError] = useState<any>(null);
-    const [isAdmin, SetIsAdmin] = useState(false);
+
 
     const getOrderDetails = () => {
         navigation('orderDetails')
     }
 
-    const orderUpdate = async (data: { id: string, franchiseId: string}) => {
+    const orderUpdate = async (data: { id: string, franchiseId: string }) => {
         try {
             const orderTransfer = await updateOrderTranfer(data);
             successToast('Order transfered succesfully');
@@ -64,7 +66,6 @@ const OrderPage = () => {
         }
         if (userType === FRANCHISETYPE.ADMIN) {
             getAllOrders(undefined);
-            SetIsAdmin(true)
         }
     }, [userType]);
 
@@ -80,7 +81,7 @@ const OrderPage = () => {
         SetError(franchiseOrdersError)
     }, [franchiseOrdersData, , franchiseOrdersLoading, franchiseOrdersError])
 
-   
+
     useEffect(() => { }, [updateOrderData, updateOrderisLoading, updateOrderError]);
     useEffect(() => { }, [franchiesLoading, franchiesError]);
 
@@ -99,15 +100,15 @@ const OrderPage = () => {
                                 <th><p className="tableTitle">Payment Status</p></th>
                                 <th><p className="tableTitle">Phone</p></th>
                                 <th><p className="tableTitle">Address</p></th>
-                                {isAdmin && <th><p className="tableTitle">Transfer</p></th>}
-                                {!isAdmin && <th><p className="tableTitle">Assign To</p></th>}
+                                {isAdmin(userType) && <th><p className="tableTitle">Transfer</p></th>}
+                                {isFranchiese(userType) && <th><p className="tableTitle">Assign To</p></th>}
                                 <th><p className="tableTitle">Actions</p></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {error && <tr><td colSpan={isAdmin ? 10 : 9} className="pageStatus"><p>Something went wrong!</p></td></tr>}
-                            {isLoading && <tr><td colSpan={isAdmin ? 10 : 9} className="pageStatus"><p>Loading...</p></td></tr>}
-                            {data?.length === 0 && <tr><td colSpan={isAdmin ? 10 : 9} className="pageStatus"><p>No Data Found</p></td></tr>}
+                            {error && <tr><td colSpan={isAdmin(userType) ? 10 : 9} className="pageStatus"><p className="text-center">Something went wrong!</p></td></tr>}
+                            {isLoading && <tr><td colSpan={isAdmin(userType) ? 10 : 9} className="pageStatus"><p className="text-center">Loading...</p></td></tr>}
+                            {data?.length === 0 && <tr><td colSpan={isAdmin(userType) ? 10 : 9} className="pageStatus"><p className="text-center">No Data Found</p></td></tr>}
 
                             {data && data?.map((order: Order, index: number) => <tr>
                                 <td className="tableItem ">{index + 1}</td>
@@ -123,7 +124,7 @@ const OrderPage = () => {
                                 <td className="tableItem">{order?.userId?.primaryAddress?.name}, {order?.userId?.primaryAddress?.houseNo}, {order?.userId?.primaryAddress?.streetName}</td>
 
                                 {/* Admin */}
-                                {isAdmin && <td className="tableItem">
+                                {isAdmin(userType) && <td className="tableItem">
                                     <Form.Select aria-label="Order Transfer" onChange={(data) => {
                                         orderUpdate({ id: order.id, franchiseId: data?.target?.value })
                                     }}>
@@ -132,7 +133,7 @@ const OrderPage = () => {
                                 </td>}
 
                                 {/* Franchise  */}
-                                {!isAdmin && <th className="tableItem">
+                                {isFranchiese(userType) && <th className="tableItem">
                                     <Form.Select aria-label="Order Transfer" onChange={(data) => {
                                         assignOrderToAgent({ id: order.id, deliveryAgentId: data?.target?.value })
                                     }}>
@@ -140,11 +141,17 @@ const OrderPage = () => {
                                     </Form.Select>
                                 </th>}
 
-                                <td ><FontAwesomeIcon icon={faEye} className="Orderpage-actions Orderpage-eye" onClick={() => {
-                                    getOrderDetails();
-                                }}></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="Orderpage-actions" onClick={() => {
-                                    getOrderDetails();
-                                }}></FontAwesomeIcon></td>
+                                <td className="text-nowrap">
+                                    {(isAdmin(userType) || isFranchiese(userType)) && <><FontAwesomeIcon icon={faEye} className="Orderpage-actions Orderpage-eye" onClick={() => {
+                                        getOrderDetails();
+                                    }}></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="Orderpage-actions" onClick={() => {
+                                        getOrderDetails();
+                                    }}></FontAwesomeIcon> </>}
+                                    {isUser(userType) && <>
+                                        <Button variant="outline-primary" className="elementSpace">Accept</Button>
+                                        <Button variant="outline-secondary">Cancel</Button></>
+                                    }
+                                </td>
                             </tr>)}
                         </tbody>
                     </Table>

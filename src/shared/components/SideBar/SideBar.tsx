@@ -25,10 +25,16 @@ const SideBar = () => {
 
     useEffect(() => {
         if (userType === FRANCHISETYPE.FRANCHISE) {
-            setSidebarOptions(Franchies)
+            setSidebarOptions(Franchies);
+            return;
         }
         if (userType === FRANCHISETYPE.ADMIN) {
-            setSidebarOptions(Admin)
+            setSidebarOptions(Admin);
+            return;
+        }
+        if(userType === FRANCHISETYPE.DELIVERYAGENTS){
+            setSidebarOptions(User);
+            return;
         }
     }, [userType])
 
