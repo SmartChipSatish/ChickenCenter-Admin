@@ -15,11 +15,6 @@ const Header = () => {
         console.log('userInfo', userInfo)
     }, [userInfo])
 
-    const handleLogout = () => {
-        localStorage.clear();
-        navigation('/login');
-      };
-
    return <>
 
         <div className="mainHeader text-white">
@@ -51,11 +46,10 @@ const Header = () => {
                                 navigation("account")
                             }}><FontAwesomeIcon icon={faUser} className='profileOptions' ></FontAwesomeIcon> My Profile</Dropdown.Item>
                             <Dropdown.Item href="#" onClick={() => {
-                                handleLogout
                                 // account
-                                // localStorage.clear();
+                                localStorage.clear();
                                 // navigation("login")
-                                // window.location.href='/ChickenCenter-Admin/login'
+                                window.location.href='/ChickenCenter-Admin/login'
                             }}> <FontAwesomeIcon icon={faSignOut} className='profileOptions'></FontAwesomeIcon>  Logout</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
