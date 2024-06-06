@@ -29,7 +29,7 @@ export default function AppRoutes() {
     <BrowserRouter basename='/ChickenCenter-Admin'>
       <Routes>
         <Route
-          path="/login"
+          path="login"
           element={
             <Login />
           } />
