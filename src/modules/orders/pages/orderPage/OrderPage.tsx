@@ -17,7 +17,7 @@ import { FRANCHISETYPE } from "../../../../utils/interfaces/appInterfaces";
 import { OrderStatus } from "../../../../shared/components/OrderStatusComponet/OrderStatusComponent";
 import dayjs from 'dayjs';
 import { IUser } from "../../../users/utils/userInterfaces";
-import { isAdmin, isFranchiese, isUser } from "../../../../utils/appConstants";
+import { getOrderDate, isAdmin, isFranchiese, isUser } from "../../../../utils/appFunctions";
 import Button from "react-bootstrap/esm/Button";
 
 const OrderPage = () => {
@@ -35,8 +35,8 @@ const OrderPage = () => {
     const [error, SetError] = useState<any>(null);
 
 
-    const getOrderDetails = () => {
-        navigation('orderDetails')
+    const getOrderDetails = (id: string) => {
+        navigation(`orderDetails/${id}`)
     }
 
     const orderUpdate = async (data: { id: string, franchiseId: string }) => {
@@ -86,6 +86,9 @@ const OrderPage = () => {
     useEffect(() => { }, [franchiesLoading, franchiesError]);
 
     return (<>
+        <div className="d-flex justify-content-between pageTitleSpace">
+            <p className="pageTile">Orders</p>
+        </div>
         <div className="Orderpage">
             <Card className="h-100">
                 <Card.Body >
@@ -113,9 +116,9 @@ const OrderPage = () => {
                             {data && data?.map((order: Order, index: number) => <tr>
                                 <td className="tableItem ">{index + 1}</td>
                                 <td className="tableItem curserPointer" onClick={() => {
-                                    getOrderDetails();
+                                    getOrderDetails(order?.id);
                                 }}><p className="Orderpage-id">{`#${order?.id}`}</p></td>
-                                <td className="tableItem text-nowrap">{dayjs(order?.date).format('MMMM D, YYYY h:mm A')} </td>
+                                <td className="tableItem text-nowrap">{getOrderDate(order?.date)} </td>
                                 <td className="tableItem text-capitalize">{order.userId?.name || '---'}</td>
                                 <td className="tableItem text-capitalize"><OrderStatus label={order?.orderStatus} status={order?.orderStatus} type={STATUSTYPES.Order} /></td>
                                 <td className="tableItem text-capitalize"><OrderStatus label={order?.paymentStatus?.toLocaleLowerCase()} status={order?.paymentStatus} type={STATUSTYPES.Payment} />
@@ -143,9 +146,9 @@ const OrderPage = () => {
 
                                 <td className="text-nowrap">
                                     {(isAdmin(userType) || isFranchiese(userType)) && <><FontAwesomeIcon icon={faEye} className="Orderpage-actions Orderpage-eye" onClick={() => {
-                                        getOrderDetails();
+                                        getOrderDetails(order?.id);
                                     }}></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="Orderpage-actions" onClick={() => {
-                                        getOrderDetails();
+                                        getOrderDetails(order?.id);
                                     }}></FontAwesomeIcon> </>}
                                     {isUser(userType) && <>
                                         <Button variant="outline-primary" className="elementSpace">Accept</Button>

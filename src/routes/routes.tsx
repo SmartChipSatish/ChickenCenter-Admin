@@ -70,7 +70,7 @@ export default function AppRoutes() {
               }>
 
             </Route>
-            <Route path="orderDetails"
+            <Route path="orderDetails/:id"
               element={
                 <Suspense>
                   <OrderDetailPage />

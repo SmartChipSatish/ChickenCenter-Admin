@@ -1,0 +1,73 @@
+.itemsCount {
+    background: #0000006e;
+    width: 25px;
+    height: 25px;
+    color: var(--appTextColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.orderItem {
+    height: 100px;
+}
+
+.orderImage {
+    height: 100px;
+    width: 100px;
+}
+
+.orderDetial {
+    margin-left: 10px;
+}
+
+.orderPrice {
+    color: var(--appTheam);
+    font-size: 16px;
+}
+
+.priceSymbole {
+    margin-right: 2px;
+}
+
+.orderItemName {
+    font-size: 15px;
+}
+
+.orderCrossIcon {
+    color: gray;
+    font-size: 13px;
+}
+
+.priceIcon {
+    margin-right: 2px;
+    font-size: 14px;
+    color: gray;
+}
+
+.itemPrice {
+    font-weight: 500;
+}
+
+.orderTotal {
+    padding-left: 90px;
+}
+
+.subTotal {
+    height: 40px;
+    // border-bottom: 0;
+}
+
+.subtotalNoBoarder {
+    border-bottom: 0;
+}
+
+.subTotal-details {
+    text-align: end;
+    color: gray;
+}
+
+.priceDetails {
+    text-align: end;
+}

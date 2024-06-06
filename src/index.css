@@ -88,6 +88,14 @@ option:hover {
   color: var(--appPageTitleColor);
 }
 
+.theamText {
+  color: var(--appTheam);
+}
+
+.appCardTitle {
+  color: var(--appTitleColor);
+  font-size: 18px;
+}
 
 
 .pageTile {
@@ -155,6 +163,7 @@ option:hover {
   color: red;
   background: #ff000038 !important;
 }
+
 .legend-indicator {
   display: inline-block;
   width: .5rem;

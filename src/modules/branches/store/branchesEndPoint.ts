@@ -8,20 +8,20 @@ export const updateMeetingRestrictionDetails = BranchesApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllFranchises: builder.query({
             query: () => `franchises/getAllFranchises`,
-            providesTags: ['getAll']
+            // providesTags: ['getAll']
         }),
 
         getAllFranchisesUsers: builder.query({
             query: (body) => `franchises/getAllusers?userType=${body?.userType}&franchiseId=${body.franchiseId}`,
         }),
-        
+
         createFranchisesOrUser: builder.mutation({
             query: (body) => ({
                 url: 'franchises/createUser',
                 method: 'POST',
                 body: body
             }),
-            invalidatesTags: ['getAll'],
+            // invalidatesTags: ['getAll'],
         }),
 
     })

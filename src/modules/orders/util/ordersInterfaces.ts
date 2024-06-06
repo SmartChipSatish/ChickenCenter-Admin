@@ -14,7 +14,15 @@ export enum STATUSTYPES {
     Order = 'Order',
     Payment = 'Payment'
 }
-
+export interface IItem {
+    amount: number,
+    imageUrl: string,
+    itemId: string,
+    itemName: string,
+    itemPrice: number,
+    itemQty: number,
+    _id: string
+}
 export interface Order {
     date: string,
     orderStatus: ORDERSTATUS,
@@ -28,11 +36,19 @@ export interface Order {
             houseNo: string,
             streetName: string,
         }
-    }
+    },
+    items: IItem[]
     id: string,
     franchiseId: string,
-    deliveryAgentId?: string
+    deliveryAgentId?: string,
+    totals: {
+        amount: number,
+        quantity: number
+    }
+
 }
+
+
 
 
 
