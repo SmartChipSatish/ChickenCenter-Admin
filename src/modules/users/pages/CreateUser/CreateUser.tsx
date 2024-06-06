@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "react-bootstrap/esm/Button";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/esm/Form";
@@ -10,6 +10,7 @@ import { AppConstants, getItemFromLocalStorage } from "../../../../utils/localSt
 import { errorToast, successToast } from "../../../../shared/utils/appToaster";
 import { useCreateFranchisesOrUserMutation } from "../../../branches/store/branchesEndPoint";
 import './CreateUser.scss'
+import { FRANCHISETYPE } from "../../../../utils/interfaces/appInterfaces";
 
 const CreateUserPage = () => {
     const {
@@ -18,16 +19,17 @@ const CreateUserPage = () => {
     } = useForm<any>({});
 
     const [createUser, { isLoading }] = useCreateFranchisesOrUserMutation();
+    const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
     const dispatch = useDispatch();
     const navigation = useNavigate();
     const inputRef = useRef<any>(null);
     const [imgUrl, SetImgUrl] = useState('https://as2.ftcdn.net/v2/jpg/02/41/38/73/1000_F_241387314_Sr3d8fVbXw0tWHQvZlKvbwY5YnEDC91V.jpg')
     const back = () => {
-        navigation('/branches')
+        navigation('/users')
     }
     const submit = async (data: any) => {
         try {
-            const newBranchObj = {
+            let user:any = {
                 name: data.name,
                 userName: data.userName,
                 password: data.password,
@@ -43,9 +45,16 @@ const CreateUserPage = () => {
                     landmark: data.landmark,
                     state: data.state,
                 },
-                userType: 'deliveryAgent'
+                userType: FRANCHISETYPE.DELIVERYAGENTS,
             }
-            const branchCreaete = await createUser(newBranchObj);
+
+            if (userInfo?.userType === FRANCHISETYPE.FRANCHISE) {
+                user = await {
+                    ...user,
+                    franchiseId: userInfo?.id
+                }
+            }
+            const branchCreaete = await createUser(user);
             successToast('User Create Successfully');
             back();
         } catch (e) {
@@ -54,6 +63,7 @@ const CreateUserPage = () => {
         }
 
     }
+    
     // const selectFile = () => {
     //     if (inputRef?.current) {
     //         inputRef.current?.click()

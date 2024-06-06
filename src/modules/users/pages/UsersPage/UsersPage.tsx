@@ -1,11 +1,3 @@
-// const UsersPage = () => {
-//     return (<>
-//         Users Page
-//     </>)
-// }
-
-// export default UsersPage
-
 
 import { faEdit, faEye } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -14,18 +6,25 @@ import Table from "react-bootstrap/esm/Table"
 import Card from "react-bootstrap/esm/Card"
 import Button from "react-bootstrap/esm/Button"
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus"
-import { useNavigate } from "react-router-dom"
-// import { useGetAllFranchisesQuery } from "../../store/branchesEndPoint"
-import { useEffect } from "react"
-// import { IBranch } from "../../utils/BranchesInterfaces"
-import './UsersPage.scss'
-const UsersPage = () => {
-    // const { data, isLoading, isError } = useGetAllFranchisesQuery(undefined)
-    const navigation = useNavigate();
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useLazyGetAllFranchisesUsersQuery } from "../../../branches/store/branchesEndPoint";
+import { useSelector } from "react-redux";
+import { IUser } from "../../utils/userInterfaces";
+import './UsersPage.scss';
 
+const UsersPage = () => {
+    const navigation = useNavigate();
+    const [getAllFranchisesUsers, { data, isLoading, isError }] = useLazyGetAllFranchisesUsersQuery();
+    const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
     const createBranch = () => {
         navigation('create');
     }
+
+    useEffect(() => {
+        getAllFranchisesUsers({ franchiseId: userInfo?.id, userType: 'deliveryAgent' })
+    }, []);
+
 
     return (
         <>
@@ -49,26 +48,20 @@ const UsersPage = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td className="tableItem">{1}</td>
-                                    <td className="tableItem"><p className="BranchesPage-id">{'Vishnu'}</p></td>
-                                    <td className="tableItem"><p className="BranchesPage-id">{'8121739901'}</p></td>
-                                    <td className="tableItem"><p className="BranchesPage-id">{'51-2-37, vaddila' || '---'}</p></td>
-                                    <td ><FontAwesomeIcon icon={faEye} className="BranchesPage-actions BranchesPage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="BranchesPage-actions"></FontAwesomeIcon></td>
-                                </tr>
-                                {/* {isError && <tr><td colSpan={6}><p>Something went wrong!</p></td></tr>}
-                                {isLoading && <tr><td colSpan={6}><p>Loading...</p></td></tr>}
-                                {data?.length === 0 && <tr><td colSpan={6}><p>No Data Found</p></td></tr>}
-                                {data && data?.map((branch: IBranch, index: number) =>
-
-                                    <tr>
-                                        <td className="tableItem">{index + 1}</td>
-                                        <td className="tableItem"><p className="BranchesPage-id">{branch.name}</p></td>
-                                        <td className="tableItem"><p className="BranchesPage-id">{branch?.currentOrders || 0}</p></td>
-                                        <td className="tableItem"><p className="BranchesPage-id">{branch.address.name || '---'} ,{branch.address.city}</p></td>
-                                        <td ><FontAwesomeIcon icon={faEye} className="BranchesPage-actions BranchesPage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="BranchesPage-actions"></FontAwesomeIcon></td>
-                                    </tr>
-                                )} */}
+                                {isError && <tr><td colSpan={5} className="pageStatus"><p>Something went wrong!</p></td></tr>}
+                                {isLoading && <tr><td colSpan={5} className="pageStatus"><p>Loading...</p></td></tr>}
+                                {data?.length === 0 && <tr><td colSpan={5} className="pageStatus"><p>No Data Found</p></td></tr>}
+                                {data && data.map((user: IUser, index: number) => {
+                                    return <>
+                                        <tr>
+                                            <td className="tableItem">{index + 1}</td>
+                                            <td className="tableItem"><p className="usersPage-id">{user.name}</p></td>
+                                            <td className="tableItem"><p className="usersPage-id">{user?.primaryNumber}</p></td>
+                                            <td className="tableItem"><p className="usersPage-id text-nowrap">{user?.address.city}, {user?.address.state}</p></td>
+                                            <td ><FontAwesomeIcon icon={faEye} className="usersPage-actions usersPage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="usersPage-actions"></FontAwesomeIcon></td>
+                                        </tr>
+                                    </>
+                                })}
 
                             </tbody>
                         </Table>

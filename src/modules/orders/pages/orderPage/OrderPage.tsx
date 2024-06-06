@@ -4,10 +4,10 @@ import Table from "react-bootstrap/esm/Table"
 import './OrderPage.scss'
 import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/esm/Card";
-import { useLazyGetOrderbyFranchiseQuery, useLazyGetAllOrdersQuery, useUpdateOrderTranferMutation, useGetAllDeliveryAgentsMutation } from "../../Store/ordersEndpoints";
+import { useLazyGetOrderbyFranchiseQuery, useLazyGetAllOrdersQuery, useUpdateOrderTranferMutation, useAssignOrderMutation } from "../../Store/ordersEndpoints";
 import { useEffect, useState } from "react";
 import { ORDERSTATUS, Order, PAYMENTSTATUS, STATUSTYPES } from "../../util/ordersInterfaces";
-import { useGetAllFranchisesQuery } from "../../../branches/store/branchesEndPoint";
+import { useGetAllFranchisesQuery, useLazyGetAllFranchisesUsersQuery } from "../../../branches/store/branchesEndPoint";
 import { IBranch } from "../../../branches/utils/BranchesInterfaces";
 import Form from "react-bootstrap/esm/Form";
 import { successToast } from "../../../../shared/utils/appToaster";
@@ -16,6 +16,7 @@ import { UserTypeHook } from "../../../../utils/hooks/userTypeHook";
 import { FRANCHISETYPE } from "../../../../utils/interfaces/appInterfaces";
 import { OrderStatus } from "../../../../shared/components/OrderStatusComponet/OrderStatusComponent";
 import dayjs from 'dayjs';
+import { IUser } from "../../../users/utils/userInterfaces";
 
 const OrderPage = () => {
     const navigation = useNavigate();
@@ -23,7 +24,8 @@ const OrderPage = () => {
     const [getAllFranchiceorders, { data: franchiseOrdersData, isLoading: franchiseOrdersLoading, error: franchiseOrdersError }] = useLazyGetOrderbyFranchiseQuery();
     const { data: franchies, isLoading: franchiesLoading, isError: franchiesError } = useGetAllFranchisesQuery(undefined);
     const [updateOrderTranfer, { data: updateOrderData, isLoading: updateOrderisLoading, isError: updateOrderError }] = useUpdateOrderTranferMutation();
-    const [getAllDeliveryAgents, { data: getAllDeliveryAgentsData, isLoading: getAllDeliveryAgentsLoading, error: getAllDeliveryAgentsError }] = useGetAllDeliveryAgentsMutation()
+    const [assignOrder] = useAssignOrderMutation();
+    const [getAllFranchisesUsers, { data: franchiesUsers, isLoading: franchiseUsersLoading, isError: franchiseUserError }] = useLazyGetAllFranchisesUsersQuery();
     const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
     const userType = UserTypeHook()
     const [isLoading, SetLoading] = useState<any>(null);
@@ -35,10 +37,20 @@ const OrderPage = () => {
         navigation('orderDetails')
     }
 
-    const orderTransfer = async (data: { id: string, franchiseId: string }) => {
+    const orderUpdate = async (data: { id: string, franchiseId: string}) => {
         try {
             const orderTransfer = await updateOrderTranfer(data);
             successToast('Order transfered succesfully');
+        } catch (e) {
+            console.log('e', e)
+        }
+    }
+
+    const assignOrderToAgent = async (data: { id: string, deliveryAgentId: string }) => {
+        try {
+            const assignOrderToDeliveryAgent = await assignOrder(data);
+            console.log('assignOrderToDeliveryAgent', assignOrderToDeliveryAgent, data);
+            successToast('Order Assigned succesfully');
         } catch (e) {
             console.log('e', e)
         }
@@ -48,7 +60,7 @@ const OrderPage = () => {
     useEffect(() => {
         if (userType === FRANCHISETYPE.FRANCHISE) {
             getAllFranchiceorders({ franchiseId: userInfo?.id });
-            // getAllDeliveryAgents({ franchiseId: userInfo?.id, userType: userInfo?.userType })
+            getAllFranchisesUsers({ franchiseId: userInfo?.id, userType: FRANCHISETYPE.DELIVERYAGENTS })
         }
         if (userType === FRANCHISETYPE.ADMIN) {
             getAllOrders(undefined);
@@ -67,11 +79,8 @@ const OrderPage = () => {
         SetData(franchiseOrdersData)
         SetError(franchiseOrdersError)
     }, [franchiseOrdersData, , franchiseOrdersLoading, franchiseOrdersError])
-   
-    useEffect(() => {
-        console.log('getAllDeliveryAgentsData, getAllDeliveryAgentsLoading, getAllDeliveryAgentsError', getAllDeliveryAgentsData, getAllDeliveryAgentsLoading, getAllDeliveryAgentsError)
-    }, [getAllDeliveryAgentsData, getAllDeliveryAgentsLoading, getAllDeliveryAgentsError])
 
+   
     useEffect(() => { }, [updateOrderData, updateOrderisLoading, updateOrderError]);
     useEffect(() => { }, [franchiesLoading, franchiesError]);
 
@@ -116,7 +125,7 @@ const OrderPage = () => {
                                 {/* Admin */}
                                 {isAdmin && <td className="tableItem">
                                     <Form.Select aria-label="Order Transfer" onChange={(data) => {
-                                        orderTransfer({ id: order.id, franchiseId: data?.target?.value })
+                                        orderUpdate({ id: order.id, franchiseId: data?.target?.value })
                                     }}>
                                         {franchies && franchies?.map((branch: IBranch) => <option value={branch._id} selected={order?.franchiseId === branch._id}>{branch?.name}</option>)}
                                     </Form.Select>
@@ -125,9 +134,9 @@ const OrderPage = () => {
                                 {/* Franchise  */}
                                 {!isAdmin && <th className="tableItem">
                                     <Form.Select aria-label="Order Transfer" onChange={(data) => {
-                                        orderTransfer({ id: order.id, franchiseId: data?.target?.value })
+                                        assignOrderToAgent({ id: order.id, deliveryAgentId: data?.target?.value })
                                     }}>
-                                        {franchies && franchies?.map((branch: IBranch) => <option value={branch._id} selected={order?.franchiseId === branch._id}>{branch?.name}</option>)}
+                                        {franchiesUsers && franchiesUsers?.map((user: IUser) => <option value={user.id} selected={order?.deliveryAgentId === user.id}>{user?.name}</option>)}
                                     </Form.Select>
                                 </th>}
 

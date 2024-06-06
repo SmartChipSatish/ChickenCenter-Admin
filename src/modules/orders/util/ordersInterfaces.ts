@@ -1,4 +1,3 @@
-import { AddItem } from "../../inventory/Utils/InventoryInterfaces";
 
 export enum ORDERSTATUS {
     In_Progress = "In Process",
@@ -8,7 +7,7 @@ export enum ORDERSTATUS {
 export enum PAYMENTSTATUS {
     In_Progress = "In Process",
     Success = 'SUCCESS',
-    
+
 }
 
 export enum STATUSTYPES {
@@ -31,13 +30,8 @@ export interface Order {
         }
     }
     id: string,
-    franchiseId: string
-    // items: AddItem[
-    //     // {
-    //     //     "itemId": "66509e96f5b94b86a246d963",
-    //     //     "_id": "66519544960c311b6a461f78"
-    //     // }
-    // ],
+    franchiseId: string,
+    deliveryAgentId?: string
 }
 
 
