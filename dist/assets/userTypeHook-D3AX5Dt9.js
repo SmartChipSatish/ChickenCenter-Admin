@@ -1,1 +1,0 @@
-import{r as s,f}from"./index-DuJGvacx.js";import{F as c}from"./appInterfaces-PvTAME0U.js";const S=()=>{const[p,u]=s.useState(c.FRANCHISE),r=f(e=>{var o;return(o=e==null?void 0:e.userInfoSlice)==null?void 0:o.userInfo});return s.useEffect(()=>{u(r.userType)},[r.userType]),p};export{S as U};
