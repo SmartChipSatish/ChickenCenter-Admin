@@ -10,7 +10,7 @@
 }
 
 .orderItem {
-    height: 100px;
+    height: 7rem;
 }
 
 .orderImage {
@@ -55,12 +55,11 @@
 }
 
 .subTotal {
-    height: 40px;
-    // border-bottom: 0;
+    height: 2rem;
 }
 
-.subtotalNoBoarder {
-    border-bottom: 0;
+.subtotalBoarder {
+    border-bottom: 1px solid #80808029;
 }
 
 .subTotal-details {
@@ -70,4 +69,32 @@
 
 .priceDetails {
     text-align: end;
+}
+
+.userName {
+    padding-left: 5px;
+    color: #000000b0;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.userDetails {
+    margin-bottom: 4%;
+}
+
+.userAddress {
+    height: 3rem;
+}
+
+.userCardBoady {
+    height: 23rem;
+}
+
+.userAddressField {
+    color: gray
+}
+
+.userAddressValue {
+    font-weight: 500;
+    color: #000000b0
 }
