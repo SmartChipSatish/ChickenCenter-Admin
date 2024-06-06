@@ -26,7 +26,7 @@ import {
 
 export default function AppRoutes() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/ChickenCenter-Admin'>
       <Routes>
         <Route
           path="/login"
