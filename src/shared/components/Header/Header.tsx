@@ -14,7 +14,7 @@ const Header = () => {
     useEffect(() => {
         console.log('userInfo', userInfo)
     }, [userInfo])
-    return <>
+   return <>
 
         <div className="mainHeader text-white">
             {/* <nav className="h-100 d-flex"> */}
@@ -48,7 +48,7 @@ const Header = () => {
                                 // account
                                 localStorage.clear();
                                 // navigation("login")
-                                window.location.href='/login'
+                                window.location.href='/ChickenCenter-Admin/login'
                             }}> <FontAwesomeIcon icon={faSignOut} className='profileOptions'></FontAwesomeIcon>  Logout</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
