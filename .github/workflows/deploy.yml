@@ -3,7 +3,8 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - dev-deployment
+      - main
+#enterd main as github configuration is missing in local system, deployment is getting failed. In order to mke it work, need to give the branch which need to deployed and need to configure git in local system
 
 jobs:
   build-and-deploy:
