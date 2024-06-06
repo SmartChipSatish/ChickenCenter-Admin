@@ -48,7 +48,7 @@ const Header = () => {
                                 // account
                                 localStorage.clear();
                                 // navigation("login")
-                                window.location.href='ChickenCenter-Admin/login'
+                                window.location.href='/login'
                             }}> <FontAwesomeIcon icon={faSignOut} className='profileOptions'></FontAwesomeIcon>  Logout</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
