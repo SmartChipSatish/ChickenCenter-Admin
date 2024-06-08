@@ -1,11 +1,11 @@
-import { faEdit, faEye } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faEdit, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Table from "react-bootstrap/esm/Table"
 import './OrderPage.scss'
 import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/esm/Card";
 import { useLazyGetOrderbyFranchiseQuery, useLazyGetAllOrdersQuery, useUpdateOrderTranferMutation, useAssignOrderMutation } from "../../Store/ordersEndpoints";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ORDERSTATUS, Order, PAYMENTSTATUS, STATUSTYPES } from "../../util/ordersInterfaces";
 import { useGetAllFranchisesQuery, useLazyGetAllFranchisesUsersQuery } from "../../../branches/store/branchesEndPoint";
 import { IBranch } from "../../../branches/utils/BranchesInterfaces";
@@ -42,7 +42,9 @@ const OrderPage = () => {
     const orderUpdate = async (data: { id: string, franchiseId: string }) => {
         try {
             const orderTransfer = await updateOrderTranfer(data);
+            // if(orderTransfer)
             successToast('Order transfered succesfully');
+            getAllMyOrders();
         } catch (e) {
             console.log('e', e)
         }
@@ -58,8 +60,7 @@ const OrderPage = () => {
         }
     }
 
-
-    useEffect(() => {
+    const getAllMyOrders = useCallback(() => {
         if (userType === FRANCHISETYPE.FRANCHISE) {
             getAllFranchiceorders({ franchiseId: userInfo?.id });
             getAllFranchisesUsers({ franchiseId: userInfo?.id, userType: FRANCHISETYPE.DELIVERYAGENTS })
@@ -67,6 +68,10 @@ const OrderPage = () => {
         if (userType === FRANCHISETYPE.ADMIN) {
             getAllOrders(undefined);
         }
+    }, [userType])
+
+    useEffect(() => {
+        getAllMyOrders()
     }, [userType]);
 
     useEffect(() => {
@@ -131,6 +136,7 @@ const OrderPage = () => {
                                     <Form.Select aria-label="Order Transfer" onChange={(data) => {
                                         orderUpdate({ id: order.id, franchiseId: data?.target?.value })
                                     }}>
+                                        <option>Select Franchise</option>
                                         {franchies && franchies?.map((branch: IBranch) => <option value={branch._id} selected={order?.franchiseId === branch._id}>{branch?.name}</option>)}
                                     </Form.Select>
                                 </td>}
@@ -140,6 +146,7 @@ const OrderPage = () => {
                                     <Form.Select aria-label="Order Transfer" onChange={(data) => {
                                         assignOrderToAgent({ id: order.id, deliveryAgentId: data?.target?.value })
                                     }}>
+                                        <option>Select Agent</option>
                                         {franchiesUsers && franchiesUsers?.map((user: IUser) => <option value={user.id} selected={order?.deliveryAgentId === user.id}>{user?.name}</option>)}
                                     </Form.Select>
                                 </th>}
@@ -147,7 +154,7 @@ const OrderPage = () => {
                                 <td className="text-nowrap">
                                     {(isAdmin(userType) || isFranchiese(userType)) && <><FontAwesomeIcon icon={faEye} className="Orderpage-actions Orderpage-eye" onClick={() => {
                                         getOrderDetails(order?.id);
-                                    }}></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="Orderpage-actions" onClick={() => {
+                                    }}></FontAwesomeIcon> <FontAwesomeIcon icon={faClose} className="Orderpage-actions" onClick={() => {
                                         getOrderDetails(order?.id);
                                     }}></FontAwesomeIcon> </>}
                                     {isUser(userType) && <>

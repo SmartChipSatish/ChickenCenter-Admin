@@ -1,9 +1,6 @@
 import { BranchesApi } from "./branchesApi";
 
 
-
-
-
 export const updateMeetingRestrictionDetails = BranchesApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllFranchises: builder.query({
@@ -12,7 +9,7 @@ export const updateMeetingRestrictionDetails = BranchesApi.injectEndpoints({
         }),
 
         getAllFranchisesUsers: builder.query({
-            query: (body) => `franchises/getAllusers?userType=${body?.userType}&franchiseId=${body.franchiseId}`,
+            query: (body) => `franchises/getAllusers?userType=${body?.userType}${body.franchiseId ? `&franchiseId=${body.franchiseId}`:''}`,
         }),
 
         createFranchisesOrUser: builder.mutation({

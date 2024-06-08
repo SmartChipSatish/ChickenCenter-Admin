@@ -12,18 +12,30 @@ import { useLazyGetAllFranchisesUsersQuery } from "../../../branches/store/branc
 import { useSelector } from "react-redux";
 import { IUser } from "../../utils/userInterfaces";
 import './UsersPage.scss';
+import { UserTypeHook } from "../../../../utils/hooks/userTypeHook"
+import { FRANCHISETYPE } from "../../../../utils/interfaces/appInterfaces"
 
 const UsersPage = () => {
     const navigation = useNavigate();
     const [getAllFranchisesUsers, { data, isLoading, isError }] = useLazyGetAllFranchisesUsersQuery();
     const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
+    const userType = UserTypeHook()
     const createBranch = () => {
         navigation('create');
     }
 
     useEffect(() => {
-        getAllFranchisesUsers({ franchiseId: userInfo?.id, userType: 'deliveryAgent' })
-    }, []);
+        if(!userType){
+            return
+        }
+        if (userType === FRANCHISETYPE.FRANCHISE) {
+            getAllFranchisesUsers({ franchiseId: userInfo?.id, userType:  FRANCHISETYPE.DELIVERYAGENTS  })
+        }
+        if (userType === FRANCHISETYPE.ADMIN) {
+            getAllFranchisesUsers({ userType:  FRANCHISETYPE.DELIVERYAGENTS  })
+        }
+        
+    }, [userType]);
 
 
     return (

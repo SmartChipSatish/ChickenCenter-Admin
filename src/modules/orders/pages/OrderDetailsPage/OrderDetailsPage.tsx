@@ -35,7 +35,7 @@ const OrderDetailPage = () => {
                             <Card.Header className="d-flex appCardTitle justify-content-between"> <div className="d-flex">
                                 Order details <span className="badge itemsCount  rounded-circle ms-1">{data?.items?.length}</span>
                             </div>  <div><OrderStatus label={data?.orderStatus} status={data?.orderStatus} type={STATUSTYPES.Order} /></div> </Card.Header>
-                            <Card.Body>
+                            <Card.Body className="userCardBoady">
                                 {data.items && data?.items?.map((item: IItem) => {
                                     return <Row className="d-flex w-100  align-items-center orderItem subtotalBoarder">
                                         <Col md={2}><Image src={item.imageUrl} rounded className="h-100 orderImage" /></Col>

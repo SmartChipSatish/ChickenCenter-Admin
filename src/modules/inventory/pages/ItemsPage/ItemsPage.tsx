@@ -89,7 +89,7 @@ const ItemsPage = () => {
             </Modal.Header>
             <Modal.Body>Do you want to delete this item?</Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button variant="outline-secondary" onClick={handleClose}>
                     Close
                 </Button>
                 <Button variant="outline-primary" onClick={handleClose}>
