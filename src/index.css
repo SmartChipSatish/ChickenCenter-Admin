@@ -64,7 +64,10 @@ p {
   color: var(--appTextColor);
   background-color: var(--appTheam);
 }
+.tooltip {
+  --bs-tooltip-bg: var(--appTheam);
 
+}
 .dropdown-item {
   font-size: 14px;
 }
