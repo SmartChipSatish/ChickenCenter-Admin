@@ -29,6 +29,13 @@ export const InventoryEndPonts = InventoryApi.injectEndpoints({
             }),
             invalidatesTags: ['getAll'],
         }),
+        deletItem: builder.mutation({
+            query: (body) => ({
+                url:'items/updateItem?itemId=${body.id}',
+                method:'DELETE',
+                body:body
+            })
+        })
     })
 })
 
