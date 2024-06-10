@@ -39,7 +39,10 @@ export interface Order {
     },
     items: IItem[]
     id: string,
-    franchiseId: string,
+    franchiseId: {
+        id: string,
+        name: string
+    },
     deliveryAgentId?: string,
     totals: {
         amount: number,

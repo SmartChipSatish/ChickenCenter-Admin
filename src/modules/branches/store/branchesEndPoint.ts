@@ -21,6 +21,14 @@ export const updateMeetingRestrictionDetails = BranchesApi.injectEndpoints({
             // invalidatesTags: ['getAll'],
         }),
 
+        updateUser: builder.mutation({
+            query:(body)=>({
+                url: `franchises/updateUser?userId=${body.userId}`,
+                method: 'POST',
+                body: body  
+            })
+        })
+
     })
 })
 
@@ -29,4 +37,5 @@ export const {
     useGetAllFranchisesQuery,
     useCreateFranchisesOrUserMutation,
     useGetAllFranchisesUsersQuery,
+    useUpdateUserMutation,
     useLazyGetAllFranchisesUsersQuery } = updateMeetingRestrictionDetails;

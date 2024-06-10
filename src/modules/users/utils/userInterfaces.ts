@@ -7,5 +7,6 @@ export interface IUser {
     name: string;
     updatedAt: string;
     updatedBy: string;
+    franchiseId:string;
     _id: string;
 }

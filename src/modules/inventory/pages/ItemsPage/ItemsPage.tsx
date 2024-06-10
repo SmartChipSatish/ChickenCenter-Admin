@@ -44,20 +44,18 @@ const ItemsPage = () => {
                         <thead>
                             <tr>
                                 <th><p className="tableTitle">#</p></th>
-                                <th ><p className="tableTitle"></p></th>
-                                <th> <p className="tableTitle">Name</p></th>
-                                <th> <p className="tableTitle">Price/Quantity</p></th>
+                                <th><p className="tableTitle"></p></th>
+                                <th><p className="tableTitle">Name</p></th>
+                                <th><p className="tableTitle">Price/Quantity</p></th>
                                 <th><p className="tableTitle">Status</p></th>
                                 <th><p className="tableTitle">Actions</p></th>
                             </tr>
                         </thead>
                         <tbody>
-
                             {error && <tr><td colSpan={6} className="pageStatus"><p>Something went wrong!</p></td></tr>}
                             {isLoading && <tr><td colSpan={6} className="pageStatus"><p>Loading...</p></td></tr>}
-                            {data?.length === 0 && <tr><td colSpan={6} className="pageStatus"><p>No Data Found</p></td></tr>}
-
-                            {data && data?.map((item: IItem, index: number) =>
+                            {data?.items.length === 0 && <tr><td colSpan={6} className="pageStatus"><p>No Data Found</p></td></tr>}
+                            {data && data?.items.map((item: IItem, index: number) =>
                                 <tr>
                                     <td className="tableItem indexWidth">{index + 1}</td>
                                     <td className="tableItem imgWidth"> <Image className="itemImg" src={item.imageUrl || "https://www.licious.in/blog/wp-content/uploads/2022/03/Chicken-Curry-Cut-min-1.png"} roundedCircle /></td>
@@ -71,9 +69,6 @@ const ItemsPage = () => {
                                     }}></FontAwesomeIcon></td>
                                 </tr>
                             )}
-
-
-
                         </tbody>
                     </Table>
                 </Card.Body>

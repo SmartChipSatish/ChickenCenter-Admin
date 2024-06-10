@@ -116,9 +116,9 @@ const OrderPage = () => {
                         <tbody>
                             {error && <tr><td colSpan={isAdmin(userType) ? 10 : 9} className="pageStatus"><p className="text-center">Something went wrong!</p></td></tr>}
                             {isLoading && <tr><td colSpan={isAdmin(userType) ? 10 : 9} className="pageStatus"><p className="text-center">Loading...</p></td></tr>}
-                            {data?.length === 0 && <tr><td colSpan={isAdmin(userType) ? 10 : 9} className="pageStatus"><p className="text-center">No Data Found</p></td></tr>}
+                            {data?.orders.length === 0 && <tr><td colSpan={isAdmin(userType) ? 10 : 9} className="pageStatus"><p className="text-center">No Data Found</p></td></tr>}
 
-                            {data && data?.map((order: Order, index: number) => <tr>
+                            {data && data?.orders.map((order: Order, index: number) => <tr>
                                 <td className="tableItem ">{index + 1}</td>
                                 <td className="tableItem curserPointer" onClick={() => {
                                     getOrderDetails(order?.id);
@@ -137,7 +137,7 @@ const OrderPage = () => {
                                         orderUpdate({ id: order.id, franchiseId: data?.target?.value })
                                     }}>
                                         <option>Select Franchise</option>
-                                        {franchies && franchies?.map((branch: IBranch) => <option value={branch._id} selected={order?.franchiseId === branch._id}>{branch?.name}</option>)}
+                                        {franchies?.franchises && franchies?.franchises.map((branch: IBranch) => <option value={branch._id} selected={order?.franchiseId?.id === branch._id}>{branch?.name}</option>)}
                                     </Form.Select>
                                 </td>}
 

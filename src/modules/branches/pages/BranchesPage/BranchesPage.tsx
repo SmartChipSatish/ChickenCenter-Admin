@@ -43,11 +43,11 @@ const BranchesPage = () => {
                                 {isError && <tr><td colSpan={6}><p>Something went wrong!</p></td></tr>}
                                 {isLoading && <tr><td colSpan={6}><p>Loading...</p></td></tr>}
                                 {data?.length === 0 && <tr><td colSpan={6}><p>No Data Found</p></td></tr>}
-                                {data && data?.map((branch: IBranch, index: number) =>
+                                {data && data?.franchises.map((branch: IBranch, index: number) =>
 
                                     <tr>
                                         <td className="tableItem">{index + 1}</td>
-                                        <td className="tableItem"><p className="BranchesPage-id">{branch.name}</p></td>
+                                        <td className="tableItem text-capitalize"><p className="BranchesPage-id">{branch.name}</p></td>
                                         <td className="tableItem"><p className="BranchesPage-id">{branch?.currentOrders || 0}</p></td>
                                         <td className="tableItem"><p className="BranchesPage-id">{branch.address.name || '---'} ,{branch.address.city}</p></td>
                                         <td ><FontAwesomeIcon icon={faEye} className="BranchesPage-actions BranchesPage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="BranchesPage-actions"></FontAwesomeIcon></td>
