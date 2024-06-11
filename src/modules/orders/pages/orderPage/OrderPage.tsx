@@ -17,9 +17,11 @@ import { FRANCHISETYPE } from "../../../../utils/interfaces/appInterfaces";
 import { OrderStatus } from "../../../../shared/components/OrderStatusComponet/OrderStatusComponent";
 import dayjs from 'dayjs';
 import { IUser } from "../../../users/utils/userInterfaces";
-import { getOrderDate, isAdmin, isFranchiese, isUser } from "../../../../utils/appFunctions";
+import { getOrderDate, isAdmin, isFranchiese, isUser, loadingState } from "../../../../utils/appFunctions";
 import Button from "react-bootstrap/esm/Button";
 import AppLoader from "../../../../shared/components/loader/loader";
+import Pagination from "@material-ui/lab/Pagination";
+import { perPage } from "../../../../utils/appConstants";
 
 const OrderPage = () => {
     const navigation = useNavigate();
@@ -34,7 +36,7 @@ const OrderPage = () => {
     const [isLoading, SetLoading] = useState<any>(null);
     const [data, SetData] = useState<any>(null);
     const [error, SetError] = useState<any>(null);
-
+    const [page, setPage] = useState(1);
 
     const getOrderDetails = (id: string) => {
         navigation(`orderDetails/${id}`)
@@ -63,17 +65,19 @@ const OrderPage = () => {
 
     const getAllMyOrders = useCallback(() => {
         if (userType === FRANCHISETYPE.FRANCHISE) {
-            getAllFranchiceorders({ franchiseId: userInfo?.id });
+            getAllFranchiceorders({
+                params: { franchiseId: userInfo?.id, perPage, page }
+            });
             getAllFranchisesUsers({ params: { franchiseId: userInfo?.id, userType: FRANCHISETYPE.DELIVERYAGENTS } })
         }
         if (userType === FRANCHISETYPE.ADMIN) {
-            getAllOrders(undefined);
+            getAllOrders({ params: { perPage, page } });
         }
-    }, [userType])
+    }, [userType, page])
 
     useEffect(() => {
         getAllMyOrders()
-    }, [userType]);
+    }, [userType, page]);
 
     useEffect(() => {
         SetLoading(allOrdersLoading)
@@ -98,7 +102,7 @@ const OrderPage = () => {
         <div className="Orderpage">
             <Card className="h-100">
                 <Card.Body >
-                    <Table hover >
+                    <Table hover>
                         <thead>
                             <tr>
                                 <th><p className="tableTitle">#</p></th>
@@ -162,7 +166,12 @@ const OrderPage = () => {
                     </Table>
                     {error && <div className="emptyTable"><p>Something went wrong!</p></div>}
                     {isLoading && <div className="emptyTable"><AppLoader></AppLoader></div>}
-                    {data?.orders?.length !== 0 && <div className="emptyTable">No Data Found</div>}
+                    {data?.orders?.length === 0 && <div className="emptyTable">No Data Found</div>}
+                    {data?.totalOrders > 10 && <div className="d-flex justify-content-end">
+                        <Pagination count={data.totalPages}
+                            shape="rounded" onChange={(_, value: number) => {
+                                setPage(value);
+                            }} /></div>}
                 </Card.Body>
             </Card>
 

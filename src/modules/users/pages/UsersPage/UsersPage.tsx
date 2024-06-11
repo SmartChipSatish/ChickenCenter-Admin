@@ -74,7 +74,7 @@ const UsersPage = () => {
             <div className="usersPage">
                 <Card className="h-100">
                     <Card.Body>
-                        <Table hover className={`${!loadingState(isLoading, isError, data?.franchises) && 'tableHeight'}`} >
+                        <Table hover >
                             <thead>
                                 <tr>
                                     <th><p className="tableTitle">#</p></th>

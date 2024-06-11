@@ -17,16 +17,16 @@ export const getOrderDate = (date: string) => {
     return date ? dayjs(date).format('MMMM D, YYYY h:mm A') : '---'
 }
 
-export const prepairQueryParams = (params: Object = {}) => {
+export const prepairQueryParams = (url: string, params: Object = {}) => {
     try {
         console.log('params', params)
         const searchParams = new URLSearchParams();
         Object.entries(params).forEach((param) => {
             searchParams.append(param[0], param[1]);
         });
-        return `?${searchParams.toString()}`;
+        return `${url}?${searchParams.toString()}`;
     } catch (err) {
-        return '?'
+        return `${url}`
     }
 }
 

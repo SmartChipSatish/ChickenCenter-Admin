@@ -10,7 +10,7 @@ export const updateMeetingRestrictionDetails = BranchesApi.injectEndpoints({
         }),
 
         getAllFranchisesUsers: builder.query({
-            query: (body:IAPIRequest) => `franchises/getAllusers${prepairQueryParams(body?.params)}`,
+            query: (body: IAPIRequest) => `${prepairQueryParams('franchises/getAllusers', body?.params)}`,
         }),
 
         createFranchisesOrUser: builder.mutation({
@@ -22,10 +22,10 @@ export const updateMeetingRestrictionDetails = BranchesApi.injectEndpoints({
         }),
 
         updateUser: builder.mutation({
-            query:(body)=>({
-                url: `franchises/updateUser?userId=${body.userId}`,
+            query: (body) => ({
+                url: `${prepairQueryParams('franchises/updateUser', { userId: body.userId })}`,
                 method: 'POST',
-                body: body  
+                body: body
             })
         })
 
