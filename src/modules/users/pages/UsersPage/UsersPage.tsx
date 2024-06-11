@@ -18,6 +18,7 @@ import { isAdmin } from "../../../../utils/appFunctions"
 import Form from "react-bootstrap/esm/Form"
 import { IBranch } from "../../../branches/utils/BranchesInterfaces"
 import { errorToast, successToast } from "../../../../shared/utils/appToaster"
+import AppLoader from "../../../../shared/components/loader/loader"
 
 const UsersPage = () => {
     const navigation = useNavigate();
@@ -40,7 +41,6 @@ const UsersPage = () => {
         } catch (err) {
             errorToast('Try Again!')
         }
-
     }
     useEffect(() => {
         if (!userType) {
@@ -78,10 +78,8 @@ const UsersPage = () => {
                                     <th style={{ width: '150px' }}><p className="tableTitle">Actions</p></th>
                                 </tr>
                             </thead>
+
                             <tbody>
-                                {isError && <tr><td colSpan={5} className="pageStatus"><p>Something went wrong!</p></td></tr>}
-                                {isLoading && <tr><td colSpan={5} className="pageStatus"><p>Loading...</p></td></tr>}
-                                {data?.length === 0 && <tr><td colSpan={5} className="pageStatus"><p>No Data Found</p></td></tr>}
                                 {data && data.franchises.map((user: IUser, index: number) => {
                                     return <>
                                         <tr>
@@ -105,6 +103,9 @@ const UsersPage = () => {
                                 })}
                             </tbody>
                         </Table>
+                        {isError && <div className="emptyTable"><p>Something went wrong!</p></div>}
+                        {isLoading && <div className="emptyTable"><AppLoader></AppLoader></div>}
+                        {data?.franchises?.length === 0 && <div className="emptyTable">No Data Found</div>}
                     </Card.Body>
                 </Card>
             </div></>)

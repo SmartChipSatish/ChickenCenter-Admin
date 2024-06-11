@@ -19,6 +19,7 @@ import dayjs from 'dayjs';
 import { IUser } from "../../../users/utils/userInterfaces";
 import { getOrderDate, isAdmin, isFranchiese, isUser } from "../../../../utils/appFunctions";
 import Button from "react-bootstrap/esm/Button";
+import AppLoader from "../../../../shared/components/loader/loader";
 
 const OrderPage = () => {
     const navigation = useNavigate();
@@ -114,10 +115,6 @@ const OrderPage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {error && <tr><td colSpan={isAdmin(userType) ? 10 : 9} className="pageStatus"><p className="text-center">Something went wrong!</p></td></tr>}
-                            {isLoading && <tr><td colSpan={isAdmin(userType) ? 10 : 9} className="pageStatus"><p className="text-center">Loading...</p></td></tr>}
-                            {data?.orders.length === 0 && <tr><td colSpan={isAdmin(userType) ? 10 : 9} className="pageStatus"><p className="text-center">No Data Found</p></td></tr>}
-
                             {data && data?.orders.map((order: Order, index: number) => <tr>
                                 <td className="tableItem ">{index + 1}</td>
                                 <td className="tableItem curserPointer" onClick={() => {
@@ -131,7 +128,6 @@ const OrderPage = () => {
                                 <td className="tableItem">{order?.userId?.primaryNumber || '---'}</td>
                                 <td className="tableItem">{order?.userId?.primaryAddress?.name}, {order?.userId?.primaryAddress?.houseNo}, {order?.userId?.primaryAddress?.streetName}</td>
 
-                                {/* Admin */}
                                 {isAdmin(userType) && <td className="tableItem">
                                     <Form.Select aria-label="Order Transfer" onChange={(data) => {
                                         orderUpdate({ id: order.id, franchiseId: data?.target?.value })
@@ -141,7 +137,6 @@ const OrderPage = () => {
                                     </Form.Select>
                                 </td>}
 
-                                {/* Franchise  */}
                                 {isFranchiese(userType) && <th className="tableItem">
                                     <Form.Select aria-label="Order Transfer" onChange={(data) => {
                                         assignOrderToAgent({ id: order.id, deliveryAgentId: data?.target?.value })
@@ -165,6 +160,9 @@ const OrderPage = () => {
                             </tr>)}
                         </tbody>
                     </Table>
+                    {error && <div className="emptyTable"><p>Something went wrong!</p></div>}
+                    {isLoading && <div className="emptyTable"><AppLoader></AppLoader></div>}
+                    {data?.orders?.length !== 0 && <div className="emptyTable">No Data Found</div>}
                 </Card.Body>
             </Card>
 
