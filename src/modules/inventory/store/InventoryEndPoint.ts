@@ -1,3 +1,5 @@
+import { prepairQueryParams } from "../../../utils/appFunctions";
+import { IAPIRequest } from "../../../utils/interfaces/appInterfaces";
 import { InventoryApi } from "./InventoryApi";
 
 
@@ -5,7 +7,7 @@ import { InventoryApi } from "./InventoryApi";
 export const InventoryEndPonts = InventoryApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllItems: builder.query({
-            query: () => `items/getAllItems`,
+            query: (body:IAPIRequest) => `${prepairQueryParams('items/getAllItems', body.params)}`,
             providesTags: ['getAll']
         }),
 

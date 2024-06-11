@@ -27,7 +27,11 @@ const OrderPage = () => {
     const navigation = useNavigate();
     const [getAllOrders, { data: allOrdersData, isLoading: allOrdersLoading, error: allOdersError }] = useLazyGetAllOrdersQuery();
     const [getAllFranchiceorders, { data: franchiseOrdersData, isLoading: franchiseOrdersLoading, error: franchiseOrdersError }] = useLazyGetOrderbyFranchiseQuery();
-    const { data: franchies, isLoading: franchiesLoading, isError: franchiesError } = useGetAllFranchisesQuery(undefined);
+    const { data: franchies, isLoading: franchiesLoading, isError: franchiesError } = useGetAllFranchisesQuery({
+        params: {
+            perPage: '', page: ''
+        }
+    });
     const [updateOrderTranfer, { data: updateOrderData, isLoading: updateOrderisLoading, isError: updateOrderError }] = useUpdateOrderTranferMutation();
     const [assignOrder] = useAssignOrderMutation();
     const [getAllFranchisesUsers, { data: franchiesUsers, isLoading: franchiseUsersLoading, isError: franchiseUserError }] = useLazyGetAllFranchisesUsersQuery();
@@ -101,7 +105,7 @@ const OrderPage = () => {
         </div>
         <div className="Orderpage">
             <Card className="h-100">
-                <Card.Body >
+                <Card.Body className={`${!loadingState(isLoading, error, data?.orders) && 'appCard'}`}>
                     <Table hover>
                         <thead>
                             <tr>

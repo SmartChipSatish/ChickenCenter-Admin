@@ -6,18 +6,26 @@ import Card from "react-bootstrap/esm/Card"
 import Button from "react-bootstrap/esm/Button"
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus"
 import { useNavigate } from "react-router-dom"
-import { useGetAllFranchisesQuery } from "../../store/branchesEndPoint"
-import { useEffect } from "react"
+import { useGetAllFranchisesQuery, useLazyGetAllFranchisesQuery } from "../../store/branchesEndPoint"
+import { useEffect, useState } from "react"
 import { IBranch } from "../../utils/BranchesInterfaces"
+import AppLoader from "../../../../shared/components/loader/loader"
+import Pagination from "@material-ui/lab/Pagination"
+import { perPage } from "../../../../utils/appConstants"
+import { loadingState } from "../../../../utils/appFunctions"
 
 const BranchesPage = () => {
-    const { data, isLoading, isError } = useGetAllFranchisesQuery(undefined)
+    const [getAllFranchises, { data, isLoading, isError }] = useLazyGetAllFranchisesQuery()
     const navigation = useNavigate();
-
+    const [page, setPage] = useState(1);
     const createBranch = () => {
         navigation('create');
     }
-
+    useEffect(() => {
+        getAllFranchises({
+            params: { page, perPage }
+        })
+    }, [page])
     return (
         <>
             <div className="d-flex justify-content-between pageTitleSpace">
@@ -28,7 +36,7 @@ const BranchesPage = () => {
             </div>
             <div className="BranchesPage">
                 <Card className="h-100">
-                    <Card.Body >
+                    <Card.Body className={`${!loadingState(isLoading, isError, data?.franchises) && 'appCard'}`}>
                         <Table hover>
                             <thead>
                                 <tr>
@@ -40,9 +48,6 @@ const BranchesPage = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {isError && <tr><td colSpan={6}><p>Something went wrong!</p></td></tr>}
-                                {isLoading && <tr><td colSpan={6}><p>Loading...</p></td></tr>}
-                                {data?.length === 0 && <tr><td colSpan={6}><p>No Data Found</p></td></tr>}
                                 {data && data?.franchises.map((branch: IBranch, index: number) =>
 
                                     <tr className="appRow">
@@ -55,6 +60,14 @@ const BranchesPage = () => {
                                 )}
                             </tbody>
                         </Table>
+                        {isError && <div className="emptyTable"><p>Something went wrong!</p></div>}
+                        {isLoading && <div className="emptyTable"><AppLoader></AppLoader></div>}
+                        {data?.franchises?.length === 0 && <div className="emptyTable">No Data Found</div>}
+                        {data?.totalFranchises > 10 && <div className="d-flex justify-content-end">
+                            <Pagination count={data.totalPages}
+                                shape="rounded" onChange={(_, value: number) => {
+                                    setPage(value);
+                                }} /></div>}
                     </Card.Body>
                 </Card>
             </div></>)

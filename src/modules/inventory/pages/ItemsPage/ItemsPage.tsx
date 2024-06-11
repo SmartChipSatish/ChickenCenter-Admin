@@ -8,16 +8,20 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLazyGetAllItemsQuery } from "../../store/InventoryEndPoint";
 import { IItem } from "../../Utils/InventoryInterfaces";
+import { loadingState } from "../../../../utils/appFunctions";
+import AppLoader from "../../../../shared/components/loader/loader";
+import Pagination from "@material-ui/lab/Pagination";
+import { perPage } from "../../../../utils/appConstants";
 
 /**
  * Items Page
  * @returns Jsx Element
  */
 const ItemsPage = () => {
-    const [getAllItems, { data, isLoading, error }] = useLazyGetAllItemsQuery();
+    const [getAllItems, { data, isLoading, isError }] = useLazyGetAllItemsQuery();
     const navigation = useNavigate();
     const [show, setShow] = useState(false);
-
+    const [page, setPage] = useState(1)
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -27,8 +31,12 @@ const ItemsPage = () => {
     }
 
     useEffect(() => {
-        getAllItems(undefined)
-    }, [])
+        getAllItems({
+            params: {
+                perPage, page
+            }
+        })
+    }, [page])
 
     return (<>
         <div className="d-flex justify-content-between pageTitleSpace">
@@ -39,7 +47,7 @@ const ItemsPage = () => {
         </div>
         <div className="itemsPage">
             <Card className="h-100">
-                <Card.Body >
+                <Card.Body className={`${!loadingState(isLoading, isError, data?.items) && 'appCard'}`} >
                     <Table hover>
                         <thead>
                             <tr>
@@ -52,9 +60,6 @@ const ItemsPage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {error && <tr><td colSpan={6} className="pageStatus"><p>Something went wrong!</p></td></tr>}
-                            {isLoading && <tr><td colSpan={6} className="pageStatus"><p>Loading...</p></td></tr>}
-                            {data?.items.length === 0 && <tr><td colSpan={6} className="pageStatus"><p>No Data Found</p></td></tr>}
                             {data && data?.items.map((item: IItem, index: number) =>
                                 <tr className="appRow">
                                     <td className="tableItem indexWidth">{index + 1}</td>
@@ -71,6 +76,14 @@ const ItemsPage = () => {
                             )}
                         </tbody>
                     </Table>
+                    {isError && <div className="emptyTable"><p>Something went wrong!</p></div>}
+                    {isLoading && <div className="emptyTable"><AppLoader></AppLoader></div>}
+                    {data?.items?.length === 0 && <div className="emptyTable">No Data Found</div>}
+                    {data?.totalItems > 10 && <div className="d-flex justify-content-end">
+                        <Pagination count={data.totalPages}
+                            shape="rounded" onChange={(_, value: number) => {
+                                setPage(value);
+                            }} /></div>}
                 </Card.Body>
 
             </Card>

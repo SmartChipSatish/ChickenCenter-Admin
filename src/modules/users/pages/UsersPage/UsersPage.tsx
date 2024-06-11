@@ -25,7 +25,11 @@ import { perPage } from "../../../../utils/appConstants"
 const UsersPage = () => {
     const navigation = useNavigate();
     const [getAllFranchisesUsers, { data, isLoading, isError }] = useLazyGetAllFranchisesUsersQuery();
-    const { data: franchies, isLoading: franchiesLoading, isError: franchiesError } = useGetAllFranchisesQuery(undefined);
+    const { data: franchies, isLoading: franchiesLoading, isError: franchiesError } = useGetAllFranchisesQuery({
+        params: {
+            perPage: '', page: ''
+        }
+    });
     const [update] = useUpdateUserMutation()
     const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
     const userType = UserTypeHook();
@@ -73,7 +77,7 @@ const UsersPage = () => {
             </div>
             <div className="usersPage">
                 <Card className="h-100">
-                    <Card.Body>
+                    <Card.Body className={`${!loadingState(isLoading, isError, data?.franchises) && 'appCard'}`}>
                         <Table hover >
                             <thead>
                                 <tr>
