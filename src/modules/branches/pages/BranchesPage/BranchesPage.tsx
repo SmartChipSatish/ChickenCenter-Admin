@@ -45,15 +45,14 @@ const BranchesPage = () => {
                                 {data?.length === 0 && <tr><td colSpan={6}><p>No Data Found</p></td></tr>}
                                 {data && data?.franchises.map((branch: IBranch, index: number) =>
 
-                                    <tr>
+                                    <tr className="appRow">
                                         <td className="tableItem">{index + 1}</td>
-                                        <td className="tableItem text-capitalize"><p className="BranchesPage-id">{branch.name}</p></td>
+                                        <td className="tableItem text-capitalize"><p className="BranchesPage-id primaryValue">{branch.name}</p></td>
                                         <td className="tableItem"><p className="BranchesPage-id">{branch?.currentOrders || 0}</p></td>
                                         <td className="tableItem"><p className="BranchesPage-id">{branch.address.name || '---'} ,{branch.address.city}</p></td>
-                                        <td ><FontAwesomeIcon icon={faEye} className="BranchesPage-actions BranchesPage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="BranchesPage-actions"></FontAwesomeIcon></td>
+                                        <td className="align-middle"><FontAwesomeIcon icon={faEye} className="BranchesPage-actions BranchesPage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="BranchesPage-actions"></FontAwesomeIcon></td>
                                     </tr>
                                 )}
-
                             </tbody>
                         </Table>
                     </Card.Body>

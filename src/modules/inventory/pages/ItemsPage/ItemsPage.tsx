@@ -56,13 +56,13 @@ const ItemsPage = () => {
                             {isLoading && <tr><td colSpan={6} className="pageStatus"><p>Loading...</p></td></tr>}
                             {data?.items.length === 0 && <tr><td colSpan={6} className="pageStatus"><p>No Data Found</p></td></tr>}
                             {data && data?.items.map((item: IItem, index: number) =>
-                                <tr>
+                                <tr className="appRow">
                                     <td className="tableItem indexWidth">{index + 1}</td>
                                     <td className="tableItem imgWidth"> <Image className="itemImg" src={item.imageUrl || "https://www.licious.in/blog/wp-content/uploads/2022/03/Chicken-Curry-Cut-min-1.png"} roundedCircle /></td>
-                                    <td className="tableItem">{item.itemName}</td>
+                                    <td className="tableItem"><p className="primaryValue">{item.itemName}</p></td>
                                     <td className="tableItem"> <div className="d-flex"><p className="fw-bold me-1"> <FontAwesomeIcon icon={faRupeeSign} /> {item.itemPrice}</p> / <p className="ms-1">{item.itemQty}</p></div></td>
                                     <td className="tableItem"><p className={`pending ${item.globalItemStatus && 'completed'}`}>{item.globalItemStatus ? 'Available' : 'Out of stock'}</p> </td>
-                                    <td className="tableItem"><FontAwesomeIcon icon={faEdit} className="itemEdit" onClick={() => {
+                                    <td className="tableItem align-middle"><FontAwesomeIcon icon={faEdit} className="itemEdit" onClick={() => {
                                         navigation(`updateItem/${item?._id}`)
                                     }}></FontAwesomeIcon> <FontAwesomeIcon icon={faTrash} className=" itemEdit" onClick={() => {
                                         handleShow()

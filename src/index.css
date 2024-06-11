@@ -72,6 +72,17 @@ p {
   font-size: 14px;
 }
 
+.MuiPaginationItem-page.Mui-selected {
+  background-color: var(--appTheam) !important;
+  color: white !important;
+}
+/* tr {
+  height: 4rem;
+} */
+
+.appRow {
+  height: 4rem;
+}
 /* option {
   padding: 5px;
   color: var(--appTheam);
@@ -121,7 +132,11 @@ option:hover {
 
 .tableAction {
   vertical-align: middle;
+}
 
+.primaryValue {
+  color: var(--appTheam);
+  cursor: pointer;
 }
 
 .errorlabel {

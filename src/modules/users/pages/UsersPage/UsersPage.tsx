@@ -7,18 +7,20 @@ import Card from "react-bootstrap/esm/Card"
 import Button from "react-bootstrap/esm/Button"
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus"
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGetAllFranchisesQuery, useLazyGetAllFranchisesUsersQuery, useUpdateUserMutation } from "../../../branches/store/branchesEndPoint";
 import { useSelector } from "react-redux";
 import { IUser } from "../../utils/userInterfaces";
 import './UsersPage.scss';
 import { UserTypeHook } from "../../../../utils/hooks/userTypeHook"
 import { FRANCHISETYPE } from "../../../../utils/interfaces/appInterfaces"
-import { isAdmin } from "../../../../utils/appFunctions"
+import { isAdmin, loadingState } from "../../../../utils/appFunctions"
 import Form from "react-bootstrap/esm/Form"
 import { IBranch } from "../../../branches/utils/BranchesInterfaces"
 import { errorToast, successToast } from "../../../../shared/utils/appToaster"
 import AppLoader from "../../../../shared/components/loader/loader"
+import Pagination from '@material-ui/lab/Pagination';
+import { perPage } from "../../../../utils/appConstants"
 
 const UsersPage = () => {
     const navigation = useNavigate();
@@ -26,7 +28,8 @@ const UsersPage = () => {
     const { data: franchies, isLoading: franchiesLoading, isError: franchiesError } = useGetAllFranchisesQuery(undefined);
     const [update] = useUpdateUserMutation()
     const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
-    const userType = UserTypeHook()
+    const userType = UserTypeHook();
+    const [page, SetPage] = useState(1);
 
     const createBranch = () => {
         navigation('create');
@@ -47,13 +50,17 @@ const UsersPage = () => {
             return
         }
         if (userType === FRANCHISETYPE.FRANCHISE) {
-            getAllFranchisesUsers({ franchiseId: userInfo?.id, userType: FRANCHISETYPE.DELIVERYAGENTS })
+            getAllFranchisesUsers({
+                params: { franchiseId: userInfo?.id, userType: FRANCHISETYPE.DELIVERYAGENTS, perPage, page },
+            })
         }
         if (userType === FRANCHISETYPE.ADMIN) {
-            getAllFranchisesUsers({ userType: FRANCHISETYPE.DELIVERYAGENTS })
+            getAllFranchisesUsers({
+                params: { userType: FRANCHISETYPE.DELIVERYAGENTS, perPage, page }
+            })
         }
 
-    }, [userType]);
+    }, [userType, page]);
 
 
     return (
@@ -66,8 +73,8 @@ const UsersPage = () => {
             </div>
             <div className="usersPage">
                 <Card className="h-100">
-                    <Card.Body >
-                        <Table hover>
+                    <Card.Body>
+                        <Table hover className={`${!loadingState(isLoading, isError, data?.franchises) && 'tableHeight'}`} >
                             <thead>
                                 <tr>
                                     <th><p className="tableTitle">#</p></th>
@@ -82,9 +89,9 @@ const UsersPage = () => {
                             <tbody>
                                 {data && data.franchises.map((user: IUser, index: number) => {
                                     return <>
-                                        <tr>
+                                        <tr className="appRow">
                                             <td className="tableItem">{index + 1}</td>
-                                            <td className="tableItem"><p className="usersPage-id text-capitalize">{user.name}</p></td>
+                                            <td className="tableItem primaryValue"><p className="primaryValue text-capitalize">{user.name}</p></td>
                                             <td className="tableItem"><p className="usersPage-id">{user?.primaryNumber}</p></td>
                                             {isAdmin(userType) && <td className="tableItem">
                                                 <Form.Select aria-label="Order Transfer" onChange={(data) => {
@@ -97,7 +104,7 @@ const UsersPage = () => {
                                                 </Form.Select>
                                             </td>}
                                             <td className="tableItem"><p className="usersPage-id text-nowrap">{user?.address.city}, {user?.address.state}</p></td>
-                                            <td ><FontAwesomeIcon icon={faEye} className="usersPage-actions usersPage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="usersPage-actions"></FontAwesomeIcon></td>
+                                            <td className="align-middle" ><FontAwesomeIcon icon={faEye} className="usersPage-actions usersPage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="usersPage-actions"></FontAwesomeIcon></td>
                                         </tr>
                                     </>
                                 })}
@@ -106,6 +113,11 @@ const UsersPage = () => {
                         {isError && <div className="emptyTable"><p>Something went wrong!</p></div>}
                         {isLoading && <div className="emptyTable"><AppLoader></AppLoader></div>}
                         {data?.franchises?.length === 0 && <div className="emptyTable">No Data Found</div>}
+                        {data?.totalFranchises > 10 && <div className="d-flex justify-content-end">
+                            <Pagination count={data.totalPages} shape="rounded" onChange={(_, value: number) => {
+                                console.log('value', value);
+                                SetPage(value);
+                            }} /></div>}
                     </Card.Body>
                 </Card>
             </div></>)

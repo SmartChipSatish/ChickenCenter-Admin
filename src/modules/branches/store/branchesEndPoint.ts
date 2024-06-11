@@ -1,3 +1,5 @@
+import { prepairQueryParams } from "../../../utils/appFunctions";
+import { IAPIRequest } from "../../../utils/interfaces/appInterfaces";
 import { BranchesApi } from "./branchesApi";
 
 
@@ -5,11 +7,10 @@ export const updateMeetingRestrictionDetails = BranchesApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllFranchises: builder.query({
             query: () => `franchises/getAllFranchises`,
-            // providesTags: ['getAll']
         }),
 
         getAllFranchisesUsers: builder.query({
-            query: (body) => `franchises/getAllusers?userType=${body?.userType}${body.franchiseId ? `&franchiseId=${body.franchiseId}`:''}`,
+            query: (body:IAPIRequest) => `franchises/getAllusers${prepairQueryParams(body?.params)}`,
         }),
 
         createFranchisesOrUser: builder.mutation({
@@ -18,7 +19,6 @@ export const updateMeetingRestrictionDetails = BranchesApi.injectEndpoints({
                 method: 'POST',
                 body: body
             }),
-            // invalidatesTags: ['getAll'],
         }),
 
         updateUser: builder.mutation({

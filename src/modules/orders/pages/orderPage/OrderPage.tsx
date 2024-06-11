@@ -64,7 +64,7 @@ const OrderPage = () => {
     const getAllMyOrders = useCallback(() => {
         if (userType === FRANCHISETYPE.FRANCHISE) {
             getAllFranchiceorders({ franchiseId: userInfo?.id });
-            getAllFranchisesUsers({ franchiseId: userInfo?.id, userType: FRANCHISETYPE.DELIVERYAGENTS })
+            getAllFranchisesUsers({ params: { franchiseId: userInfo?.id, userType: FRANCHISETYPE.DELIVERYAGENTS } })
         }
         if (userType === FRANCHISETYPE.ADMIN) {
             getAllOrders(undefined);
@@ -115,7 +115,7 @@ const OrderPage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {data && data?.orders.map((order: Order, index: number) => <tr>
+                            {data && data?.orders.map((order: Order, index: number) => <tr className="appRow">
                                 <td className="tableItem ">{index + 1}</td>
                                 <td className="tableItem curserPointer" onClick={() => {
                                     getOrderDetails(order?.id);
@@ -146,7 +146,7 @@ const OrderPage = () => {
                                     </Form.Select>
                                 </th>}
 
-                                <td className="text-nowrap">
+                                <td className="text-nowrap align-middle">
                                     {(isAdmin(userType) || isFranchiese(userType)) && <><FontAwesomeIcon icon={faEye} className="Orderpage-actions Orderpage-eye" onClick={() => {
                                         getOrderDetails(order?.id);
                                     }}></FontAwesomeIcon> <FontAwesomeIcon icon={faClose} className="Orderpage-actions" onClick={() => {
