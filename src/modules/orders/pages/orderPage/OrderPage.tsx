@@ -15,33 +15,30 @@ import { useSelector } from "react-redux";
 import { UserTypeHook } from "../../../../utils/hooks/userTypeHook";
 import { FRANCHISETYPE } from "../../../../utils/interfaces/appInterfaces";
 import { OrderStatus } from "../../../../shared/components/OrderStatusComponet/OrderStatusComponent";
-import dayjs from 'dayjs';
 import { IUser } from "../../../users/utils/userInterfaces";
 import { getOrderDate, isAdmin, isFranchiese, isUser, loadingState } from "../../../../utils/appFunctions";
 import Button from "react-bootstrap/esm/Button";
 import AppLoader from "../../../../shared/components/loader/loader";
 import Pagination from "@material-ui/lab/Pagination";
 import { perPage } from "../../../../utils/appConstants";
+import { useGetAllOrders } from "../../../../shared/hooks/OrdersHook/OrdersHook";
 
 const OrderPage = () => {
     const navigation = useNavigate();
-    const [getAllOrders, { data: allOrdersData, isLoading: allOrdersLoading, error: allOdersError }] = useLazyGetAllOrdersQuery();
-    const [getAllFranchiceorders, { data: franchiseOrdersData, isLoading: franchiseOrdersLoading, error: franchiseOrdersError }] = useLazyGetOrderbyFranchiseQuery();
-    const { data: franchies, isLoading: franchiesLoading, isError: franchiesError } = useGetAllFranchisesQuery({
+    const { data: franchies } = useGetAllFranchisesQuery({
         params: {
             perPage: '', page: ''
         }
     });
-    const [updateOrderTranfer, { data: updateOrderData, isLoading: updateOrderisLoading, isError: updateOrderError }] = useUpdateOrderTranferMutation();
+    const [getAllFranchisesUsers, { data: franchiesUsers }] = useLazyGetAllFranchisesUsersQuery();
+    const [updateOrderTranfer] = useUpdateOrderTranferMutation();
     const [assignOrder] = useAssignOrderMutation();
-    const [getAllFranchisesUsers, { data: franchiesUsers, isLoading: franchiseUsersLoading, isError: franchiseUserError }] = useLazyGetAllFranchisesUsersQuery();
     const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
     const userType = UserTypeHook()
-    const [isLoading, SetLoading] = useState<any>(null);
-    const [data, SetData] = useState<any>(null);
-    const [error, SetError] = useState<any>(null);
     const [page, setPage] = useState(1);
-
+    const { data, isError, isLoading } = useGetAllOrders({
+        perPage, page
+    })
     const getOrderDetails = (id: string) => {
         navigation(`orderDetails/${id}`)
     }
@@ -49,9 +46,10 @@ const OrderPage = () => {
     const orderUpdate = async (data: { id: string, franchiseId: string }) => {
         try {
             const orderTransfer = await updateOrderTranfer(data);
-            // if(orderTransfer)
-            successToast('Order transfered succesfully');
-            getAllMyOrders();
+            if (orderTransfer?.data) {
+                successToast('Order transfered succesfully');
+            }
+
         } catch (e) {
             console.log('e', e)
         }
@@ -61,43 +59,21 @@ const OrderPage = () => {
         try {
             const assignOrderToDeliveryAgent = await assignOrder(data);
             console.log('assignOrderToDeliveryAgent', assignOrderToDeliveryAgent, data);
-            successToast('Order Assigned succesfully');
+            if (assignOrderToDeliveryAgent?.data) {
+                successToast('Order Assigned succesfully');
+            }
+
         } catch (e) {
             console.log('e', e)
         }
     }
 
-    const getAllMyOrders = useCallback(() => {
+    useEffect(() => {
         if (userType === FRANCHISETYPE.FRANCHISE) {
-            getAllFranchiceorders({
-                params: { franchiseId: userInfo?.id, perPage, page }
-            });
             getAllFranchisesUsers({ params: { franchiseId: userInfo?.id, userType: FRANCHISETYPE.DELIVERYAGENTS } })
         }
-        if (userType === FRANCHISETYPE.ADMIN) {
-            getAllOrders({ params: { perPage, page } });
-        }
-    }, [userType, page])
-
-    useEffect(() => {
-        getAllMyOrders()
     }, [userType, page]);
 
-    useEffect(() => {
-        SetLoading(allOrdersLoading)
-        SetData(allOrdersData)
-        SetError(allOdersError)
-    }, [allOrdersData, , allOrdersLoading, allOdersError]);
-
-    useEffect(() => {
-        SetLoading(franchiseOrdersLoading)
-        SetData(franchiseOrdersData)
-        SetError(franchiseOrdersError)
-    }, [franchiseOrdersData, , franchiseOrdersLoading, franchiseOrdersError])
-
-
-    useEffect(() => { }, [updateOrderData, updateOrderisLoading, updateOrderError]);
-    useEffect(() => { }, [franchiesLoading, franchiesError]);
 
     return (<>
         <div className="d-flex justify-content-between pageTitleSpace">
@@ -105,7 +81,7 @@ const OrderPage = () => {
         </div>
         <div className="Orderpage">
             <Card className="h-100">
-                <Card.Body className={`${!loadingState(isLoading, error, data?.orders) && 'appCard'}`}>
+                <Card.Body className={`${!loadingState(isLoading, isError, data?.orders) && 'appCard'}`}>
                     <Table hover>
                         <thead>
                             <tr>
@@ -168,7 +144,7 @@ const OrderPage = () => {
                             </tr>)}
                         </tbody>
                     </Table>
-                    {error && <div className="emptyTable"><p>Something went wrong!</p></div>}
+                    {isError && <div className="emptyTable"><p>Something went wrong!</p></div>}
                     {isLoading && <div className="emptyTable"><AppLoader></AppLoader></div>}
                     {data?.orders?.length === 0 && <div className="emptyTable">No Data Found</div>}
                     {data?.totalOrders > 10 && <div className="d-flex justify-content-end">
