@@ -78,7 +78,9 @@ p {
   background-color: var(--appTheam) !important;
   color: white !important;
 }
-
+.form-select {
+  line-height: 1.5 !important;
+}
 /* tr {
   height: 4rem;
 } */

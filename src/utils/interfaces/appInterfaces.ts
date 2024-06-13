@@ -7,3 +7,8 @@ export interface IAPIRequest {
     params?: Object,
     body?: Object
 }
+
+export interface IOrdersPage {
+    isPagination?: boolean,
+    perPage: number
+}
