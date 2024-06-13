@@ -20,7 +20,6 @@ import { FRANCHISETYPE, IOrdersPage } from "../../../utils/interfaces/appInterfa
 import { useSelector } from "react-redux";
 export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) => {
     const userType = UserTypeHook();
-    const { data, isLoading, isError } = useGetAllOrders({ perPage, page: 1 });
     const { data: franchies } = useGetAllFranchisesQuery({
         params: {
             perPage: '', page: ''
@@ -29,6 +28,7 @@ export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) =
     const [updateOrderTranfer] = useUpdateOrderTranferMutation();
     const [assignOrder] = useAssignOrderMutation();
     const [page, setPage] = useState(1);
+    const { data, isLoading, isError } = useGetAllOrders({ perPage, page: page });
     const [getAllFranchisesUsers, { data: franchiesUsers }] = useLazyGetAllFranchisesUsersQuery();
     const navigation = useNavigate();
     const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
@@ -66,7 +66,7 @@ export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) =
             getAllFranchisesUsers({ params: { franchiseId: userInfo?.id, userType: FRANCHISETYPE.DELIVERYAGENTS } })
         }
     }, [userType, page]);
-    
+
     return <>
         <Table hover>
             <thead>
