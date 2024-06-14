@@ -1,31 +1,14 @@
-import { faClose, faEdit, faEye } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Table from "react-bootstrap/esm/Table"
 import './OrderPage.scss'
-import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/esm/Card";
-import { useLazyGetOrderbyFranchiseQuery, useLazyGetAllOrdersQuery, useUpdateOrderTranferMutation, useAssignOrderMutation } from "../../Store/ordersEndpoints";
-import { useCallback, useEffect, useState } from "react";
-import { ORDERSTATUS, Order, PAYMENTSTATUS, STATUSTYPES } from "../../util/ordersInterfaces";
-import { useGetAllFranchisesQuery, useLazyGetAllFranchisesUsersQuery } from "../../../branches/store/branchesEndPoint";
-import { IBranch } from "../../../branches/utils/BranchesInterfaces";
-import Form from "react-bootstrap/esm/Form";
-import { successToast } from "../../../../shared/utils/appToaster";
-import { useSelector } from "react-redux";
-import { UserTypeHook } from "../../../../utils/hooks/userTypeHook";
-import { FRANCHISETYPE } from "../../../../utils/interfaces/appInterfaces";
-import { OrderStatus } from "../../../../shared/components/OrderStatusComponet/OrderStatusComponent";
-import { IUser } from "../../../users/utils/userInterfaces";
-import { getOrderDate, isAdmin, isFranchiese, isUser, loadingState } from "../../../../utils/appFunctions";
-import Button from "react-bootstrap/esm/Button";
-import AppLoader from "../../../../shared/components/loader/loader";
-import Pagination from "@material-ui/lab/Pagination";
+import {  useState } from "react";
 import { perPage } from "../../../../utils/appConstants";
 import { useGetAllOrders } from "../../../../shared/hooks/OrdersHook/OrdersHook";
 import { AllOrdersListComponent } from "../../../../shared/components/AllOrdersList/AllOrdersListComponent";
+import { loadingState } from '../../../../utils/appFunctions';
 
 const OrderPage = () => {
-    const [page, setPage] = useState(1);
+    const [page] = useState(1);
+
     const { data, isError, isLoading } = useGetAllOrders({
         perPage, page
     })

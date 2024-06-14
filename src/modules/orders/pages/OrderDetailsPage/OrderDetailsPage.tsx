@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useLazyGetOrderByIdQuery } from "../../Store/ordersEndpoints";
 import { useEffect } from "react";
 import AppLoader from "../../../../shared/components/loader/loader";
-import { getOrderDate } from "../../../../utils/appFunctions";
+import { getOrderDate, getOrderSmallId } from "../../../../utils/appFunctions";
 import './OrderDetailsPage.scss'
 import { ORDERSTATUS, Order, PAYMENTSTATUS, STATUSTYPES, IItem } from "../../util/ordersInterfaces";
 import { OrderStatus } from "../../../../shared/components/OrderStatusComponet/OrderStatusComponent";
@@ -23,8 +23,8 @@ const OrderDetailPage = () => {
 
     return (
         <>
-            <div className="d-flex justify-content-between pageTitleSpace">
-                <p className="pageTile">Order</p>
+            <div className="d-flex align-items-center pageTitleSpace">
+                <p className="pageTile">Order</p> {data?._id && <span className="orderid text-uppercase" title={data?._id}>#{getOrderSmallId(data?._id || '')}</span>}
             </div>
             {isLoading && <div className="h-100 w-100 d-flex justify-content-center align-items-center"><AppLoader></AppLoader></div>}
             {isError && <div className="h-100 w-100 d-flex justify-content-center align-items-center"><p>Something went wrong!</p></div>}
@@ -33,7 +33,7 @@ const OrderDetailPage = () => {
                     <Col md={8}>
                         <Card>
                             <Card.Header className="d-flex appCardTitle justify-content-between"> <div className="d-flex">
-                                Order details <span className="badge itemsCount  rounded-circle ms-1">{data?.items?.length}</span>
+                                Order Details <span className="badge itemsCount  rounded-circle ms-1">{data?.items?.length}</span>
                             </div>  <div><OrderStatus label={data?.orderStatus} status={data?.orderStatus} type={STATUSTYPES.Order} /></div> </Card.Header>
                             <Card.Body className="userCardBoady">
                                 {data.items && data?.items?.map((item: IItem) => {

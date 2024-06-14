@@ -1,5 +1,5 @@
 import { Button, Form, Table } from "react-bootstrap";
-import { getOrderDate, isAdmin, isFranchiese, isUser } from "../../../utils/appFunctions";
+import { getOrderDate, getOrderSmallId, isAdmin, isFranchiese, isUser } from "../../../utils/appFunctions";
 import { UserTypeHook } from "../../../utils/hooks/userTypeHook";
 import { Order, STATUSTYPES } from "../../../modules/orders/util/ordersInterfaces";
 import { useGetAllOrders } from "../../hooks/OrdersHook/OrdersHook";
@@ -89,7 +89,7 @@ export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) =
                     <td className="tableItem ">{index + 1}</td>
                     <td className="tableItem curserPointer" onClick={() => {
                         getOrderDetails(order?.id);
-                    }}><p className="Orderpage-id">{`#${order?.id}`}</p></td>
+                    }}><p className="Orderpage-id text-uppercase">{`#${getOrderSmallId(order?.id)}`}</p></td>
                     <td className="tableItem text-nowrap">{getOrderDate(order?.date)} </td>
                     <td className="tableItem text-capitalize">{order.userId?.name || '---'}</td>
                     <td className="tableItem text-capitalize"><OrderStatus label={order?.orderStatus} status={order?.orderStatus} type={STATUSTYPES.Order} /></td>

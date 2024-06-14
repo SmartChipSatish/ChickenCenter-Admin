@@ -33,3 +33,7 @@ export const prepairQueryParams = (url: string, params: Object = {}) => {
 export const loadingState = (isLoading: boolean, isError: boolean, data: []) => {
     return isLoading || isError || data?.length === 0;
 }
+
+export const getOrderSmallId = (orderId: string) => {
+    return orderId?.substr(orderId.length - 5) || '';
+}
