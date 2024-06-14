@@ -10,3 +10,16 @@ export interface IUser {
     franchiseId:string;
     _id: string;
 }
+
+export const UserForm = {
+    Name: 'name',
+    UserName: 'userName',
+    Password: 'password',
+    PrimaryNumber: 'primaryNumber',
+    HouseNo: 'houseNo',
+    StreetName: 'streetName',
+    City: 'city',
+    Pincode: 'pincode',
+    Landmark: 'landmark',
+    State: 'state'
+}

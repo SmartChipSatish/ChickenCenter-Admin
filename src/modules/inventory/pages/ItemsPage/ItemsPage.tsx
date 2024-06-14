@@ -61,7 +61,7 @@ const ItemsPage = () => {
                         </thead>
                         <tbody>
                             {data && data?.items.map((item: IItem, index: number) =>
-                                <tr className="appRow">
+                                <tr className="appRow" key={item?._id}>
                                     <td className="tableItem indexWidth">{index + 1}</td>
                                     <td className="tableItem imgWidth"> <Image className="itemImg" src={item.imageUrl || "https://www.licious.in/blog/wp-content/uploads/2022/03/Chicken-Curry-Cut-min-1.png"} roundedCircle /></td>
                                     <td className="tableItem"><p className="primaryValue">{item.itemName}</p></td>

@@ -88,7 +88,7 @@ export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) =
                 </tr>
             </thead>
             <tbody>
-                {data && data?.orders.map((order: Order, index: number) => <tr className="appRow">
+                {data && data?.orders.map((order: Order, index: number) => <tr className="appRow" key={order?.id}>
                     <td className="tableItem ">{index + 1}</td>
                     <td className="tableItem curserPointer" onClick={() => {
                         getOrderDetails(order?.id);

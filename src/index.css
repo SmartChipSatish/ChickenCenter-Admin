@@ -41,6 +41,7 @@ p {
 .card {
   border: var(--bs-card-border-width) solid #5352521a;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  /* overflow:scroll; */
 }
 
 .btn-outline-primary {

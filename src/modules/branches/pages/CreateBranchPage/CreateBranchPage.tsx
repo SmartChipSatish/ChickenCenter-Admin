@@ -55,7 +55,7 @@ const CreateBranchPage = () => {
             if (id) {
                 const branchUpdate = await updateFranchise({
                     params: {
-                        franchiseId: id
+                        userId: id
                     },
                     body: newBranchObj
                 });

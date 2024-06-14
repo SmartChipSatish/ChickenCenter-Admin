@@ -1,5 +1,5 @@
 
-import { faEdit, faEye } from "@fortawesome/free-solid-svg-icons"
+import { faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Table from "react-bootstrap/esm/Table"
 
@@ -93,7 +93,7 @@ const UsersPage = () => {
                             <tbody>
                                 {data && data.franchises.map((user: IUser, index: number) => {
                                     return <>
-                                        <tr className="appRow">
+                                        <tr className="appRow" key={user?.id}>
                                             <td className="tableItem">{index + 1}</td>
                                             <td className="tableItem primaryValue"><p className="primaryValue text-capitalize">{user.name}</p></td>
                                             <td className="tableItem"><p className="usersPage-id">{user?.primaryNumber}</p></td>
@@ -108,7 +108,13 @@ const UsersPage = () => {
                                                 </Form.Select>
                                             </td>}
                                             <td className="tableItem"><p className="usersPage-id text-nowrap">{user?.address.city}, {user?.address.state}</p></td>
-                                            <td className="align-middle" ><FontAwesomeIcon icon={faEye} className="usersPage-actions usersPage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="usersPage-actions"></FontAwesomeIcon></td>
+                                            <td className="align-middle" >
+                                                <FontAwesomeIcon icon={faEdit} className="usersPage-actions usersPage-eye" onClick={() => {
+                                                    navigation(`update/${user.id}`)
+                                                }}></FontAwesomeIcon> <FontAwesomeIcon icon={faTrash} className="itemEdit deleteIcon" onClick={() => {
+                                                    // handleShow()
+                                                }}></FontAwesomeIcon>
+                                            </td>
                                         </tr>
                                     </>
                                 })}

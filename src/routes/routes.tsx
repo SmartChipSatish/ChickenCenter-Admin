@@ -134,6 +134,13 @@ export default function AppRoutes() {
                 </Suspense>
               }>
             </Route>
+            <Route path="update/:id"
+              element={
+                <Suspense>
+                  <CreateUserPage />
+                </Suspense>
+              }>
+            </Route>
 
           </Route>
           <Route path="inventory"

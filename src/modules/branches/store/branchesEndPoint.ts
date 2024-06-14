@@ -35,7 +35,7 @@ export const updateMeetingRestrictionDetails = BranchesApi.injectEndpoints({
             query: (body: IAPIRequest) => ({
                 url: `${prepairQueryParams('franchises/updateFranchise', body.params)}`,
                 method: 'POST',
-                body: body
+                body: body.body
             })
         }),
         // franchises/updateFranchise

@@ -14,6 +14,7 @@ import Pagination from "@material-ui/lab/Pagination"
 import { perPage } from "../../../../utils/appConstants"
 import { loadingState } from "../../../../utils/appFunctions"
 import Modal from "react-bootstrap/esm/Modal"
+import { FRANCHISETYPE } from "../../../../utils/interfaces/appInterfaces"
 
 const BranchesPage = () => {
     const [getAllFranchises, { data, isLoading, isError }] = useLazyGetAllFranchisesQuery()
@@ -30,7 +31,11 @@ const BranchesPage = () => {
     }
     useEffect(() => {
         getAllFranchises({
-            params: { page, perPage }
+            params: {
+                page,
+                perPage,
+                userType: FRANCHISETYPE.FRANCHISE
+            }
         })
     }, [page])
     return (
@@ -58,7 +63,7 @@ const BranchesPage = () => {
                             <tbody>
                                 {data && data?.franchises.map((branch: IBranch, index: number) =>
 
-                                    <tr className="appRow">
+                                    <tr className="appRow" key={branch._id}>
                                         <td className="tableItem">{index + 1}</td>
                                         <td className="tableItem text-capitalize" onClick={() => {
                                             editBranch(branch._id)
