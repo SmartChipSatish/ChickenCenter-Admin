@@ -9,3 +9,17 @@ export interface IBranch {
     _id: string;
     currentOrders: number;
 }
+
+
+export const BranchFields = {
+    Name: 'name',
+    UserName: 'userName',
+    Password: 'password',
+    PrimaryNumber: 'primaryNumber',
+    HouseNo: 'houseNo',
+    StreetName: 'streetName',
+    City: 'city',
+    Pincode: 'pincode',
+    Landmark: 'landmark',
+    State: 'state'
+}

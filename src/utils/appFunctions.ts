@@ -37,3 +37,7 @@ export const loadingState = (isLoading: boolean, isError: boolean, data: []) => 
 export const getOrderSmallId = (orderId: string) => {
     return orderId?.substr(orderId.length - 5) || '';
 }
+
+export const hasKey = (formObj: Object, keyName: string) => {
+    return Object.keys(formObj).some((key) => key === keyName);
+}
