@@ -1,12 +1,12 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import Button from "react-bootstrap/esm/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Form from "react-bootstrap/esm/Form";
 import Card from "react-bootstrap/esm/Card";
 import './CreateBranchPage.scss'
 import { Col, Row } from "react-bootstrap";
-import { useCreateFranchisesOrUserMutation } from "../../store/branchesEndPoint";
+import { useCreateFranchisesOrUserMutation, useLazyGetFranchiseByIdQuery, useUpdateFranchiseMutation } from "../../store/branchesEndPoint";
 import { useForm } from "react-hook-form";
 import { AppConstants, getItemFromLocalStorage } from "../../../../utils/localStorage";
 import { errorToast, successToast } from "../../../../shared/utils/appToaster";
@@ -15,6 +15,7 @@ import { hasKey } from "../../../../utils/appFunctions";
 import { BranchFields } from "../../utils/BranchesInterfaces";
 
 const CreateBranchPage = () => {
+    const { id } = useParams();
     const {
         register,
         handleSubmit,
@@ -23,6 +24,8 @@ const CreateBranchPage = () => {
     } = useForm<any>({});
 
     const [createBranch, { isLoading }] = useCreateFranchisesOrUserMutation();
+    const [updateFranchise, { isLoading: updateLoading }] = useUpdateFranchiseMutation()
+    const [getFranchiseById, { data, isError, isLoading: franchiseLoading }] = useLazyGetFranchiseByIdQuery()
     const dispatch = useDispatch();
     const navigation = useNavigate();
     const inputRef = useRef<any>(null);
@@ -49,8 +52,19 @@ const CreateBranchPage = () => {
                     state: data.state,
                 }
             }
-            const branchCreaete = await createBranch(newBranchObj);
-            successToast('Franchises Create Successfully');
+            if (id) {
+                const branchUpdate = await updateFranchise({
+                    params: {
+                        franchiseId: id
+                    },
+                    body: newBranchObj
+                });
+                successToast('Franchises Updated Successfully');
+            } else {
+                const branchCreaete = await createBranch(newBranchObj);
+                successToast('Franchises Create Successfully');
+            }
+
             back();
         } catch (e) {
             console.log('e', e)
@@ -58,22 +72,42 @@ const CreateBranchPage = () => {
         }
 
     }
-    // const selectFile = () => {
-    //     if (inputRef?.current) {
-    //         inputRef.current?.click()
-    //     }
-    // }
 
-    // const fileChange = (event: any) => {
-    //     if (event.target.files && event.target.files[0]) {
-    //         SetImgUrl(URL.createObjectURL(event.target.files[0]));
-    //         inputRef.current.target.files = '';
-    //     }
-    // }
-    console.log('isDirty, dirtyFields', isDirty, dirtyFields, touchedFields)
+    useEffect(() => {
+        try {
+            if (data) {
+                const franchiseData = {
+                    [BranchFields.Name]: data.name,
+                    [BranchFields.UserName]: data.userName,
+                    [BranchFields.PrimaryNumber]: data.primaryNumber,
+                    [BranchFields.Password]: data.password,
+                    [BranchFields.HouseNo]: data?.address?.houseNo,
+                    [BranchFields.City]: data?.address?.city,
+                    [BranchFields.Pincode]: data?.address?.pincode,
+                    [BranchFields.Landmark]: data?.address?.landmark,
+                    [BranchFields.StreetName]: data?.address?.streetName,
+                    [BranchFields.State]: data?.address?.state,
+                }
+                reset(franchiseData)
+            }
+        } catch (err) {
+            console.log('Err', err)
+        }
+
+    }, [data])
+    useEffect(() => {
+        console.log('id', id)
+        if (id) {
+            getFranchiseById({
+                params: {
+                    franchiseId: id
+                }
+            })
+        }
+    }, [id])
 
     return (<>
-        <p className="pageTile pageTitleSpace">Create Franchises</p>
+        <p className="pageTile pageTitleSpace">{`${id ? 'Update' : 'Create'} Franchise`} </p>
         <Card className="createBranch">
             <Card.Body className="branchFrom">
                 <Form onSubmit={handleSubmit(submit)}>
@@ -108,13 +142,13 @@ const CreateBranchPage = () => {
                         <Col>
                             <Form.Label className="fromLabel" >User Name</Form.Label>
                             <Form.Control type="text" placeholder="User name" minLength={5} maxLength={20} {...register(BranchFields.UserName, { required: true })} />
-                            {errors?.userName && hasKey(touchedFields, BranchFields.UserName)&& <p className="errorlabel">{getErrorMessage('userName', errors.userName.type! as string)}</p>}
+                            {errors?.userName && hasKey(touchedFields, BranchFields.UserName) && <p className="errorlabel">{getErrorMessage('userName', errors.userName.type! as string)}</p>}
 
                         </Col>
                         <Col>
                             <Form.Label className="fromLabel" >Password</Form.Label>
                             <Form.Control type="password" placeholder="Password" minLength={5} maxLength={10} {...register(BranchFields.Password, { required: true })} />
-                            {errors?.password && hasKey(touchedFields, BranchFields.Password)&& <p className="errorlabel">{getErrorMessage('Password', errors.password.type! as string)}</p>}
+                            {errors?.password && hasKey(touchedFields, BranchFields.Password) && <p className="errorlabel">{getErrorMessage('Password', errors.password.type! as string)}</p>}
                         </Col>
                     </Row>
 
@@ -148,7 +182,7 @@ const CreateBranchPage = () => {
 
                                 <Form.Label className="fromLabel" >Landmark</Form.Label>
                                 <Form.Control type="text" placeholder="Landmark" maxLength={50} {...register(BranchFields.Landmark, { required: true })} />
-                                {errors?.landmark  && hasKey(touchedFields, BranchFields.Landmark) && <p className="errorlabel">{getErrorMessage('Landmark', errors.landmark.type! as string)}</p>}
+                                {errors?.landmark && hasKey(touchedFields, BranchFields.Landmark) && <p className="errorlabel">{getErrorMessage('Landmark', errors.landmark.type! as string)}</p>}
                             </Col>
 
                         </Row>
@@ -177,8 +211,8 @@ const CreateBranchPage = () => {
                         <Button variant="outline-secondary" className="elementSpace" onClick={() => {
                             back()
                         }}>Cancel</Button>
-                        <Button variant="outline-primary" type="submit" disabled={isLoading}>
-                            Create
+                        <Button variant="outline-primary" type="submit" disabled={isLoading || franchiseLoading}>
+                            {id ? 'Update' : 'Create'}
                         </Button>
                     </div>
 

@@ -106,6 +106,13 @@ export default function AppRoutes() {
                 </Suspense>
               }>
             </Route>
+            <Route path="update/:id"
+              element={
+                <Suspense>
+                  <CreateBranchPage />
+                </Suspense>
+              }>
+            </Route>
           </Route>
           <Route path="users"
             element={

@@ -211,3 +211,6 @@ option:hover {
   align-items: center;
   color: gray;
 }
+.deleteIcon {
+  color: #f5000096 !important;
+}

@@ -6,11 +6,14 @@ import { BranchesApi } from "./branchesApi";
 export const updateMeetingRestrictionDetails = BranchesApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllFranchises: builder.query({
-            query: (body:IAPIRequest) => `${prepairQueryParams('franchises/getAllFranchises', body?.params)}`,
+            query: (body: IAPIRequest) => `${prepairQueryParams('franchises/getAllFranchises', body?.params)}`,
         }),
 
         getAllFranchisesUsers: builder.query({
             query: (body: IAPIRequest) => `${prepairQueryParams('franchises/getAllusers', body?.params)}`,
+        }),
+        getFranchiseById: builder.query({
+            query: (body: IAPIRequest) => `${prepairQueryParams('franchises/getFranchiseById', body.params)}`
         }),
 
         createFranchisesOrUser: builder.mutation({
@@ -27,7 +30,15 @@ export const updateMeetingRestrictionDetails = BranchesApi.injectEndpoints({
                 method: 'POST',
                 body: body
             })
-        })
+        }),
+        updateFranchise: builder.mutation({
+            query: (body: IAPIRequest) => ({
+                url: `${prepairQueryParams('franchises/updateFranchise', body.params)}`,
+                method: 'POST',
+                body: body
+            })
+        }),
+        // franchises/updateFranchise
 
     })
 })
@@ -38,4 +49,6 @@ export const {
     useCreateFranchisesOrUserMutation,
     useGetAllFranchisesUsersQuery,
     useUpdateUserMutation,
-    useLazyGetAllFranchisesUsersQuery } = updateMeetingRestrictionDetails;
+    useLazyGetAllFranchisesUsersQuery,
+    useLazyGetFranchiseByIdQuery,
+    useUpdateFranchiseMutation } = updateMeetingRestrictionDetails;

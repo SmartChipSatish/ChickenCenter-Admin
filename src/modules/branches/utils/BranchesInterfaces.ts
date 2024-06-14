@@ -8,6 +8,7 @@ export interface IBranch {
     updatedBy: string;
     _id: string;
     currentOrders: number;
+    primaryNumber:number
 }
 
 

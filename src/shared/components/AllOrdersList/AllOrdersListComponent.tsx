@@ -1,4 +1,4 @@
-import { Button, Form, Table } from "react-bootstrap";
+import { Button, Form, Modal, Table } from "react-bootstrap";
 import { getOrderDate, getOrderSmallId, isAdmin, isFranchiese, isUser } from "../../../utils/appFunctions";
 import { UserTypeHook } from "../../../utils/hooks/userTypeHook";
 import { Order, STATUSTYPES } from "../../../modules/orders/util/ordersInterfaces";
@@ -9,7 +9,7 @@ import { useGetAllFranchisesQuery, useLazyGetAllFranchisesUsersQuery } from "../
 import { IBranch } from "../../../modules/branches/utils/BranchesInterfaces";
 import { IUser } from "../../../modules/users/utils/userInterfaces";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose, faEye } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import AppLoader from "../loader/loader";
 import Pagination from "@material-ui/lab/Pagination";
 import { useEffect, useState } from "react";
@@ -32,6 +32,9 @@ export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) =
     const [getAllFranchisesUsers, { data: franchiesUsers }] = useLazyGetAllFranchisesUsersQuery();
     const navigation = useNavigate();
     const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const orderUpdate = async (data: { id: string, franchiseId: string }) => {
         try {
@@ -119,9 +122,7 @@ export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) =
                     <td className="text-nowrap align-middle">
                         {(isAdmin(userType) || isFranchiese(userType)) && <><FontAwesomeIcon icon={faEye} className="Orderpage-actions Orderpage-eye" onClick={() => {
                             getOrderDetails(order?.id);
-                        }}></FontAwesomeIcon> <FontAwesomeIcon icon={faClose} className="Orderpage-actions" onClick={() => {
-                            getOrderDetails(order?.id);
-                        }}></FontAwesomeIcon> </>}
+                        }}></FontAwesomeIcon> <FontAwesomeIcon icon={faTrash} className="Orderpage-actions deleteIcon" onClick={handleShow}></FontAwesomeIcon> </>}
                         {isUser(userType) && <>
                             <Button variant="outline-primary" className="elementSpace">Accept</Button>
                             <Button variant="outline-secondary">Cancel</Button></>
@@ -140,5 +141,20 @@ export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) =
                         setPage(value);
                     }} /></div>
         }
+        {show &&
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirmation</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Do you want to cancel this order?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="outline-primary" onClick={handleClose}>
+                        Confirm
+                    </Button>
+                </Modal.Footer>
+            </Modal>}
     </>
 }
