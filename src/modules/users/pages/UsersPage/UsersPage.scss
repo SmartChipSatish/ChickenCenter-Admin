@@ -1,17 +1,23 @@
 .usersPage {
     height: 93%;
-    &-id {
-        margin-bottom: 0;
-    }
+
+  
+
     &-actions {
         color: #00000069;
         cursor: pointer;
-       
+
     }
+
     &-eye {
         margin-right: 12px;
     }
+
     &-title {
         // color: var(--appPageTitleColor);
     }
+}
+
+.selectFranchise {
+    width: 250px;
 }

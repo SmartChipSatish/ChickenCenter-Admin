@@ -5,14 +5,18 @@ export const setItemToLocalStorage = (key: string, data: any) => {
 export const getItemFromLocalStorage = (key: string) => {
     const getItem = localStorage.getItem(key);
     console.log('getItem', getItem)
-    if (getItem != undefined ) {
+    if (getItem != undefined && getItem != '' && getItem != null) {
         return JSON.parse(getItem);
     }
     return getItem;
 }
 
+export const clearLocalStorage = () => {
+    localStorage.clear();
+}
+
 export const AppConstants = {
-    userId : 'userId',
+    userId: 'userId',
     accessToken: 'accessToken',
     userInfo: 'userInfo'
 }

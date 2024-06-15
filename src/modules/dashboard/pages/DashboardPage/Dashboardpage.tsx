@@ -4,15 +4,83 @@ import { DashBoardEnum } from "../../../../shared/utils/appInterfaces";
 import Card from 'react-bootstrap/Card';
 import "./DashboardPage.scss"
 import { useGetDashboardDataQuery } from "../../store/dashboardEndPoints";
-
+import { AllOrdersListComponent } from "../../../../shared/components/AllOrdersList/AllOrdersListComponent";
+import { useNavigate } from "react-router-dom";
+import CanvasJS from '@canvasjs/charts';
+import { useEffect, useRef } from "react";
 
 const DashboardPage = () => {
     const { data } = useGetDashboardDataQuery(undefined);
+    const navigation = useNavigate();
+    const chartContainer = useRef(null);
+    const pieChartContainer = useRef(null);
+    useEffect(() => {
+        if (!chartContainer.current) {
+            return
+        }
+        var chart = new CanvasJS.Chart(chartContainer.current, {
+            animationEnabled: true,
+            data: [{
+                type: "column",
+                dataPoints: [
+                    { label: "Jan", y: 5000 },
+                    { label: "Feb", y: 2000 },
+                    { label: "March", y: 7000 },
+                    { label: "April", y: 1000 },
+                    { label: "May", y: 500 },
+                    { label: "June", y: 5000 },
+                    { label: "July", y: 2000 },
 
+
+
+                ]
+            }]
+        });
+        chart.render();
+    }, [chartContainer])
+
+    useEffect(() => {
+        if (!pieChartContainer.current) {
+            return
+        }
+        var chart = new CanvasJS.Chart(pieChartContainer.current, {
+            animationEnabled: true,
+            data: [{
+                type: "line",
+                indexLabelFontSize: 16,
+                dataPoints: [
+                    { y: 450, label: "Jan" },
+                    { y: 414, label: "Feb" },
+                    { y: 520, label: "March", indexLabel: "\u2191 highest", markerColor: "red", markerType: "triangle" },
+                    { y: 410, indexLabel: "\u2193 lowest", markerColor: "DarkSlateGrey", markerType: "cross", label: "April" },
+                    { y: 450, label: "May" },
+                    { y: 500, label: "June" },
+                    { y: 500, label: "July" },
+                    { y: 480, label: "Aguest" },
+                    { y: 510, label: "Sept" }
+
+                ]
+            }]
+            // data: [{
+            //     type: "pie",
+            //     startAngle: 240,
+            //     yValueFormatString: "##0.00\"%\"",
+            //     indexLabel: "{label} {y}",
+            //     dataPoints: [
+            //         { y: 79.45, label: "Jan" },
+            //         { y: 30.31, label: "Feb" },
+            //         { y: 25.06, label: "March" },
+            //         { y: 80.91, label: "April" },
+            //         { y: 11.26, label: "May" }
+            //     ]
+            // }]
+        });
+        chart.render();
+    }, [pieChartContainer])
     return (<>
         <Row>
             <Col>
-                <CardComponent type={DashBoardEnum.orders} count={ data?.length > 0 && data[0]?.orderCount || 0} title="Total Orders"></CardComponent>
+                <CardComponent type={DashBoardEnum.orders} count={data?.length > 0 && data[0]?.orderCount || 0} title="Total Orders"></CardComponent>
             </Col>
             <Col>
                 <CardComponent type={DashBoardEnum.deliverd} count={76} title="Total Deliverd"></CardComponent>
@@ -32,9 +100,7 @@ const DashboardPage = () => {
                 <Card className="dashboard-canvasChart">
                     <Card.Title className="dashboard-title">Total Revenue</Card.Title>
                     <Card.Body className="dashboard-body">
-                        <Card.Text>
-                            Pie Chart
-                        </Card.Text>
+                        <div id="chartContainer" className="h-100 w-100" ref={chartContainer}></div>
                     </Card.Body>
                 </Card>
             </Col>
@@ -42,100 +108,27 @@ const DashboardPage = () => {
                 <Card className="dashboard-canvasChart">
                     <Card.Title className="dashboard-title">Total Orders</Card.Title>
                     <Card.Body className="dashboard-body">
-                        <Card.Text>
-                            Orders Chart
-                        </Card.Text>
+                        <div id="piechartContainer" className="h-100 w-100" ref={pieChartContainer}></div>
                     </Card.Body>
                 </Card>
             </Col>
         </Row>
         <br></br>
 
+        <Card>
+            <Card.Body >
+                <div className="dashboard-reviews ">
+                    <div className="dashboard-reviews-header">
+                        <p className="dashboard-reviews-title" >Latest Orders</p>
+                        <p className="dashboard-reviews-viewall primaryValue" onClick={() => {
+                            navigation('/orders')
+                        }}>View All</p>
+                    </div>
+                    <AllOrdersListComponent perPage={2} ></AllOrdersListComponent>
 
-        <div className="dashboard-reviews ">
-            <div className="dashboard-reviews-header">
-                <p className="dashboard-reviews-title" >Customer Reviews</p>
-                <p className="dashboard-reviews-header-viewall">View All</p>
-            </div>
-
-            <Row>
-                <Col>
-                    <Card className="dashboard-reviews-card">
-                        <div className="userInformation d-flex">
-                            <Card.Img src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250"></Card.Img>
-                            <div>
-                                <p className="dashboard-reviews-name">Vishnu</p>
-                                <p className="dashboard-reviews-time"> 2 day ago</p>
-                            </div>
-                        </div>
-                        <Card.Body >
-                            <Card.Text className="dashboard-reviews-comment">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-                                molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-                                numquam blanditiis harum quisquam eius sed odit fugiat
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-
-
-                </Col>
-                <Col>
-                    <Card className="dashboard-reviews-card">
-                        <div className="userInformation d-flex">
-                            <Card.Img src="https://cdn.pixabay.com/photo/2019/09/24/16/58/woman-4501777_1280.jpg"></Card.Img>
-                            <div>
-                                <p className="dashboard-reviews-name">Siddam</p>
-                                <p className="dashboard-reviews-time"> 1 day ago</p>
-                            </div>
-                        </div>
-                        <Card.Body >
-                            <Card.Text className="dashboard-reviews-comment">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-                                molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-                                numquam blanditiis harum quisquam eius sed odit fugiat
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col>
-                    <Card className="dashboard-reviews-card">
-                        <div className="userInformation d-flex">
-                            <Card.Img src="https://cdn.pixabay.com/photo/2016/07/27/17/56/woman-1545885_1280.jpg"></Card.Img>
-                            <div>
-                                <p className="dashboard-reviews-name">Satish</p>
-                                <p className="dashboard-reviews-time"> 3 day ago</p>
-                            </div>
-                        </div>
-                        <Card.Body >
-                            <Card.Text className="dashboard-reviews-comment">
-                                nice
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col>
-                    <Card className="dashboard-reviews-card">
-                        <div className="userInformation d-flex">
-                            <Card.Img src="https://cdn.pixabay.com/photo/2016/11/29/13/14/attractive-1869761_1280.jpg"></Card.Img>
-                            <div>
-                                <p className="dashboard-reviews-name">Mohan</p>
-                                <p className="dashboard-reviews-time"> 4 day ago</p>
-                            </div>
-                        </div>
-                        <Card.Body >
-                            <Card.Text className="dashboard-reviews-comment">
-                                Nice App , i got fresh meat.
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                {/* <Col>
-                </Col> */}
-
-            </Row>
-        </div>
-
-
+                </div>
+            </Card.Body>
+        </Card>
     </>)
 }
 

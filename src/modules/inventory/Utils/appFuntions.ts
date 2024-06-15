@@ -1,4 +1,4 @@
-export const getErrorMessage = (controller: string, validationType: string) => {
+export const getErrorMessage = (controller: string, validationType: string | any) => {
     console.log('controller, getErrorMessage', controller, validationType)
     switch (validationType) {
         case 'required':

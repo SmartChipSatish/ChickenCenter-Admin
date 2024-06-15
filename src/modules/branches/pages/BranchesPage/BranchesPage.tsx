@@ -1,4 +1,4 @@
-import { faEdit, faEye } from "@fortawesome/free-solid-svg-icons"
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Table from "react-bootstrap/esm/Table"
 import './BranchesPage.scss'
@@ -6,29 +6,51 @@ import Card from "react-bootstrap/esm/Card"
 import Button from "react-bootstrap/esm/Button"
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus"
 import { useNavigate } from "react-router-dom"
-import { useGetAllFranchisesQuery } from "../../store/branchesEndPoint"
-import { useEffect } from "react"
+import { useLazyGetAllFranchisesQuery } from "../../store/branchesEndPoint"
+import { useEffect, useRef, useState } from "react"
 import { IBranch } from "../../utils/BranchesInterfaces"
-
+import AppLoader from "../../../../shared/components/loader/loader"
+import Pagination from "@material-ui/lab/Pagination"
+import { perPage } from "../../../../shared/utils/appConstants"
+import { loadingState } from "../../../../shared/utils/appFunctions"
+import { FRANCHISETYPE } from "../../../../shared/utils/appInterfaces"
+import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/AppDeleteModal"
+import { IAppDeleteModalRefType } from '../../../../shared/utils/appInterfaces'
 const BranchesPage = () => {
-    const { data, isLoading, isError } = useGetAllFranchisesQuery(undefined)
+    const [getAllFranchises, { data, isLoading, isError }] = useLazyGetAllFranchisesQuery()
     const navigation = useNavigate();
+    const deleteModalData = useRef<IAppDeleteModalRefType>();
+    const [page, setPage] = useState(1);
 
-    const createBranch = () => {
-        navigation('create');
+    const editBranch = (id: string) => {
+        navigation(`update/${id}`)
     }
+
+    const accept = (status: boolean, data: IBranch) => {
+        console.log('deleteModalData.current', data)
+    };
+
+    useEffect(() => {
+        getAllFranchises({
+            params: {
+                page,
+                perPage,
+                userType: FRANCHISETYPE.FRANCHISE
+            }
+        })
+    }, [page])
 
     return (
         <>
             <div className="d-flex justify-content-between pageTitleSpace">
                 <p className="pageTile">Franchises</p>
                 <Button variant="outline-primary" onClick={() => {
-                    createBranch()
+                    navigation('create');
                 }}><FontAwesomeIcon icon={faPlus} ></FontAwesomeIcon> Add</Button>
             </div>
             <div className="BranchesPage">
                 <Card className="h-100">
-                    <Card.Body >
+                    <Card.Body className={`${!loadingState(isLoading, isError, data?.franchises) && 'appCard'}`}>
                         <Table hover>
                             <thead>
                                 <tr>
@@ -36,29 +58,49 @@ const BranchesPage = () => {
                                     <th><p className="tableTitle">Name</p></th>
                                     <th><p className="tableTitle">Orders</p></th>
                                     <th><p className="tableTitle">Address</p></th>
+                                    <th><p className="tableTitle">Phone</p></th>
                                     <th><p className="tableTitle">Actions</p></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {isError && <tr><td colSpan={6}><p>Something went wrong!</p></td></tr>}
-                                {isLoading && <tr><td colSpan={6}><p>Loading...</p></td></tr>}
-                                {data?.length === 0 && <tr><td colSpan={6}><p>No Data Found</p></td></tr>}
-                                {data && data?.map((branch: IBranch, index: number) =>
+                                {data && data?.franchises.map((branch: IBranch, index: number) =>
 
-                                    <tr>
+                                    <tr className="appRow" key={branch._id}>
                                         <td className="tableItem">{index + 1}</td>
-                                        <td className="tableItem"><p className="BranchesPage-id">{branch.name}</p></td>
+                                        <td className="tableItem text-capitalize" onClick={() => {
+                                            editBranch(branch._id)
+                                        }}><p className="BranchesPage-id primaryValue">{branch.name}</p></td>
                                         <td className="tableItem"><p className="BranchesPage-id">{branch?.currentOrders || 0}</p></td>
                                         <td className="tableItem"><p className="BranchesPage-id">{branch.address.name || '---'} ,{branch.address.city}</p></td>
-                                        <td ><FontAwesomeIcon icon={faEye} className="BranchesPage-actions BranchesPage-eye"></FontAwesomeIcon> <FontAwesomeIcon icon={faEdit} className="BranchesPage-actions"></FontAwesomeIcon></td>
+                                        <td className="tableItem"><p className="BranchesPage-id">{branch.primaryNumber}</p></td>
+                                        <td className="align-middle">
+                                            <FontAwesomeIcon icon={faEdit} className="BranchesPage-actions BranchesPage-eye" onClick={() => {
+                                                editBranch(branch._id)
+                                            }}></FontAwesomeIcon>
+                                            <FontAwesomeIcon icon={faTrash} className="BranchesPage-actions deleteIcon" onClick={() => {
+                                                deleteModalData.current?.open(branch);
+                                            }}></FontAwesomeIcon>
+                                        </td>
                                     </tr>
                                 )}
-
                             </tbody>
                         </Table>
+                        {isError && <div className="emptyTable"><p>Something went wrong!</p></div>}
+                        {isLoading && <div className="emptyTable"><AppLoader></AppLoader></div>}
+                        {data?.franchises?.length === 0 && <div className="emptyTable">No Data Found</div>}
+                        {data?.totalFranchises > 10 && <div className="d-flex justify-content-end">
+                            <Pagination count={data.totalPages}
+                                shape="rounded" onChange={(_, value: number) => {
+                                    setPage(value);
+                                }} /></div>}
                     </Card.Body>
                 </Card>
-            </div></>)
+            </div>
+
+            {<AppDeleteModal ref={deleteModalData} title="Do you want to delete this Franchise?"
+                accept={accept} />
+            }
+        </>)
 
 
 }

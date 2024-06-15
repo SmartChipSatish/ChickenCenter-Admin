@@ -21,6 +21,7 @@ import {
   CreateUserPage
 
 } from './pages';
+import { AuthGuard } from '../shared/components/AuthGuard/AuthGuard';
 
 
 
@@ -37,7 +38,9 @@ export default function AppRoutes() {
           path=""
           element={
             <Suspense>
-              <MainLayout />
+              <AuthGuard>
+                <MainLayout />
+              </AuthGuard>
             </Suspense>
 
           }>
@@ -70,7 +73,7 @@ export default function AppRoutes() {
               }>
 
             </Route>
-            <Route path="orderDetails"
+            <Route path="orderDetails/:id"
               element={
                 <Suspense>
                   <OrderDetailPage />
@@ -106,6 +109,13 @@ export default function AppRoutes() {
                 </Suspense>
               }>
             </Route>
+            <Route path="update/:id"
+              element={
+                <Suspense>
+                  <CreateBranchPage />
+                </Suspense>
+              }>
+            </Route>
           </Route>
           <Route path="users"
             element={
@@ -121,6 +131,13 @@ export default function AppRoutes() {
               }>
             </Route>
             <Route path="create"
+              element={
+                <Suspense>
+                  <CreateUserPage />
+                </Suspense>
+              }>
+            </Route>
+            <Route path="update/:id"
               element={
                 <Suspense>
                   <CreateUserPage />

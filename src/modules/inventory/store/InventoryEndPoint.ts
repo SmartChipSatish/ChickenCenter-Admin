@@ -1,3 +1,5 @@
+import { prepairQueryParams } from "../../../shared/utils/appFunctions";
+import { IAPIRequest } from "../../../shared/utils/appInterfaces";
 import { InventoryApi } from "./InventoryApi";
 
 
@@ -5,7 +7,7 @@ import { InventoryApi } from "./InventoryApi";
 export const InventoryEndPonts = InventoryApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllItems: builder.query({
-            query: () => `items/getAllItems`,
+            query: (body:IAPIRequest) => `${prepairQueryParams('items/getAllItems', body.params)}`,
             providesTags: ['getAll']
         }),
 
@@ -29,6 +31,13 @@ export const InventoryEndPonts = InventoryApi.injectEndpoints({
             }),
             invalidatesTags: ['getAll'],
         }),
+        deletItem: builder.mutation({
+            query: (body) => ({
+                url:'items/updateItem?itemId=${body.id}',
+                method:'DELETE',
+                body:body
+            })
+        })
     })
 })
 

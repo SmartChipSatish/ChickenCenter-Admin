@@ -8,4 +8,19 @@ export interface IBranch {
     updatedBy: string;
     _id: string;
     currentOrders: number;
+    primaryNumber:number
+}
+
+
+export const BranchFields = {
+    Name: 'name',
+    UserName: 'userName',
+    Password: 'password',
+    PrimaryNumber: 'primaryNumber',
+    HouseNo: 'houseNo',
+    StreetName: 'streetName',
+    City: 'city',
+    Pincode: 'pincode',
+    Landmark: 'landmark',
+    State: 'state'
 }

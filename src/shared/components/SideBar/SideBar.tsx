@@ -8,8 +8,8 @@ import OverlayTrigger from "react-bootstrap/esm/OverlayTrigger";
 import Tooltip from "react-bootstrap/esm/Tooltip";
 import { useSelector } from "react-redux";
 import { User, Franchies, Admin } from "../../utils/appConstants";
-import { UserTypeHook } from "../../../utils/hooks/userTypeHook";
-import { FRANCHISETYPE } from "../../../utils/interfaces/appInterfaces";
+import { UserTypeHook } from "../../hooks/userTypeHook";
+import { FRANCHISETYPE } from "../../../shared/utils/appInterfaces";
 
 
 const SideBar = () => {
@@ -32,7 +32,7 @@ const SideBar = () => {
             setSidebarOptions(Admin);
             return;
         }
-        if(userType === FRANCHISETYPE.DELIVERYAGENTS){
+        if (userType === FRANCHISETYPE.DELIVERYAGENTS) {
             setSidebarOptions(User);
             return;
         }
@@ -51,6 +51,7 @@ const SideBar = () => {
                                     {tooltip}
                                 </Tooltip>
                             }}
+                            key={title}
                         >
                             <p className={`module ${isActivePath(title)}`} onClick={() => {
                                 navigation(`${title}`)
@@ -58,30 +59,6 @@ const SideBar = () => {
                         </OverlayTrigger>
                     </>
                 })}
-
-
-                {/* <p className={`module ${isActivePath('orders')}`} onClick={() => {
-                    navigation('orders')
-                }}> <FontAwesomeIcon icon={faCartPlus} className="module-appIcon" /></p>
-                {userInfo?.userType === 'admin'
-                    && <p className={`module ${isActivePath('branches')}`} onClick={() => {
-                        navigation('branches')
-                    }}><FontAwesomeIcon icon={faBuilding} className="module-appIcon" /></p>}
-
-                <p className={`module ${isActivePath('inventory')}`} onClick={() => {
-                    navigation('inventory')
-                    // 
-                }}><FontAwesomeIcon icon={faStore} className="module-appIcon" /></p>
-
-                <p className={`module ${isActivePath('users')}`} onClick={() => {
-                    navigation('users')
-                }}><FontAwesomeIcon icon={faUsers} className="module-appIcon" /></p> */}
-                {/* <p className="module" onClick={() => {
-                    navigation('payment')
-                }}><FontAwesomeIcon icon={faCreditCard} className="module-appIcon" /> Payment</p>
-                <p className="module" onClick={() => {
-                    navigation('payment')
-                }}><FontAwesomeIcon icon={faCogs} className="module-appIcon" /> Settings</p> */}
             </div>
             <div>
                 <p className="appVersion">V 0.0.1</p>

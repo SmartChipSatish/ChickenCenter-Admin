@@ -4,7 +4,7 @@ import './MainLayout.scss'
 import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { AppConstants, getItemFromLocalStorage } from "../../utils/localStorage";
+import { AppConstants, getItemFromLocalStorage } from "../../shared/utils/localStorage";
 import { adduserInfo } from "../authentication/store/userInfoSlice";
 
 const MainLayout = () => {

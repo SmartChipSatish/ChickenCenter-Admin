@@ -22,6 +22,7 @@
 
 .imgWidth {
     width: 75px;
+    cursor: pointer;
 }
 
 .outofstock {
@@ -31,4 +32,8 @@
 
 .available {
     color: var(--appOrderDelivered) !important;
+}
+.rupeeicon {
+    font-size: 12px;
+    margin-right: 2px;
 }

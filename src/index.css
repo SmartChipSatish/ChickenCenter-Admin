@@ -41,6 +41,7 @@ p {
 .card {
   border: var(--bs-card-border-width) solid #5352521a;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  /* overflow:scroll; */
 }
 
 .btn-outline-primary {
@@ -65,8 +66,28 @@ p {
   background-color: var(--appTheam);
 }
 
+.tooltip {
+  --bs-tooltip-bg: var(--appTheam);
+
+}
+
 .dropdown-item {
   font-size: 14px;
+}
+
+.MuiPaginationItem-page.Mui-selected {
+  background-color: var(--appTheam) !important;
+  color: white !important;
+}
+.form-select {
+  line-height: 1.5 !important;
+}
+/* tr {
+  height: 4rem;
+} */
+
+.appRow {
+  height: 4rem;
 }
 
 /* option {
@@ -88,6 +109,21 @@ option:hover {
   color: var(--appPageTitleColor);
 }
 
+.theamText {
+  color: var(--appTheam);
+}
+
+.appCardTitle {
+  color: var(--appTitleColor);
+  font-size: 18px;
+}
+
+.appCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
 
 
 .pageTile {
@@ -110,7 +146,11 @@ option:hover {
 
 .tableAction {
   vertical-align: middle;
+}
 
+.primaryValue {
+  color: var(--appTheam);
+  cursor: pointer;
 }
 
 .errorlabel {
@@ -155,6 +195,7 @@ option:hover {
   color: red;
   background: #ff000038 !important;
 }
+
 .legend-indicator {
   display: inline-block;
   width: .5rem;
@@ -162,4 +203,15 @@ option:hover {
   background-color: #bdc5d1;
   border-radius: 50%;
   margin-right: .4375rem;
+}
+
+.emptyTable {
+  height: calc(100% - 40px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: gray;
+}
+.deleteIcon {
+  color: #f5000096 !important;
 }

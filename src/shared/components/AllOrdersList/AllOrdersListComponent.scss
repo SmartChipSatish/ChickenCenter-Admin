@@ -1,15 +1,17 @@
-.BranchesPage {
+.Orderpage {
     height: 93%;
-   
+    &-id {
+        color: var(--appTheam);
+        margin-bottom: 0;
+    }
     &-actions {
         color: #00000069;
         cursor: pointer;
-       
     }
     &-eye {
         margin-right: 12px;
     }
     &-title {
-        // color: var(--appPageTitleColor);
+        color: var(--appPageTitleColor);
     }
 }

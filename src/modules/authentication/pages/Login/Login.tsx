@@ -6,7 +6,7 @@ import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import { useLazyGetUserQuery, useLoginMutation } from "../../store/authenticateEndPoints";
 import { useForm } from "react-hook-form";
 import { errorToast, successToast } from "../../../../shared/utils/appToaster";
-import { AppConstants, setItemToLocalStorage } from "../../../../utils/localStorage";
+import { AppConstants, setItemToLocalStorage } from "../../../../shared/utils/localStorage";
 import { useDispatch } from "react-redux";
 import { adduserInfo } from "../../store/userInfoSlice";
 import Spinner from "react-bootstrap/esm/Spinner";

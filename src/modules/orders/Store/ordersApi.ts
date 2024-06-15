@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ApiUrl } from '../../../ApiUrl/apiUrl';
-import { AppConstants } from '../../../utils/localStorage';
+import { AppConstants } from '../../../shared/utils/localStorage';
 
 export const OrdersApi = createApi({
     reducerPath: 'OrdersApi',
