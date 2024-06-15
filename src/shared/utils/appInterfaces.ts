@@ -26,8 +26,11 @@ export interface IAppDeleteModalData {
     name: string
 }
 export interface IAppDeleteModalProps {
-    data: IAppDeleteModalData,
     title: string,
-    id: string
-    handleClose: (status: boolean, id?: string) => void
+    accept: (status: boolean, data: any) => void
+}
+
+export interface IAppDeleteModalRefType {
+    open: (data: any) => void,
+    data:any
 }

@@ -12,12 +12,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import AppLoader from "../loader/loader";
 import Pagination from "@material-ui/lab/Pagination";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAssignOrderMutation, useUpdateOrderTranferMutation } from "../../../modules/orders/Store/ordersEndpoints";
 import { successToast } from "../../utils/appToaster";
 import "./AllOrdersListComponent.scss"
-import { FRANCHISETYPE, IOrdersPage } from "../../../shared/utils/appInterfaces";
+import { FRANCHISETYPE, IAppDeleteModalRefType, IOrdersPage } from "../../../shared/utils/appInterfaces";
 import { useSelector } from "react-redux";
+import { AppDeleteModal } from "../AppDeleteModal/AppDeleteModal";
 export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) => {
     const userType = UserTypeHook();
     const { data: franchies } = useGetAllFranchisesQuery({
@@ -32,9 +33,12 @@ export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) =
     const [getAllFranchisesUsers, { data: franchiesUsers }] = useLazyGetAllFranchisesUsersQuery();
     const navigation = useNavigate();
     const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const deleteModalData = useRef<IAppDeleteModalRefType>();
+
+
+    const accept = (status: boolean, data: Order) => {
+        console.log('deleteModalData.current', data)
+    };
 
     const orderUpdate = async (data: { id: string, franchiseId: string }) => {
         try {
@@ -122,7 +126,11 @@ export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) =
                     <td className="text-nowrap align-middle">
                         {(isAdmin(userType) || isFranchiese(userType)) && <><FontAwesomeIcon icon={faEye} className="Orderpage-actions Orderpage-eye" onClick={() => {
                             getOrderDetails(order?.id);
-                        }}></FontAwesomeIcon> <FontAwesomeIcon icon={faTrash} className="Orderpage-actions deleteIcon" onClick={handleShow}></FontAwesomeIcon> </>}
+                        }}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faTrash} className="Orderpage-actions deleteIcon" onClick={() => {
+                                deleteModalData.current?.open(order)
+                            }}>
+                            </FontAwesomeIcon> </>}
                         {isUser(userType) && <>
                             <Button variant="outline-primary" className="elementSpace">Accept</Button>
                             <Button variant="outline-secondary">Cancel</Button></>
@@ -141,20 +149,8 @@ export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) =
                         setPage(value);
                     }} /></div>
         }
-        {show &&
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Confirmation</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Do you want to cancel this order?</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="outline-secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="outline-primary" onClick={handleClose}>
-                        Confirm
-                    </Button>
-                </Modal.Footer>
-            </Modal>}
+        {<AppDeleteModal ref={deleteModalData} title="Do you want to delete this Order?"
+            accept={accept} />
+        }
     </>
 }

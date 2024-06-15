@@ -5,13 +5,15 @@ import Table from "react-bootstrap/esm/Table";
 import Image from 'react-bootstrap/Image';
 import './ItemsPage.scss'
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLazyGetAllItemsQuery } from "../../store/InventoryEndPoint";
 import { IItem } from "../../Utils/InventoryInterfaces";
 import { loadingState } from "../../../../shared/utils/appFunctions";
 import AppLoader from "../../../../shared/components/loader/loader";
 import Pagination from "@material-ui/lab/Pagination";
 import { perPage } from "../../../../shared/utils/appConstants";
+import { IAppDeleteModalRefType } from "../../../../shared/utils/appInterfaces";
+import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/AppDeleteModal";
 
 /**
  * Items Page
@@ -20,11 +22,16 @@ import { perPage } from "../../../../shared/utils/appConstants";
 const ItemsPage = () => {
     const [getAllItems, { data, isLoading, isError }] = useLazyGetAllItemsQuery();
     const navigation = useNavigate();
-    const [show, setShow] = useState(false);
+
     const [page, setPage] = useState(1)
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const deleteModalData = useRef<IAppDeleteModalRefType>();
+
+
+    const accept = (status: boolean, data: IItem) => {
+        console.log('deleteModalData.current', data)
+    };
+
 
     const addItem = () => {
         navigation('addItem');
@@ -70,7 +77,7 @@ const ItemsPage = () => {
                                     <td className="tableItem align-middle"><FontAwesomeIcon icon={faEdit} className="itemEdit" onClick={() => {
                                         navigation(`updateItem/${item?._id}`)
                                     }}></FontAwesomeIcon> <FontAwesomeIcon icon={faTrash} className="itemEdit deleteIcon" onClick={() => {
-                                        handleShow()
+                                        deleteModalData.current?.open(item)
                                     }}></FontAwesomeIcon></td>
                                 </tr>
                             )}
@@ -90,21 +97,10 @@ const ItemsPage = () => {
         </div>
 
 
-
-        <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Confirmation</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>Do you want to delete this item?</Modal.Body>
-            <Modal.Footer>
-                <Button variant="outline-secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="outline-primary" onClick={handleClose}>
-                    Confirm
-                </Button>
-            </Modal.Footer>
-        </Modal></>)
+        {<AppDeleteModal ref={deleteModalData} title="Do you want to delete this item?"
+            accept={accept} />
+        }
+    </>)
 }
 
 export default ItemsPage

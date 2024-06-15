@@ -7,13 +7,13 @@ import Card from "react-bootstrap/esm/Card"
 import Button from "react-bootstrap/esm/Button"
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus"
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGetAllFranchisesQuery, useLazyGetAllFranchisesUsersQuery, useUpdateUserMutation } from "../../../branches/store/branchesEndPoint";
 import { useSelector } from "react-redux";
 import { IUser } from "../../utils/userInterfaces";
 import './UsersPage.scss';
 import { UserTypeHook } from "../../../../shared/hooks/userTypeHook"
-import { FRANCHISETYPE } from "../../../../shared/utils/appInterfaces"
+import { FRANCHISETYPE, IAppDeleteModalRefType } from "../../../../shared/utils/appInterfaces"
 import { isAdmin, loadingState } from "../../../../shared/utils/appFunctions"
 import Form from "react-bootstrap/esm/Form"
 import { IBranch } from "../../../branches/utils/BranchesInterfaces"
@@ -21,6 +21,7 @@ import { errorToast, successToast } from "../../../../shared/utils/appToaster"
 import AppLoader from "../../../../shared/components/loader/loader"
 import Pagination from '@material-ui/lab/Pagination';
 import { perPage } from "../../../../shared/utils/appConstants";
+import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/AppDeleteModal"
 
 const UsersPage = () => {
     const navigation = useNavigate();
@@ -35,6 +36,11 @@ const UsersPage = () => {
     const userType = UserTypeHook();
     const [page, SetPage] = useState(1);
 
+    const deleteModalData = useRef<IAppDeleteModalRefType>();
+
+    const accept = (status: boolean, data: IUser) => {
+        console.log('deleteModalData.current', data)
+    };
     const createBranch = () => {
         navigation('create');
     }
@@ -112,7 +118,7 @@ const UsersPage = () => {
                                                 <FontAwesomeIcon icon={faEdit} className="usersPage-actions usersPage-eye" onClick={() => {
                                                     navigation(`update/${user.id}`)
                                                 }}></FontAwesomeIcon> <FontAwesomeIcon icon={faTrash} className="itemEdit deleteIcon" onClick={() => {
-                                                    // handleShow()
+                                                    deleteModalData.current?.open(user)
                                                 }}></FontAwesomeIcon>
                                             </td>
                                         </tr>
@@ -130,7 +136,11 @@ const UsersPage = () => {
                             }} /></div>}
                     </Card.Body>
                 </Card>
-            </div></>)
+            </div>
+            {<AppDeleteModal ref={deleteModalData} title="Do you want to delete this User?"
+                accept={accept} />
+            }
+        </>)
 
 
 }

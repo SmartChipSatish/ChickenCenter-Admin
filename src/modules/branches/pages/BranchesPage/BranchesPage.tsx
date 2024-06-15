@@ -7,7 +7,7 @@ import Button from "react-bootstrap/esm/Button"
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus"
 import { useNavigate } from "react-router-dom"
 import { useLazyGetAllFranchisesQuery } from "../../store/branchesEndPoint"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { IBranch } from "../../utils/BranchesInterfaces"
 import AppLoader from "../../../../shared/components/loader/loader"
 import Pagination from "@material-ui/lab/Pagination"
@@ -15,27 +15,21 @@ import { perPage } from "../../../../shared/utils/appConstants"
 import { loadingState } from "../../../../shared/utils/appFunctions"
 import { FRANCHISETYPE } from "../../../../shared/utils/appInterfaces"
 import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/AppDeleteModal"
-import { IAppDeleteModalData } from "../../../../shared/utils/appInterfaces"
+import { IAppDeleteModalRefType } from '../../../../shared/utils/appInterfaces'
 const BranchesPage = () => {
     const [getAllFranchises, { data, isLoading, isError }] = useLazyGetAllFranchisesQuery()
     const navigation = useNavigate();
-    const [show, setShow] = useState<IAppDeleteModalData>({
-        show: false,
-        id: '',
-        name: ''
-    });
+    const deleteModalData = useRef<IAppDeleteModalRefType>();
     const [page, setPage] = useState(1);
 
-    const createBranch = () => {
-        navigation('create');
-    }
     const editBranch = (id: string) => {
         navigation(`update/${id}`)
     }
-    const handleClose = (status: boolean) => {
-        console.log('status', status);
-        // setShow(false)
+
+    const accept = (status: boolean, data: IBranch) => {
+        console.log('deleteModalData.current', data)
     };
+
     useEffect(() => {
         getAllFranchises({
             params: {
@@ -45,12 +39,13 @@ const BranchesPage = () => {
             }
         })
     }, [page])
+
     return (
         <>
             <div className="d-flex justify-content-between pageTitleSpace">
                 <p className="pageTile">Franchises</p>
                 <Button variant="outline-primary" onClick={() => {
-                    createBranch()
+                    navigation('create');
                 }}><FontAwesomeIcon icon={faPlus} ></FontAwesomeIcon> Add</Button>
             </div>
             <div className="BranchesPage">
@@ -79,12 +74,11 @@ const BranchesPage = () => {
                                         <td className="tableItem"><p className="BranchesPage-id">{branch.address.name || '---'} ,{branch.address.city}</p></td>
                                         <td className="tableItem"><p className="BranchesPage-id">{branch.primaryNumber}</p></td>
                                         <td className="align-middle">
-                                            {/* <FontAwesomeIcon icon={faEye} className="BranchesPage-actions BranchesPage-eye"></FontAwesomeIcon> */}
                                             <FontAwesomeIcon icon={faEdit} className="BranchesPage-actions BranchesPage-eye" onClick={() => {
                                                 editBranch(branch._id)
                                             }}></FontAwesomeIcon>
                                             <FontAwesomeIcon icon={faTrash} className="BranchesPage-actions deleteIcon" onClick={() => {
-                                                // setShow(true)
+                                                deleteModalData.current?.open(branch);
                                             }}></FontAwesomeIcon>
                                         </td>
                                     </tr>
@@ -103,10 +97,8 @@ const BranchesPage = () => {
                 </Card>
             </div>
 
-            {show && ''
-                // <AppDeleteModal title="Do you want to delete this Franchise"
-                //     // show={show}
-                //     handleClose={handleClose} />
+            {<AppDeleteModal ref={deleteModalData} title="Do you want to delete this Franchise?"
+                accept={accept} />
             }
         </>)
 

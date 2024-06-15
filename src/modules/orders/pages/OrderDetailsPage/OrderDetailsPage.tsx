@@ -24,7 +24,7 @@ const OrderDetailPage = () => {
     return (
         <>
             <div className="d-flex align-items-center pageTitleSpace">
-                <p className="pageTile">Order</p> {data?._id && <span className="orderid text-uppercase" title={data?._id}>#{getOrderSmallId(data?._id || '')}</span>}
+                <p className="pageTile">Order</p> {data?._id && <span className="orderid text-uppercase" title={data?._id}>#{getOrderSmallId(data?._id || '', true)}</span>}
             </div>
             {isLoading && <div className="h-100 w-100 d-flex justify-content-center align-items-center"><AppLoader></AppLoader></div>}
             {isError && <div className="h-100 w-100 d-flex justify-content-center align-items-center"><p>Something went wrong!</p></div>}
