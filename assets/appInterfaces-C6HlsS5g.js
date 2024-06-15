@@ -1,0 +1,1 @@
+var r=(e=>(e.ADMIN="admin",e.FRANCHISE="franchise",e.DELIVERYAGENTS="deliveryAgent",e))(r||{}),v=(e=>(e[e.orders=1]="orders",e[e.deliverd=2]="deliverd",e[e.canceled=3]="canceled",e[e.revenue=4]="revenue",e))(v||{});export{v as D,r as F};
