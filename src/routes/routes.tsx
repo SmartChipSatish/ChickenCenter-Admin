@@ -21,6 +21,7 @@ import {
   CreateUserPage
 
 } from './pages';
+import { AuthGuard } from '../shared/components/AuthGuard/AuthGuard';
 
 
 
@@ -37,7 +38,9 @@ export default function AppRoutes() {
           path=""
           element={
             <Suspense>
-              <MainLayout />
+              <AuthGuard>
+                <MainLayout />
+              </AuthGuard>
             </Suspense>
 
           }>
