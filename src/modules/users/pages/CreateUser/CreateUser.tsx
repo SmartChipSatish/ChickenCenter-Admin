@@ -6,14 +6,14 @@ import Form from "react-bootstrap/esm/Form";
 import Card from "react-bootstrap/esm/Card";
 import { Col, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { AppConstants, getItemFromLocalStorage } from "../../../../utils/localStorage";
+import { AppConstants, getItemFromLocalStorage } from "../../../../shared/utils/localStorage";
 import { errorToast, successToast } from "../../../../shared/utils/appToaster";
 import { useCreateFranchisesOrUserMutation, useLazyGetFranchiseByIdQuery, useUpdateFranchiseMutation } from "../../../branches/store/branchesEndPoint";
 import './CreateUser.scss'
-import { FRANCHISETYPE } from "../../../../utils/interfaces/appInterfaces";
+import { FRANCHISETYPE } from "../../../../shared/utils/appInterfaces";
 import { getErrorMessage } from "../../../inventory/Utils/appFuntions";
 import { UserForm } from "../../utils/userInterfaces";
-import { hasKey } from "../../../../utils/appFunctions";
+import { hasKey } from "../../../../shared/utils/appFunctions";
 
 const CreateUserPage = () => {
     const { id } = useParams();

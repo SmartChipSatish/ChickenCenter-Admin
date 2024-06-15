@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLazyGetAllOrdersQuery, useLazyGetOrderbyFranchiseQuery } from "../../../modules/orders/Store/ordersEndpoints";
-import { UserTypeHook } from "../../../utils/hooks/userTypeHook";
-import { FRANCHISETYPE } from "../../../utils/interfaces/appInterfaces";
+import { UserTypeHook } from "../userTypeHook";
+import { FRANCHISETYPE } from "../../../shared/utils/appInterfaces";
 import { useSelector } from "react-redux";
 
 export const useGetAllOrders = ({ perPage, page }: {

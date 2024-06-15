@@ -8,10 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLazyGetAllItemsQuery } from "../../store/InventoryEndPoint";
 import { IItem } from "../../Utils/InventoryInterfaces";
-import { loadingState } from "../../../../utils/appFunctions";
+import { loadingState } from "../../../../shared/utils/appFunctions";
 import AppLoader from "../../../../shared/components/loader/loader";
 import Pagination from "@material-ui/lab/Pagination";
-import { perPage } from "../../../../utils/appConstants";
+import { perPage } from "../../../../shared/utils/appConstants";
 
 /**
  * Items Page

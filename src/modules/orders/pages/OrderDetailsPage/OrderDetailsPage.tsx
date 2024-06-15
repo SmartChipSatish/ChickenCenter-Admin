@@ -1,13 +1,13 @@
-import { faCalendar, faInr, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faInr, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Card, Col, Image, ListGroup, Row } from "react-bootstrap";
+import {  Card, Col, Image, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useLazyGetOrderByIdQuery } from "../../Store/ordersEndpoints";
 import { useEffect } from "react";
 import AppLoader from "../../../../shared/components/loader/loader";
-import { getOrderDate, getOrderSmallId } from "../../../../utils/appFunctions";
+import { getOrderSmallId } from "../../../../shared/utils/appFunctions";
 import './OrderDetailsPage.scss'
-import { ORDERSTATUS, Order, PAYMENTSTATUS, STATUSTYPES, IItem } from "../../util/ordersInterfaces";
+import { STATUSTYPES, IItem } from "../../util/ordersInterfaces";
 import { OrderStatus } from "../../../../shared/components/OrderStatusComponet/OrderStatusComponent";
 
 const OrderDetailPage = () => {

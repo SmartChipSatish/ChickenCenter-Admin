@@ -1,6 +1,6 @@
 import { Button, Form, Modal, Table } from "react-bootstrap";
-import { getOrderDate, getOrderSmallId, isAdmin, isFranchiese, isUser } from "../../../utils/appFunctions";
-import { UserTypeHook } from "../../../utils/hooks/userTypeHook";
+import { getOrderDate, getOrderSmallId, isAdmin, isFranchiese, isUser } from "../../../shared/utils/appFunctions";
+import { UserTypeHook } from "../../hooks/userTypeHook";
 import { Order, STATUSTYPES } from "../../../modules/orders/util/ordersInterfaces";
 import { useGetAllOrders } from "../../hooks/OrdersHook/OrdersHook";
 import { useNavigate } from "react-router-dom";
@@ -9,14 +9,14 @@ import { useGetAllFranchisesQuery, useLazyGetAllFranchisesUsersQuery } from "../
 import { IBranch } from "../../../modules/branches/utils/BranchesInterfaces";
 import { IUser } from "../../../modules/users/utils/userInterfaces";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import AppLoader from "../loader/loader";
 import Pagination from "@material-ui/lab/Pagination";
 import { useEffect, useState } from "react";
 import { useAssignOrderMutation, useUpdateOrderTranferMutation } from "../../../modules/orders/Store/ordersEndpoints";
 import { successToast } from "../../utils/appToaster";
 import "./AllOrdersListComponent.scss"
-import { FRANCHISETYPE, IOrdersPage } from "../../../utils/interfaces/appInterfaces";
+import { FRANCHISETYPE, IOrdersPage } from "../../../shared/utils/appInterfaces";
 import { useSelector } from "react-redux";
 export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) => {
     const userType = UserTypeHook();
@@ -106,7 +106,7 @@ export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) =
                             orderUpdate({ id: order.id, franchiseId: data?.target?.value })
                         }}>
                             <option>Select Franchise</option>
-                            {franchies?.franchises && franchies?.franchises.map((branch: IBranch) => <option value={branch._id} selected={order?.franchiseId?.id === branch._id}>{branch?.name}</option>)}
+                            {franchies?.franchises && franchies?.franchises.map((branch: IBranch) => <option value={branch._id} selected={order?.franchiseId?.id === branch._id} key={branch._id}>{branch?.name}</option>)}
                         </Form.Select>
                     </td>}
 
@@ -115,7 +115,7 @@ export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) =
                             assignOrderToAgent({ id: order.id, deliveryAgentId: data?.target?.value })
                         }}>
                             <option>Select Agent</option>
-                            {franchiesUsers && franchiesUsers?.map((user: IUser) => <option value={user.id} selected={order?.deliveryAgentId === user.id}>{user?.name}</option>)}
+                            {franchiesUsers && franchiesUsers?.map((user: IUser) => <option value={user.id} selected={order?.deliveryAgentId === user.id} key={user.id}>{user?.name}</option>)}
                         </Form.Select>
                     </th>}
 

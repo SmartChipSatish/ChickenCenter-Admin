@@ -1,4 +1,4 @@
-import { faClose, faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Table from "react-bootstrap/esm/Table"
 import './BranchesPage.scss'
@@ -6,29 +6,36 @@ import Card from "react-bootstrap/esm/Card"
 import Button from "react-bootstrap/esm/Button"
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus"
 import { useNavigate } from "react-router-dom"
-import { useGetAllFranchisesQuery, useLazyGetAllFranchisesQuery } from "../../store/branchesEndPoint"
+import { useLazyGetAllFranchisesQuery } from "../../store/branchesEndPoint"
 import { useEffect, useState } from "react"
 import { IBranch } from "../../utils/BranchesInterfaces"
 import AppLoader from "../../../../shared/components/loader/loader"
 import Pagination from "@material-ui/lab/Pagination"
-import { perPage } from "../../../../utils/appConstants"
-import { loadingState } from "../../../../utils/appFunctions"
-import Modal from "react-bootstrap/esm/Modal"
-import { FRANCHISETYPE } from "../../../../utils/interfaces/appInterfaces"
-
+import { perPage } from "../../../../shared/utils/appConstants"
+import { loadingState } from "../../../../shared/utils/appFunctions"
+import { FRANCHISETYPE } from "../../../../shared/utils/appInterfaces"
+import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/AppDeleteModal"
+import { IAppDeleteModalData } from "../../../../shared/utils/appInterfaces"
 const BranchesPage = () => {
     const [getAllFranchises, { data, isLoading, isError }] = useLazyGetAllFranchisesQuery()
     const navigation = useNavigate();
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [show, setShow] = useState<IAppDeleteModalData>({
+        show: false,
+        id: '',
+        name: ''
+    });
     const [page, setPage] = useState(1);
+
     const createBranch = () => {
         navigation('create');
     }
     const editBranch = (id: string) => {
         navigation(`update/${id}`)
     }
+    const handleClose = (status: boolean) => {
+        console.log('status', status);
+        // setShow(false)
+    };
     useEffect(() => {
         getAllFranchises({
             params: {
@@ -76,7 +83,9 @@ const BranchesPage = () => {
                                             <FontAwesomeIcon icon={faEdit} className="BranchesPage-actions BranchesPage-eye" onClick={() => {
                                                 editBranch(branch._id)
                                             }}></FontAwesomeIcon>
-                                            <FontAwesomeIcon icon={faTrash} className="BranchesPage-actions deleteIcon" onClick={handleShow}></FontAwesomeIcon>
+                                            <FontAwesomeIcon icon={faTrash} className="BranchesPage-actions deleteIcon" onClick={() => {
+                                                // setShow(true)
+                                            }}></FontAwesomeIcon>
                                         </td>
                                     </tr>
                                 )}
@@ -94,20 +103,11 @@ const BranchesPage = () => {
                 </Card>
             </div>
 
-            {show && <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Confirmation</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Do you want to delete this Franchise?</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="outline-secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="outline-primary" onClick={handleClose}>
-                        Confirm
-                    </Button>
-                </Modal.Footer>
-            </Modal>}
+            {show && ''
+                // <AppDeleteModal title="Do you want to delete this Franchise"
+                //     // show={show}
+                //     handleClose={handleClose} />
+            }
         </>)
 
 

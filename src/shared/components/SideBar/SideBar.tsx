@@ -8,8 +8,8 @@ import OverlayTrigger from "react-bootstrap/esm/OverlayTrigger";
 import Tooltip from "react-bootstrap/esm/Tooltip";
 import { useSelector } from "react-redux";
 import { User, Franchies, Admin } from "../../utils/appConstants";
-import { UserTypeHook } from "../../../utils/hooks/userTypeHook";
-import { FRANCHISETYPE } from "../../../utils/interfaces/appInterfaces";
+import { UserTypeHook } from "../../hooks/userTypeHook";
+import { FRANCHISETYPE } from "../../../shared/utils/appInterfaces";
 
 
 const SideBar = () => {
@@ -51,6 +51,7 @@ const SideBar = () => {
                                     {tooltip}
                                 </Tooltip>
                             }}
+                            key={title}
                         >
                             <p className={`module ${isActivePath(title)}`} onClick={() => {
                                 navigation(`${title}`)

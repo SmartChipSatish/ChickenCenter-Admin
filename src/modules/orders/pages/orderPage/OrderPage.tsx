@@ -1,10 +1,10 @@
 import './OrderPage.scss'
 import Card from "react-bootstrap/esm/Card";
 import {  useState } from "react";
-import { perPage } from "../../../../utils/appConstants";
+import { perPage } from "../../../../shared/utils/appConstants";
 import { useGetAllOrders } from "../../../../shared/hooks/OrdersHook/OrdersHook";
 import { AllOrdersListComponent } from "../../../../shared/components/AllOrdersList/AllOrdersListComponent";
-import { loadingState } from '../../../../utils/appFunctions';
+import { loadingState } from '../../../../shared/utils/appFunctions';
 
 const OrderPage = () => {
     const [page] = useState(1);

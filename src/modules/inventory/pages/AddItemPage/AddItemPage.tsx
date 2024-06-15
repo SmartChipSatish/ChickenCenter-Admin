@@ -15,7 +15,7 @@ import { AddItem } from "../../Utils/InventoryInterfaces";
 import { getErrorMessage } from "../../Utils/appFuntions";
 import { successToast } from "../../../../shared/utils/appToaster";
 import { fileUpload } from "../../../../shared/utils/appFunctions";
-import { AppConstants, getItemFromLocalStorage } from "../../../../utils/localStorage";
+import { AppConstants, getItemFromLocalStorage } from "../../../../shared/utils/localStorage";
 
 
 const AddItemPage = () => {

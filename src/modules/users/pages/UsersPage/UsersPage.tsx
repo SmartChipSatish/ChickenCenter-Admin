@@ -12,15 +12,15 @@ import { useGetAllFranchisesQuery, useLazyGetAllFranchisesUsersQuery, useUpdateU
 import { useSelector } from "react-redux";
 import { IUser } from "../../utils/userInterfaces";
 import './UsersPage.scss';
-import { UserTypeHook } from "../../../../utils/hooks/userTypeHook"
-import { FRANCHISETYPE } from "../../../../utils/interfaces/appInterfaces"
-import { isAdmin, loadingState } from "../../../../utils/appFunctions"
+import { UserTypeHook } from "../../../../shared/hooks/userTypeHook"
+import { FRANCHISETYPE } from "../../../../shared/utils/appInterfaces"
+import { isAdmin, loadingState } from "../../../../shared/utils/appFunctions"
 import Form from "react-bootstrap/esm/Form"
 import { IBranch } from "../../../branches/utils/BranchesInterfaces"
 import { errorToast, successToast } from "../../../../shared/utils/appToaster"
 import AppLoader from "../../../../shared/components/loader/loader"
 import Pagination from '@material-ui/lab/Pagination';
-import { perPage } from "../../../../utils/appConstants"
+import { perPage } from "../../../../shared/utils/appConstants";
 
 const UsersPage = () => {
     const navigation = useNavigate();

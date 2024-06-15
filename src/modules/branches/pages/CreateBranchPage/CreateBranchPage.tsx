@@ -8,10 +8,10 @@ import './CreateBranchPage.scss'
 import { Col, Row } from "react-bootstrap";
 import { useCreateFranchisesOrUserMutation, useLazyGetFranchiseByIdQuery, useUpdateFranchiseMutation } from "../../store/branchesEndPoint";
 import { useForm } from "react-hook-form";
-import { AppConstants, getItemFromLocalStorage } from "../../../../utils/localStorage";
+import { AppConstants, getItemFromLocalStorage } from "../../../../shared/utils/localStorage";
 import { errorToast, successToast } from "../../../../shared/utils/appToaster";
 import { getErrorMessage } from "../../../inventory/Utils/appFuntions";
-import { hasKey } from "../../../../utils/appFunctions";
+import { hasKey } from "../../../../shared/utils/appFunctions";
 import { BranchFields } from "../../utils/BranchesInterfaces";
 
 const CreateBranchPage = () => {

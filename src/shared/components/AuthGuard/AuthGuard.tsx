@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { getItemFromLocalStorage, clearLocalStorage } from "../../../utils/localStorage"
+import { getItemFromLocalStorage, clearLocalStorage } from "../../utils/localStorage"
 import { useLocation, useNavigate } from "react-router-dom"
 
 export const AuthGuard = ({ children }: any) => {

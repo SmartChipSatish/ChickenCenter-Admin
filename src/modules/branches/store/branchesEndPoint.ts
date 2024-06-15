@@ -1,5 +1,5 @@
-import { prepairQueryParams } from "../../../utils/appFunctions";
-import { IAPIRequest } from "../../../utils/interfaces/appInterfaces";
+import { prepairQueryParams } from "../../../shared/utils/appFunctions";
+import { IAPIRequest } from "../../../shared/utils/appInterfaces";
 import { BranchesApi } from "./branchesApi";
 
 

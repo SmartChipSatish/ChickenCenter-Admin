@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { FRANCHISETYPE } from "../interfaces/appInterfaces"
 import { useSelector } from "react-redux";
 
 export const UserTypeHook = () => {
