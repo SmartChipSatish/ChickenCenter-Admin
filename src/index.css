@@ -16,7 +16,8 @@
 
 
   --appSiderbarWidth: 75px;
-  --appTheam: #F38B07;
+  /* --appTheam: #F38B07; */
+  --appTheam: rgb(243 139 7);
   --appTextColor: white;
   --appPageTitleColor: var(--bs-gray-700);
   --appTitleColor: var(--bs-gray-700);
@@ -42,6 +43,10 @@ p {
   border: var(--bs-card-border-width) solid #5352521a;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   /* overflow:scroll; */
+}
+
+.card-body {
+  /* overflow-y: scroll; */
 }
 
 .btn-outline-primary {
@@ -79,15 +84,17 @@ p {
   background-color: var(--appTheam) !important;
   color: white !important;
 }
+
 .form-select {
   line-height: 1.5 !important;
 }
+
 /* tr {
   height: 4rem;
 } */
 
 .appRow {
-  height: 4rem;
+  height: 3.8rem;
 }
 
 /* option {
@@ -130,6 +137,8 @@ option:hover {
   font-size: 24px;
   font-weight: bold;
   color: var(--appPageTitleColor);
+  display: flex;
+  align-items: center;
 }
 
 .pageTitleSpace {
@@ -206,12 +215,25 @@ option:hover {
 }
 
 .emptyTable {
-  height: calc(100% - 40px);
+  height: calc(100% - 90px);
   display: flex;
   justify-content: center;
   align-items: center;
   color: gray;
 }
+
 .deleteIcon {
   color: #f5000096 !important;
+}
+
+.filters {
+  display: flex;
+  padding: 10px 14px;
+  justify-content: space-between;
+}
+
+.pageItemsCount {
+  font-size: .9rem;
+  margin-left: 6px;
+  color: rgb(243 139 7 / 84%);
 }

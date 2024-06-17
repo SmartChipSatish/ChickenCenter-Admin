@@ -24,7 +24,10 @@ export const prepairQueryParams = (url: string, params: Object = {}) => {
         console.log('params', params)
         const searchParams = new URLSearchParams();
         Object.entries(params).forEach((param) => {
-            searchParams.append(param[0], param[1]);
+            if (!!param[1]) {
+                searchParams.append(param[0], param[1]);
+            }
+
         });
         return `${url}?${searchParams.toString()}`;
     } catch (err) {

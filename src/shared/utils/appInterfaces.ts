@@ -10,7 +10,8 @@ export interface IAPIRequest {
 
 export interface IOrdersPage {
     isPagination?: boolean,
-    perPage: number
+    perPage: number,
+    queryParams?:any
 }
 
 export enum DashBoardEnum {

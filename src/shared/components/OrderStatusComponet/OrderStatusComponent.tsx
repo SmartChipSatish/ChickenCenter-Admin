@@ -39,7 +39,7 @@ export const OrderStatus = ({
 }: { label: string, status: string, type: string }) => {
     return <>
         {label && <Badge className={`align-middle text-capitalize OrderPending ${(getStatus(type, status))}`}>
-            <FontAwesomeIcon icon={faCircleDot} className="statusIcon"></FontAwesomeIcon>{label}
+            <FontAwesomeIcon icon={faCircleDot} className="statusIcon"></FontAwesomeIcon>{label.toUpperCase()}
         </Badge>}
         {!label && '---'}
     </>

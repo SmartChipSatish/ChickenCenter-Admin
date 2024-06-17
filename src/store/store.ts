@@ -21,5 +21,7 @@ export default configureStore({
         [dashboardApi.reducerPath]: dashboardApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(InventoryApi.middleware, BranchesApi.middleware, OrdersApi.middleware, authApi.middleware, dashboardApi.middleware)
+        getDefaultMiddleware({
+            // serializableCheck: false
+        }).concat(InventoryApi.middleware, BranchesApi.middleware, OrdersApi.middleware, authApi.middleware, dashboardApi.middleware)
 });

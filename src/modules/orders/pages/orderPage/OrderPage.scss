@@ -16,3 +16,11 @@
     }
 }
 
+.filters {
+    display: flex;
+    padding: 10px 14px;
+    justify-content: space-between;
+}
+.filterOption {
+    margin-right: 2%;
+}

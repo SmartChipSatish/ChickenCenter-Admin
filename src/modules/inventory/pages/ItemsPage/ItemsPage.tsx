@@ -1,6 +1,6 @@
-import { faEdit, faPlus, faTrash, faRupeeSign, faInr } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlus, faTrash, faRupeeSign, faInr, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Card, Modal } from "react-bootstrap";
+import { Button, Card, Form, Modal } from "react-bootstrap";
 import Table from "react-bootstrap/esm/Table";
 import Image from 'react-bootstrap/Image';
 import './ItemsPage.scss'
@@ -24,9 +24,9 @@ const ItemsPage = () => {
     const [getAllItems, { data, isLoading, isError }] = useLazyGetAllItemsQuery();
     const [updateItem] = useUpdateItemMutation();
     const navigation = useNavigate();
-
     const [page, setPage] = useState(1)
-
+    const [itemStatus, SetItemStatus] = useState('');
+    const [search, SetSearch] = useState('')
     const deleteModalData = useRef<IAppDeleteModalRefType>();
 
 
@@ -55,22 +55,52 @@ const ItemsPage = () => {
     }
 
     useEffect(() => {
+        let params = {
+            perPage, page,
+        }
+        if (itemStatus || search) {
+            params = Object.assign(params, { globalItemStatus: itemStatus, name: search })
+        }
         getAllItems({
-            params: {
-                perPage, page
-            }
+            params: params,
         })
-    }, [page])
+    }, [page, itemStatus, search])
 
     return (<>
         <div className="d-flex justify-content-between pageTitleSpace">
-            <p className="pageTile">Items</p>
+            <p className="pageTile">Items {data?.totalItems > 0 && <span className="pageItemsCount">({data?.totalItems})</span>}</p>
             <Button variant="outline-primary" onClick={() => {
                 addItem()
             }}><FontAwesomeIcon icon={faPlus} ></FontAwesomeIcon> Add</Button>
         </div>
         <div className="itemsPage">
             <Card className="h-100">
+                <div className='filters'>
+                    <div>
+                        <form className="d-flex" role="search">
+                            <Form.Control className="me-2" type="search" placeholder="Search Item" aria-label="Search Item" onChange={(searchValue) => {
+                                SetSearch(searchValue.target.value)
+                            }} />
+                            <Button variant="outline-primary" onClick={() => {
+                            }}>
+                                <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+                            </Button>
+
+                        </form>
+                    </div>
+                    <div>
+                        <Form.Select aria-label="Default select example" onChange={(value) => {
+                            console.log('value', value?.target?.value)
+                            SetItemStatus(value?.target?.value)
+                        }}>
+                            <option value=''>Item Status(All)</option>
+                            <option value="true">Available</option>
+                            <option value="false">Out of Stock</option>
+                        </Form.Select>
+
+                    </div>
+                </div>
+
                 <Card.Body className={`${!loadingState(isLoading, isError, data?.items) && 'appCard'}`} >
                     <Table hover>
                         <thead>
