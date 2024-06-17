@@ -62,9 +62,15 @@ const AddItemPage = () => {
                 imageUrl: fileUrl || imgUrl,
                 globalItemStatus: defaultValues?.globalItemStatus ? true : false,
             });
-
+            console.log('item', item)
             if (id) {
-                await updateItem(item);
+                const updateItemData = {
+                    params: {
+                        itemId: id
+                    },
+                    body: item
+                };
+                const itemUpdate = await updateItem(updateItemData)
                 successToast('Item Updated Succesfully');
                 navigate('/inventory')
                 return
