@@ -6,7 +6,7 @@ import Image from 'react-bootstrap/Image';
 import './ItemsPage.scss'
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { useLazyGetAllItemsQuery } from "../../store/InventoryEndPoint";
+import { useLazyGetAllItemsQuery, useUpdateItemMutation } from "../../store/InventoryEndPoint";
 import { IItem } from "../../Utils/InventoryInterfaces";
 import { loadingState } from "../../../../shared/utils/appFunctions";
 import AppLoader from "../../../../shared/components/loader/loader";
@@ -14,6 +14,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import { perPage } from "../../../../shared/utils/appConstants";
 import { IAppDeleteModalRefType } from "../../../../shared/utils/appInterfaces";
 import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/AppDeleteModal";
+import { errorToast, successToast } from "../../../../shared/utils/appToaster";
 
 /**
  * Items Page
@@ -21,6 +22,7 @@ import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/App
  */
 const ItemsPage = () => {
     const [getAllItems, { data, isLoading, isError }] = useLazyGetAllItemsQuery();
+    const [updateItem] = useUpdateItemMutation();
     const navigation = useNavigate();
 
     const [page, setPage] = useState(1)
@@ -28,8 +30,23 @@ const ItemsPage = () => {
     const deleteModalData = useRef<IAppDeleteModalRefType>();
 
 
-    const accept = (status: boolean, data: IItem) => {
-        console.log('deleteModalData.current', data)
+    const accept = async (status: boolean, data: IItem) => {
+        try {
+            const deleteItem = await updateItem({
+                params: {
+                    itemId: data.id
+                },
+                body: {
+                    status: false
+                }
+            })
+            if (deleteItem) {
+                successToast('Item Deleted Succesfully!');
+            }
+        } catch (err) {
+            errorToast('Something went wrong!')
+        }
+
     };
 
 

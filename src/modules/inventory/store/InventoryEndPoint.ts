@@ -12,7 +12,7 @@ export const InventoryEndPonts = InventoryApi.injectEndpoints({
         }),
 
         getItemById: builder.query({
-            query: (id: string) => `items/getItemById?itemId=${id}`,
+            query: (id: string) => `${prepairQueryParams('items/getItemById', {itemId:id})}`,
         }),
 
         createItem: builder.mutation({
@@ -24,20 +24,20 @@ export const InventoryEndPonts = InventoryApi.injectEndpoints({
             invalidatesTags: ['getAll'],
         }),
         updateItem: builder.mutation({
-            query: (body) => ({
-                url: `items/updateItem?itemId=${body.id}`,
+            query: (body:IAPIRequest) => ({
+                url: `${prepairQueryParams('items/updateItem', body.params)}`,
                 method: 'POST',
-                body: body
+                body: body.body
             }),
             invalidatesTags: ['getAll'],
         }),
-        deletItem: builder.mutation({
-            query: (body) => ({
-                url:'items/updateItem?itemId=${body.id}',
-                method:'DELETE',
-                body:body
-            })
-        })
+        // deletItem: builder.mutation({
+        //     query: (body) => ({
+        //         url:'items/updateItem?itemId=${body.id}',
+        //         method:'DELETE',
+        //         body:body
+        //     })
+        // })
     })
 })
 
