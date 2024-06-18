@@ -121,7 +121,7 @@ export const AllOrdersListComponent = ({ perPage, isPagination, queryParams }: I
                     <td className="tableItem ">{index + 1}</td>
                     <td className="tableItem curserPointer" onClick={() => {
                         getOrderDetails(order?.id);
-                    }}><p className="Orderpage-id text-uppercase">{`#${getOrderSmallId(order?.id)}`}</p></td>
+                    }}><p className="Orderpage-id text-uppercase" title={order?.id}>{`#${getOrderSmallId(order?.id)}`}</p></td>
                     <td className="tableItem text-nowrap">{getOrderDate(order?.date)} </td>
                     <td className="tableItem text-capitalize">{order.userId?.name || '---'}</td>
                     <td className="tableItem text-capitalize"><OrderStatus label={order?.orderStatus} status={order?.orderStatus} type={STATUSTYPES.Order} /></td>

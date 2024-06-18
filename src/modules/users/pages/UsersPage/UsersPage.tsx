@@ -22,6 +22,7 @@ import AppLoader from "../../../../shared/components/loader/loader"
 import Pagination from '@material-ui/lab/Pagination';
 import { perPage } from "../../../../shared/utils/appConstants";
 import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/AppDeleteModal"
+import { AppSearchBar } from "../../../../shared/components/AppSearchBar/AppSearchBar"
 
 const UsersPage = () => {
     const navigation = useNavigate();
@@ -88,20 +89,13 @@ const UsersPage = () => {
                 <Card className="h-100">
                     <div className='filters'>
                         <div>
-                            <form className="d-flex" role="search">
-                                <Form.Control className="me-2" type="search" placeholder="Search User" aria-label="Search User" onChange={(searchValue) => {
-                                    setSearchQuery({
-                                        ...searchQuery,
-                                        page: 1,
-                                        name: searchValue.target.value
-                                    })
-                                }} />
-                                <Button variant="outline-primary" onClick={() => {
-                                }}>
-                                    <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
-                                </Button>
-
-                            </form>
+                            <AppSearchBar searchFn={(searchKey) => {
+                                setSearchQuery({
+                                    ...searchQuery,
+                                    page: 1,
+                                    name: searchKey
+                                })
+                            }} placeholder="Search User" />
                         </div>
                     </div>
                     <Card.Body className={`${!loadingState(isLoading, isError, data?.franchises) && 'appCard'}`}>
@@ -122,7 +116,7 @@ const UsersPage = () => {
                                     return <>
                                         <tr className="appRow" key={user?.id}>
                                             <td className="tableItem">{index + 1}</td>
-                                            <td className="tableItem primaryValue"><p className="primaryValue text-capitalize">{user.name}</p></td>
+                                            <td className="tableItem primaryValue"><p className="primaryValue text-capitalize text-nowrap">{user.name}</p></td>
                                             <td className="tableItem"><p className="usersPage-id">{user?.primaryNumber}</p></td>
                                             {isAdmin(userType) && <td className="tableItem">
                                                 <Form.Select aria-label="Order Transfer" onChange={(data) => {

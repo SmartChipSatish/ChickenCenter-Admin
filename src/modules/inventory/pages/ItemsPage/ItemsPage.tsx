@@ -15,6 +15,7 @@ import { perPage } from "../../../../shared/utils/appConstants";
 import { IAppDeleteModalRefType } from "../../../../shared/utils/appInterfaces";
 import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/AppDeleteModal";
 import { errorToast, successToast } from "../../../../shared/utils/appToaster";
+import { AppSearchBar } from "../../../../shared/components/AppSearchBar/AppSearchBar";
 
 /**
  * Items Page
@@ -59,7 +60,7 @@ const ItemsPage = () => {
             perPage, page,
         }
         if (itemStatus || search) {
-            params = Object.assign(params, { globalItemStatus: itemStatus, name: search })
+            params = Object.assign(params, { globalItemStatus: itemStatus, itemName: search })
         }
         getAllItems({
             params: params,
@@ -77,16 +78,9 @@ const ItemsPage = () => {
             <Card className="h-100">
                 <div className='filters'>
                     <div>
-                        <form className="d-flex" role="search">
-                            <Form.Control className="me-2" type="search" placeholder="Search Item" aria-label="Search Item" onChange={(searchValue) => {
-                                SetSearch(searchValue.target.value)
-                            }} />
-                            <Button variant="outline-primary" onClick={() => {
-                            }}>
-                                <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
-                            </Button>
-
-                        </form>
+                        <AppSearchBar searchFn={(searchKey) => {
+                            SetSearch(searchKey)
+                        }} placeholder="Search Item" />
                     </div>
                     <div>
                         <Form.Select aria-label="Default select example" onChange={(value) => {

@@ -1,4 +1,4 @@
-import { faEdit, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Table from "react-bootstrap/esm/Table"
 import './BranchesPage.scss'
@@ -16,7 +16,7 @@ import { loadingState } from "../../../../shared/utils/appFunctions"
 import { FRANCHISETYPE } from "../../../../shared/utils/appInterfaces"
 import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/AppDeleteModal"
 import { IAppDeleteModalRefType } from '../../../../shared/utils/appInterfaces';
-import { Form } from "react-bootstrap";
+import { AppSearchBar } from "../../../../shared/components/AppSearchBar/AppSearchBar"
 
 
 const BranchesPage = () => {
@@ -59,20 +59,13 @@ const BranchesPage = () => {
                 <Card className="h-100">
                     <div className='filters'>
                         <div>
-                            <form className="d-flex" role="search">
-                                <Form.Control className="me-2" type="search" placeholder="Search Franchise" aria-label="Search Franchise" onChange={(searchValue) => {
-                                    setSearchQuery({
-                                        ...searchQuery,
-                                        page: 1,
-                                        name: searchValue.target.value
-                                    })
-                                }} />
-                                <Button variant="outline-primary" onClick={() => {
-                                }}>
-                                    <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
-                                </Button>
-
-                            </form>
+                            <AppSearchBar searchFn={(searchKey) => {
+                                setSearchQuery({
+                                    ...searchQuery,
+                                    page: 1,
+                                    name: searchKey
+                                })
+                            }} placeholder="Search Franchise"/>
                         </div>
                     </div>
                     <Card.Body className={`${!loadingState(isLoading, isError, data?.franchises) && 'appCard'}`}>

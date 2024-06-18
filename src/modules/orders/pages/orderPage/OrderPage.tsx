@@ -9,9 +9,7 @@ import { ORDERSTATUS, PAYMENTSTATUS } from '../../util/ordersInterfaces';
 import { addDays } from 'date-fns';
 import { DateRangePickers } from '../../../../shared/components/DateRangePickers/DateRangePickers';
 import dayjs from 'dayjs';
-import Button from 'react-bootstrap/esm/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { AppSearchBar } from '../../../../shared/components/AppSearchBar/AppSearchBar';
 
 const OrderPage = () => {
     const [queryParam, setQueryParams] = useState({});
@@ -33,7 +31,7 @@ const OrderPage = () => {
                     'date[gte]': startDate,
                     'date[lte]': endDate
                 },
-                itemId: search
+                _id: search
             })
         } catch (err) {
             console.log('err', err)
@@ -49,16 +47,9 @@ const OrderPage = () => {
             <Card className="h-100">
                 <div className='filters'>
                     <div>
-                        <form className="d-flex" role="search">
-                            <Form.Control className="me-2" type="search" placeholder="Search Order ID" aria-label="Search Order ID" onChange={(searchValue) => {
-                                SetSearch(searchValue.target.value)
-                            }} />
-                            <Button variant="outline-primary" onClick={() => {
-                            }}>
-                                <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
-                            </Button>
-
-                        </form>
+                        <AppSearchBar searchFn={(searchKey) => {
+                            SetSearch(searchKey)
+                        }} placeholder="Search Order ID" isDirectValue={true} />
                     </div>
                     <div className='d-flex'>
                         <Form.Group className="filterOption" style={{ width: '280px' }}>

@@ -46,6 +46,11 @@ export const getOrderSmallId = (orderId: string, full = false) => {
 export const hasKey = (formObj: Object, keyName: string) => {
     return Object.keys(formObj).some((key) => key === keyName);
 }
+
+export const makeSearchKey = (search: string = '', isDirectValue = false) => {
+    return !!search && !isDirectValue ? `%${search}` : search;
+}
+
 export const fileUpload = (photo: any) => {
     return new Promise((resolve, reject) => {
         const data = new FormData()
