@@ -78,7 +78,7 @@ const OrderPage = () => {
                     </div>
                 </div>
 
-                <Card.Body >
+                <Card.Body className='carBodyWithPosistion'>
                     <AllOrdersListComponent perPage={perPage} isPagination={true} queryParams={queryParam}></AllOrdersListComponent>
                 </Card.Body>
             </Card>

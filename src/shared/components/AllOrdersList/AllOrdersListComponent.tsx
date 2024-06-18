@@ -168,7 +168,7 @@ export const AllOrdersListComponent = ({ perPage, isPagination, queryParams }: I
         {isLoading && <div className="emptyTable"><AppLoader></AppLoader></div>}
         {data?.orders?.length === 0 && <div className="emptyTable">No Data Found</div>}
         {
-            (data?.totalOrders > 10 && isPagination) && <div className="d-flex justify-content-end">
+            (data?.totalOrders > 10 && isPagination) && <div className="d-flex justify-content-end paginationdiv">
                 <Pagination count={data.totalPages}
                     shape="rounded" onChange={(_, value: number) => {
                         setPage(value);

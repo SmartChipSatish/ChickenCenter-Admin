@@ -124,25 +124,19 @@ input.inputBox {
 }
 
 .clear-btn {
-  // border-color: #00000021;
-  // background: none;
-  // font-family: none;
-  // color: gray;
-  // margin-right: 4px;
-  // padding: 7px 15px;
-  // border-radius: 5px;
-  background-color: var(--bs-btn-hover-bg);
-  // background: white;
-  // border:  #00000021;
-  // padding: 7px 15px;
-  // border-radius: 5px;
-  // color: var(--appTitleColor);
+  background: white;
+  border: 1px solid rgb(24 23 21);
+  padding: 7px 15px;
+  border-radius: 5px;
+  color: var(--appTitleColor);
+  margin-right: 8px;
 }
-// .clear-btn:hover {
-//   color: var(--bs-btn-hover-color);
-//   background-color: var(--bs-btn-hover-bg);
-//   border-color: var(--bs-btn-hover-border-color);
-// }
+
+.clear-btn:hover {
+  color: white;
+  border-color: #6c757d;
+  background: #6c757d;
+}
 
 .apply-btn {
 
@@ -164,6 +158,24 @@ input.inputBox {
 
 .rdrDateDisplayWrapper {
   border-radius: 12px 12px 0px 0px;
+}
+
+/** Color Change **/
+.rdrDay,
+.rdrDayWeekend,
+.rdrDayStartOfWeek,
+.rdrInRange,
+.rdrEndEdge,
+.rdrStartEdge,
+.rdrDayStartPreview,
+.rdrDayEndPreview,
+.rdrDayInPreview,
+.rdrDateDisplay {
+  color: var(--appTheam) !important;
+}
+
+.rdrDayToday .rdrDayNumber span:after {
+  background: var(--appTheam);
 }
 
 .date-border {
