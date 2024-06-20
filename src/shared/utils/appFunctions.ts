@@ -2,7 +2,8 @@ import dayjs from "dayjs"
 import { ApiUrl } from "../../ApiUrl/apiUrl"
 import { FRANCHISETYPE } from "./appInterfaces"
 import { ORDERSTATUS } from "../../modules/orders/util/ordersInterfaces"
-
+// import { InProgressActionsIds } from "./appConstants"
+let InProgressActionsIds: string[] = [];
 
 export const isFranchiese = (userType: string) => {
     return userType === FRANCHISETYPE.FRANCHISE
@@ -54,7 +55,21 @@ export const makeSearchKey = (search: string = '', isDirectValue = false) => {
 export const isActiveOrder = (status: ORDERSTATUS) => {
     return [ORDERSTATUS.Cancelled, ORDERSTATUS.Canceled, ORDERSTATUS.Success].includes(status);
 }
-
+export const addIdToInProgress = (id: string) => {
+    console.log('addIdToInProgress', InProgressActionsIds , id)
+    if (id) {
+        InProgressActionsIds.push(id);
+    }
+}
+export const removeIdToInProgress = (id: string) => {
+    if (id) {
+        InProgressActionsIds = InProgressActionsIds.filter((processId) => processId != id);
+    }
+}
+export const hasInProgress =(id:string) => {
+    console.log('hasInProgress', InProgressActionsIds , id)
+    return InProgressActionsIds.some((processId) => processId == id);
+}
 export const fileUpload = (photo: any) => {
     return new Promise((resolve, reject) => {
         const data = new FormData()

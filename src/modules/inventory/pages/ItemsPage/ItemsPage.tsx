@@ -113,7 +113,9 @@ const ItemsPage = () => {
                                 <tr className="appRow" key={item?._id}>
                                     <td className="tableItem indexWidth">{index + 1}</td>
                                     <td className="tableItem imgWidth"> <Image className="itemImg" src={item.imageUrl || "https://www.licious.in/blog/wp-content/uploads/2022/03/Chicken-Curry-Cut-min-1.png"} roundedCircle /></td>
-                                    <td className="tableItem"><p className="primaryValue">{item.itemName}</p></td>
+                                    <td className="tableItem" onClick={() => {
+                                        navigation(`updateItem/${item?._id}`)
+                                    }}><p className="primaryValue">{item.itemName}</p></td>
                                     <td className="tableItem"> <div className="d-flex align-items-center"><FontAwesomeIcon icon={faInr} className="rupeeicon" /> <p className="fw-bold me-1">  {item.itemPrice}</p> / <p className="ms-1">{item.itemQty}</p></div></td>
                                     <td className="tableItem"><p className={`pending ${item.globalItemStatus && 'completed'}`}>{item.globalItemStatus ? 'Available' : 'Out of stock'}</p> </td>
                                     <td className="tableItem align-middle"><FontAwesomeIcon icon={faEdit} className="itemEdit" onClick={() => {

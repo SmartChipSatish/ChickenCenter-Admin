@@ -1,13 +1,15 @@
 export interface IUser {
-    address: { name: string, _id: string, city: string , state:string},
+    address: { name: string, _id: string, city: string, state: string },
     createdAt: string;
     createdBy: string;
-    primaryNumber:number,
+    primaryNumber: number,
     id: string;
     name: string;
     updatedAt: string;
     updatedBy: string;
-    franchiseId:string;
+    franchiseId: {
+        franchiseId: string
+    };
     _id: string;
 }
 

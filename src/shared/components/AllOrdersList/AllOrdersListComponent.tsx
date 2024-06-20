@@ -1,5 +1,5 @@
 import { Button, Form, Table } from "react-bootstrap";
-import { isActiveOrder, getOrderDate, getOrderSmallId, isAdmin, isFranchiese, isUser } from "../../../shared/utils/appFunctions";
+import { isActiveOrder, getOrderDate, getOrderSmallId, isAdmin, isFranchiese, isUser, addIdToInProgress, hasInProgress, removeIdToInProgress } from "../../../shared/utils/appFunctions";
 import { UserTypeHook } from "../../hooks/userTypeHook";
 import { Order, STATUSTYPES } from "../../../modules/orders/util/ordersInterfaces";
 import { useGetAllOrders } from "../../hooks/OrdersHook/OrdersHook";
@@ -14,7 +14,7 @@ import AppLoader from "../loader/loader";
 import Pagination from "@material-ui/lab/Pagination";
 import { useEffect, useRef, useState } from "react";
 import { useAssignOrderMutation, useUpdateOrderTranferMutation } from "../../../modules/orders/Store/ordersEndpoints";
-import { successToast } from "../../utils/appToaster";
+import { errorToast, successToast } from "../../utils/appToaster";
 import "./AllOrdersListComponent.scss"
 import { FRANCHISETYPE, IAppDeleteModalRefType, IOrdersPage } from "../../../shared/utils/appInterfaces";
 import { useSelector } from "react-redux";
@@ -45,27 +45,33 @@ export const AllOrdersListComponent = ({ perPage, isPagination, queryParams }: I
     };
 
     const orderUpdate = async (data: { id: string, franchiseId: string }) => {
+        addIdToInProgress(data.id)
         try {
             const orderTransfer = await updateOrderTranfer(data);
             if (orderTransfer?.data) {
                 successToast('Order transfered succesfully');
             }
-
+            removeIdToInProgress(data.id)
         } catch (e) {
-            console.log('e', e)
+            console.log('e', e);
+            removeIdToInProgress(data.id);
+            errorToast('Something went wrong!')
         }
     }
 
     const assignOrderToAgent = async (data: { id: string, deliveryAgentId: string }) => {
+        addIdToInProgress(data.id)
         try {
             const assignOrderToDeliveryAgent = await assignOrder(data);
             console.log('assignOrderToDeliveryAgent', assignOrderToDeliveryAgent, data);
             if (assignOrderToDeliveryAgent?.data) {
                 successToast('Order Assigned succesfully');
             }
-
+            removeIdToInProgress(data.id)
         } catch (e) {
-            console.log('e', e)
+            console.log('e', e);
+            errorToast('Something went wrong!')
+            removeIdToInProgress(data.id)
         }
     }
     const getOrderDetails = (id: string) => {
@@ -133,7 +139,7 @@ export const AllOrdersListComponent = ({ perPage, isPagination, queryParams }: I
                     {isAdmin(userType) && <td className="tableItem">
                         <Form.Select aria-label="Order Transfer" onChange={(data) => {
                             orderUpdate({ id: order.id, franchiseId: data?.target?.value })
-                        }} disabled={isActiveOrder(order?.orderStatus)}>
+                        }} disabled={isActiveOrder(order?.orderStatus) || hasInProgress(order.id)}>
                             <option>Select Franchise</option>
                             {franchies?.franchises && franchies?.franchises.map((branch: IBranch) => <option value={branch._id} selected={order?.franchiseId?.id === branch._id} key={branch._id}>{branch?.name}</option>)}
                         </Form.Select>
@@ -142,7 +148,7 @@ export const AllOrdersListComponent = ({ perPage, isPagination, queryParams }: I
                     {isFranchiese(userType) && <th className="tableItem">
                         <Form.Select aria-label="Order Transfer" onChange={(data) => {
                             assignOrderToAgent({ id: order.id, deliveryAgentId: data?.target?.value })
-                        }} disabled={isActiveOrder(order?.orderStatus)}>
+                        }} disabled={isActiveOrder(order?.orderStatus) || hasInProgress(order.id)}>
                             <option>Select Agent</option>
                             {franchiesUsers && franchiesUsers?.map((user: IUser) => <option value={user.id} selected={order?.deliveryAgentId === user.id} key={user.id}>{user?.name}</option>)}
                         </Form.Select>

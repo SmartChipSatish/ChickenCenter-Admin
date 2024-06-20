@@ -16,3 +16,5 @@ export const Franchies = [
 export const User = [
     { title: 'dashboard', icon: faHouse, tooltip: 'Dashboard' },
     { title: 'orders', icon: faCartPlus, tooltip: 'Orders' }]
+
+ 
