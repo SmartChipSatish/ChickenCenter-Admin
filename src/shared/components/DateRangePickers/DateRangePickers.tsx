@@ -111,7 +111,7 @@ export const DateRangePickers = ((props) => {
         <InputGroup className="cursor-pointer" onClick={() => { setOpenCalendar(!openCalendar) }}>
           <Form.Control type="text" value={`${format(dateRange[0].startDate, "MMM dd yyyy")} - ${format(dateRange[0].endDate, "MMM dd yyyy")}`} readOnly />
           <InputGroup.Text className={"bg-transparent"}>
-            <FontAwesomeIcon icon={faCalendar}></FontAwesomeIcon>
+            <FontAwesomeIcon icon={faCalendar} className="appIconsColor"></FontAwesomeIcon>
           </InputGroup.Text> 
         </InputGroup>
       </Form.Group>

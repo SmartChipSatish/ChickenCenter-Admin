@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom"
+import { PageTitle } from "../../../shared/components/PageTitle/PageTitle";
 
 
 const DashBoardLayout = () => {
     return (<>
-        <p className="pageTile pageTitleSpace">DashBoard</p>
+        <PageTitle name="DashBoard" classNames="pageTitleSpace" pageItems={2 || 0}></PageTitle>
         <Outlet />
     </>)
 }

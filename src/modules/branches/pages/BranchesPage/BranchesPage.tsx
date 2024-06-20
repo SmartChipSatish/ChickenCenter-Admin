@@ -17,6 +17,7 @@ import { FRANCHISETYPE } from "../../../../shared/utils/appInterfaces"
 import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/AppDeleteModal"
 import { IAppDeleteModalRefType } from '../../../../shared/utils/appInterfaces';
 import { AppSearchBar } from "../../../../shared/components/AppSearchBar/AppSearchBar"
+import { PageTitle } from "../../../../shared/components/PageTitle/PageTitle"
 
 
 const BranchesPage = () => {
@@ -49,8 +50,7 @@ const BranchesPage = () => {
     return (
         <>
             <div className="d-flex justify-content-between pageTitleSpace">
-                <p className="pageTile">Franchises</p>
-
+                <PageTitle name="Franchises" pageItems={data?.totalFranchises || 0}></PageTitle>
                 <Button variant="outline-primary" onClick={() => {
                     navigation('create');
                 }}><FontAwesomeIcon icon={faPlus} ></FontAwesomeIcon> Add</Button>
@@ -65,7 +65,7 @@ const BranchesPage = () => {
                                     page: 1,
                                     name: searchKey
                                 })
-                            }} placeholder="Search Franchise"/>
+                            }} placeholder="Search Franchise" />
                         </div>
                     </div>
                     <Card.Body className={`${!loadingState(isLoading, isError, data?.franchises) && 'appCard'}`}>

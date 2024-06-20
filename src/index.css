@@ -16,7 +16,6 @@
 
 
   --appSiderbarWidth: 75px;
-  /* --appTheam: #F38B07; */
   --appTheam: rgb(243 139 7);
   --appTextColor: white;
   --appPageTitleColor: var(--bs-gray-700);
@@ -236,4 +235,19 @@ option:hover {
   font-size: .9rem;
   margin-left: 6px;
   color: rgb(243 139 7 / 84%);
+}
+
+.appIconsColor {
+  color: rgba(0, 0, 0, 0.4117647059);
+  cursor: pointer;
+}
+
+.carBodyWithPosistion {
+  position: relative;
+}
+
+.paginationdiv {
+  position: absolute;
+  bottom: 2%;
+  right: 2px;
 }

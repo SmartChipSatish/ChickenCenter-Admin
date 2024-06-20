@@ -23,6 +23,7 @@ import Pagination from '@material-ui/lab/Pagination';
 import { perPage } from "../../../../shared/utils/appConstants";
 import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/AppDeleteModal"
 import { AppSearchBar } from "../../../../shared/components/AppSearchBar/AppSearchBar"
+import { PageTitle } from "../../../../shared/components/PageTitle/PageTitle"
 
 const UsersPage = () => {
     const navigation = useNavigate();
@@ -80,7 +81,7 @@ const UsersPage = () => {
     return (
         <>
             <div className="d-flex justify-content-between pageTitleSpace">
-                <p className="pageTile">Users</p>
+                <PageTitle name="Users" pageItems={data?.totalFranchises || 0}></PageTitle>
                 <Button variant="outline-primary" onClick={() => {
                     createBranch()
                 }}><FontAwesomeIcon icon={faPlus} ></FontAwesomeIcon> Add</Button>

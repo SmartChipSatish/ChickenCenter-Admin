@@ -16,6 +16,7 @@ import { IAppDeleteModalRefType } from "../../../../shared/utils/appInterfaces";
 import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/AppDeleteModal";
 import { errorToast, successToast } from "../../../../shared/utils/appToaster";
 import { AppSearchBar } from "../../../../shared/components/AppSearchBar/AppSearchBar";
+import { PageTitle } from "../../../../shared/components/PageTitle/PageTitle";
 
 /**
  * Items Page
@@ -69,7 +70,7 @@ const ItemsPage = () => {
 
     return (<>
         <div className="d-flex justify-content-between pageTitleSpace">
-            <p className="pageTile">Items {data?.totalItems > 0 && <span className="pageItemsCount">({data?.totalItems})</span>}</p>
+            <PageTitle name="Items" pageItems={data?.totalItems || 0}></PageTitle>
             <Button variant="outline-primary" onClick={() => {
                 addItem()
             }}><FontAwesomeIcon icon={faPlus} ></FontAwesomeIcon> Add</Button>

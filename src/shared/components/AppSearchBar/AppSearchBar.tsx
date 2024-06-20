@@ -13,7 +13,7 @@ export const AppSearchBar = ({ searchFn, placeholder = 'Search', isDirectValue =
         <Form.Control className="me-2" type="search" placeholder={placeholder} aria-label={placeholder} onChange={(searchValue) => {
             searchFn(makeSearchKey(searchValue.target.value || '', isDirectValue))
         }} />
-        <Button variant="outline-primary" onClick={() => {
+        <Button variant="outline-primary"  className="me-2" onClick={() => {
         }}>
             <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
         </Button>
