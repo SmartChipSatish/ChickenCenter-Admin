@@ -1,5 +1,5 @@
-import { Button, Form, Modal, Table } from "react-bootstrap";
-import { getOrderDate, getOrderSmallId, isAdmin, isFranchiese, isUser } from "../../../shared/utils/appFunctions";
+import { Button, Form, Table } from "react-bootstrap";
+import { isActiveOrder, getOrderDate, getOrderSmallId, isAdmin, isFranchiese, isUser } from "../../../shared/utils/appFunctions";
 import { UserTypeHook } from "../../hooks/userTypeHook";
 import { Order, STATUSTYPES } from "../../../modules/orders/util/ordersInterfaces";
 import { useGetAllOrders } from "../../hooks/OrdersHook/OrdersHook";
@@ -133,7 +133,7 @@ export const AllOrdersListComponent = ({ perPage, isPagination, queryParams }: I
                     {isAdmin(userType) && <td className="tableItem">
                         <Form.Select aria-label="Order Transfer" onChange={(data) => {
                             orderUpdate({ id: order.id, franchiseId: data?.target?.value })
-                        }}>
+                        }} disabled={isActiveOrder(order?.orderStatus)}>
                             <option>Select Franchise</option>
                             {franchies?.franchises && franchies?.franchises.map((branch: IBranch) => <option value={branch._id} selected={order?.franchiseId?.id === branch._id} key={branch._id}>{branch?.name}</option>)}
                         </Form.Select>
@@ -142,7 +142,7 @@ export const AllOrdersListComponent = ({ perPage, isPagination, queryParams }: I
                     {isFranchiese(userType) && <th className="tableItem">
                         <Form.Select aria-label="Order Transfer" onChange={(data) => {
                             assignOrderToAgent({ id: order.id, deliveryAgentId: data?.target?.value })
-                        }}>
+                        }} disabled={isActiveOrder(order?.orderStatus)}>
                             <option>Select Agent</option>
                             {franchiesUsers && franchiesUsers?.map((user: IUser) => <option value={user.id} selected={order?.deliveryAgentId === user.id} key={user.id}>{user?.name}</option>)}
                         </Form.Select>

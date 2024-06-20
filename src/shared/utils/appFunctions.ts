@@ -1,6 +1,7 @@
 import dayjs from "dayjs"
 import { ApiUrl } from "../../ApiUrl/apiUrl"
 import { FRANCHISETYPE } from "./appInterfaces"
+import { ORDERSTATUS } from "../../modules/orders/util/ordersInterfaces"
 
 
 export const isFranchiese = (userType: string) => {
@@ -49,6 +50,9 @@ export const hasKey = (formObj: Object, keyName: string) => {
 
 export const makeSearchKey = (search: string = '', isDirectValue = false) => {
     return !!search && !isDirectValue ? `%${search}` : search;
+}
+export const isActiveOrder = (status: ORDERSTATUS) => {
+    return [ORDERSTATUS.Cancelled, ORDERSTATUS.Canceled, ORDERSTATUS.Success].includes(status);
 }
 
 export const fileUpload = (photo: any) => {
