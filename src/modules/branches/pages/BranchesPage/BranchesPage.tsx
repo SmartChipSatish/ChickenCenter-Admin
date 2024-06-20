@@ -15,13 +15,18 @@ import { perPage } from "../../../../shared/utils/appConstants"
 import { loadingState } from "../../../../shared/utils/appFunctions"
 import { FRANCHISETYPE } from "../../../../shared/utils/appInterfaces"
 import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/AppDeleteModal"
-import { IAppDeleteModalRefType } from '../../../../shared/utils/appInterfaces'
+import { IAppDeleteModalRefType } from '../../../../shared/utils/appInterfaces';
+import { AppSearchBar } from "../../../../shared/components/AppSearchBar/AppSearchBar"
+
+
 const BranchesPage = () => {
     const [getAllFranchises, { data, isLoading, isError }] = useLazyGetAllFranchisesQuery()
     const navigation = useNavigate();
     const deleteModalData = useRef<IAppDeleteModalRefType>();
-    const [page, setPage] = useState(1);
-
+    const [searchQuery, setSearchQuery] = useState<{ page: number, name: string }>({
+        page: 1,
+        name: ''
+    });
     const editBranch = (id: string) => {
         navigation(`update/${id}`)
     }
@@ -33,24 +38,38 @@ const BranchesPage = () => {
     useEffect(() => {
         getAllFranchises({
             params: {
-                page,
+                page: searchQuery.page,
                 perPage,
-                userType: FRANCHISETYPE.FRANCHISE
+                userType: FRANCHISETYPE.FRANCHISE,
+                name: searchQuery.name
             }
         })
-    }, [page])
+    }, [searchQuery])
 
     return (
         <>
             <div className="d-flex justify-content-between pageTitleSpace">
                 <p className="pageTile">Franchises</p>
+
                 <Button variant="outline-primary" onClick={() => {
                     navigation('create');
                 }}><FontAwesomeIcon icon={faPlus} ></FontAwesomeIcon> Add</Button>
             </div>
             <div className="BranchesPage">
                 <Card className="h-100">
+                    <div className='filters'>
+                        <div>
+                            <AppSearchBar searchFn={(searchKey) => {
+                                setSearchQuery({
+                                    ...searchQuery,
+                                    page: 1,
+                                    name: searchKey
+                                })
+                            }} placeholder="Search Franchise"/>
+                        </div>
+                    </div>
                     <Card.Body className={`${!loadingState(isLoading, isError, data?.franchises) && 'appCard'}`}>
+
                         <Table hover>
                             <thead>
                                 <tr>
@@ -91,7 +110,10 @@ const BranchesPage = () => {
                         {data?.totalFranchises > 10 && <div className="d-flex justify-content-end">
                             <Pagination count={data.totalPages}
                                 shape="rounded" onChange={(_, value: number) => {
-                                    setPage(value);
+                                    setSearchQuery({
+                                        ...searchQuery,
+                                        page: value,
+                                    })
                                 }} /></div>}
                     </Card.Body>
                 </Card>

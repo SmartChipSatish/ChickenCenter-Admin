@@ -19,17 +19,21 @@ import "./AllOrdersListComponent.scss"
 import { FRANCHISETYPE, IAppDeleteModalRefType, IOrdersPage } from "../../../shared/utils/appInterfaces";
 import { useSelector } from "react-redux";
 import { AppDeleteModal } from "../AppDeleteModal/AppDeleteModal";
-export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) => {
+export const AllOrdersListComponent = ({ perPage, isPagination, queryParams }: IOrdersPage) => {
     const userType = UserTypeHook();
     const { data: franchies } = useGetAllFranchisesQuery({
         params: {
-            perPage: '', page: ''
+            perPage: '',
+            page: '',
+            userType: FRANCHISETYPE.FRANCHISE
         }
     });
+
     const [updateOrderTranfer] = useUpdateOrderTranferMutation();
     const [assignOrder] = useAssignOrderMutation();
     const [page, setPage] = useState(1);
-    const { data, isLoading, isError } = useGetAllOrders({ perPage, page: page });
+    const [apiParams, SetApiParams] = useState({ page, perPage })
+    const { data, isLoading, isError, triggerAPi } = useGetAllOrders(apiParams);
     const [getAllFranchisesUsers, { data: franchiesUsers }] = useLazyGetAllFranchisesUsersQuery();
     const navigation = useNavigate();
     const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
@@ -72,8 +76,29 @@ export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) =
         if (userType === FRANCHISETYPE.FRANCHISE) {
             getAllFranchisesUsers({ params: { franchiseId: userInfo?.id, userType: FRANCHISETYPE.DELIVERYAGENTS } })
         }
-    }, [userType, page]);
+    }, [userType]);
 
+    useEffect(() => {
+        SetApiParams({
+            ...apiParams,
+            ...queryParams,
+            page: 1
+        })
+    }, [queryParams]);
+
+
+    useEffect(() => {
+        SetApiParams({
+            ...apiParams,
+            page
+        })
+    }, [page]);
+
+    useEffect(() => {
+        console.log('apiParams Vishnu', apiParams);
+        triggerAPi()
+    }, [apiParams]);
+    console.log('isLoading Vishnu', isLoading)
     return <>
         <Table hover>
             <thead>
@@ -92,11 +117,11 @@ export const AllOrdersListComponent = ({ perPage, isPagination }: IOrdersPage) =
                 </tr>
             </thead>
             <tbody>
-                {data && data?.orders.map((order: Order, index: number) => <tr className="appRow" key={order?.id}>
+                {(data && !isLoading) && data?.orders.map((order: Order, index: number) => <tr className="appRow" key={order?.id}>
                     <td className="tableItem ">{index + 1}</td>
                     <td className="tableItem curserPointer" onClick={() => {
                         getOrderDetails(order?.id);
-                    }}><p className="Orderpage-id text-uppercase">{`#${getOrderSmallId(order?.id)}`}</p></td>
+                    }}><p className="Orderpage-id text-uppercase" title={order?.id}>{`#${getOrderSmallId(order?.id)}`}</p></td>
                     <td className="tableItem text-nowrap">{getOrderDate(order?.date)} </td>
                     <td className="tableItem text-capitalize">{order.userId?.name || '---'}</td>
                     <td className="tableItem text-capitalize"><OrderStatus label={order?.orderStatus} status={order?.orderStatus} type={STATUSTYPES.Order} /></td>

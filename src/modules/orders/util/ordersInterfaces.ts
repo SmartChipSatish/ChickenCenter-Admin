@@ -2,11 +2,14 @@
 export enum ORDERSTATUS {
     In_Progress = "In Process",
     Success = 'Success',
-    Canceled = "Canceled"
+    Canceled = "Canceled",
+    Placed = "PLACED",
+    Received = "Received"
 }
 export enum PAYMENTSTATUS {
     In_Progress = "In Process",
     Success = 'SUCCESS',
+    Pending = "PENDING"
 
 }
 

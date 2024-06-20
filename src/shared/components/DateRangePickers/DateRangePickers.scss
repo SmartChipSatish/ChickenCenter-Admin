@@ -1,0 +1,230 @@
+.rdrDateRangePickerWrapper {
+  position: absolute;
+  z-index: 9;
+}
+
+.react-datepicker__day--outside-month {
+  color: transparent !important;
+  pointer-events: none;
+  background: none;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background: none;
+}
+
+.from_period {
+  background-color: var(--global-btns);
+  border: none;
+  border-radius: 6px;
+  min-width: 230px;
+  width: 100%;
+}
+
+.from_period .form-control {
+  background-color: var(--global-btns);
+  color: var(--white);
+}
+
+.from_period .form-control::placeholder {
+  color: var(--white);
+}
+
+.svg-styles {
+  background: #F8F8FF !important;
+  border-color: #F8F8FF !important;
+}
+
+.rdrDefinedRangesWrapper {
+  display: none;
+}
+
+.rdrMonthAndYearPickers span select {
+  border: 1px solid #ced4da;
+  padding: 4px 30px 4px 4px;
+}
+
+/* .rdrMonthAndYearWrapper{
+        display: none;
+      } */
+/* .rdrYearPicker{
+        display: none;
+      } */
+.calendar-element {
+  position: absolute;
+  top: 50px;
+  border: 1px solid #e6e0e0;
+  border-radius: 12px;
+  /* overflow: hidden; */
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+  z-index: 9999;
+}
+
+.calendar-element::before {
+  content: "";
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #e6e0e0;
+  top: -10px;
+  left: 25px;
+}
+
+.calendar-element::after {
+  content: "";
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid rgb(239, 242, 247);
+  top: -9px;
+  left: 25px;
+}
+
+.calendar-wrap {
+  display: inline-block;
+  position: relative;
+}
+
+.custom-label {
+  /* / margin-bottom: 0 !important; / */
+  padding-top: 11px !important;
+}
+
+input.inputBox {
+  font-size: 15px;
+  padding: 5px 8px 4px 8px;
+  /* / border-radius: 3px; / */
+  border-radius: 3px 0px 0px 3px;
+  border: 1px solid #E0E0E0;
+  height: 34px;
+  margin-top: -4px;
+  width: 220px;
+}
+
+.custom-svg {
+  background: #FFFFFF;
+  border-width: 1px 1px 1px 0;
+  border-color: #E0E0E0;
+  border-style: solid;
+  border-radius: 0px 8px 8px 0px;
+  padding: 5px;
+  height: 34px;
+  margin-top: -4px;
+}
+
+.custom-inputbox {
+  margin-left: 10px;
+}
+
+.customm-btn-class {
+  margin: 2px 30px 10px 20px;
+  font-size: medium;
+  padding: 2px 2px 2px 2px;
+  text-align: right;
+}
+
+.clear-btn {
+  // border-color: #00000021;
+  // background: none;
+  // font-family: none;
+  // color: gray;
+  // margin-right: 4px;
+  // padding: 7px 15px;
+  // border-radius: 5px;
+  background-color: var(--bs-btn-hover-bg);
+  // background: white;
+  // border:  #00000021;
+  // padding: 7px 15px;
+  // border-radius: 5px;
+  // color: var(--appTitleColor);
+}
+// .clear-btn:hover {
+//   color: var(--bs-btn-hover-color);
+//   background-color: var(--bs-btn-hover-bg);
+//   border-color: var(--bs-btn-hover-border-color);
+// }
+
+.apply-btn {
+
+  background: white;
+  border: 1px solid var(--appTheam);
+  padding: 7px 15px;
+  border-radius: 5px;
+  color: var(--appTitleColor);
+}
+
+.apply-btn:hover {
+  background: var(--appTheam);
+  color: white;
+}
+
+.rdrCalendarWrapper {
+  border-radius: 12px;
+}
+
+.rdrDateDisplayWrapper {
+  border-radius: 12px 12px 0px 0px;
+}
+
+.date-border {
+  border: 1px solid var(--placeholderColor);
+  border-radius: 4px;
+  width: 100%;
+  margin-right: 20px;
+  position: relative;
+  z-index: 2;
+
+}
+
+@media (max-width:350px) {
+  .date-border {
+    width: 120px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 575px) {
+  .calendar-element {
+    width: 100%;
+  }
+
+  .rdrCalendarWrapper {
+    width: 100%;
+  }
+
+
+}
+
+@media (min-width: 576px) and (max-width: 1499px) {
+  .calendar-element {
+    max-width: 420px;
+  }
+
+  .rdrCalendarWrapper {
+    width: 100%;
+  }
+}
+
+@media (max-width:499px) {
+  .calendar-element-responsive {
+    width: 320px;
+  }
+
+  .calendar-element-responsive .rdrMonths {
+    width: 320px;
+  }
+
+  .calendar-element-responsive .rdrMonth {
+    width: 50%;
+    padding: 0px 5px;
+  }
+
+  .calendar-element-responsive .rdrDay {
+    font-size: 9px;
+  }
+
+  .calendar-element-responsive .rdrWeekDay {
+    font-size: 9px;
+    width: calc(100% / 7);
+  }
+}

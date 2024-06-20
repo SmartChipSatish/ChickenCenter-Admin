@@ -1,5 +1,5 @@
 
-import { faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { faEdit, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Table from "react-bootstrap/esm/Table"
 
@@ -22,20 +22,24 @@ import AppLoader from "../../../../shared/components/loader/loader"
 import Pagination from '@material-ui/lab/Pagination';
 import { perPage } from "../../../../shared/utils/appConstants";
 import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/AppDeleteModal"
+import { AppSearchBar } from "../../../../shared/components/AppSearchBar/AppSearchBar"
 
 const UsersPage = () => {
     const navigation = useNavigate();
     const [getAllFranchisesUsers, { data, isLoading, isError }] = useLazyGetAllFranchisesUsersQuery();
     const { data: franchies, isLoading: franchiesLoading, isError: franchiesError } = useGetAllFranchisesQuery({
         params: {
-            perPage: '', page: ''
+            perPage: '', page: '',
+            userType: FRANCHISETYPE.FRANCHISE
         }
     });
     const [update] = useUpdateUserMutation()
     const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
     const userType = UserTypeHook();
-    const [page, SetPage] = useState(1);
-
+    const [searchQuery, setSearchQuery] = useState<{ page: number, name: string }>({
+        page: 1,
+        name: ''
+    });
     const deleteModalData = useRef<IAppDeleteModalRefType>();
 
     const accept = (status: boolean, data: IUser) => {
@@ -61,16 +65,16 @@ const UsersPage = () => {
         }
         if (userType === FRANCHISETYPE.FRANCHISE) {
             getAllFranchisesUsers({
-                params: { franchiseId: userInfo?.id, userType: FRANCHISETYPE.DELIVERYAGENTS, perPage, page },
+                params: { franchiseId: userInfo?.id, userType: FRANCHISETYPE.DELIVERYAGENTS, perPage, page: searchQuery.page, name: searchQuery.name },
             })
         }
         if (userType === FRANCHISETYPE.ADMIN) {
             getAllFranchisesUsers({
-                params: { userType: FRANCHISETYPE.DELIVERYAGENTS, perPage, page }
+                params: { userType: FRANCHISETYPE.DELIVERYAGENTS, perPage, page: searchQuery.page, name: searchQuery.name }
             })
         }
 
-    }, [userType, page]);
+    }, [userType, searchQuery]);
 
 
     return (
@@ -83,6 +87,17 @@ const UsersPage = () => {
             </div>
             <div className="usersPage">
                 <Card className="h-100">
+                    <div className='filters'>
+                        <div>
+                            <AppSearchBar searchFn={(searchKey) => {
+                                setSearchQuery({
+                                    ...searchQuery,
+                                    page: 1,
+                                    name: searchKey
+                                })
+                            }} placeholder="Search User" />
+                        </div>
+                    </div>
                     <Card.Body className={`${!loadingState(isLoading, isError, data?.franchises) && 'appCard'}`}>
                         <Table hover >
                             <thead>
@@ -101,7 +116,7 @@ const UsersPage = () => {
                                     return <>
                                         <tr className="appRow" key={user?.id}>
                                             <td className="tableItem">{index + 1}</td>
-                                            <td className="tableItem primaryValue"><p className="primaryValue text-capitalize">{user.name}</p></td>
+                                            <td className="tableItem primaryValue"><p className="primaryValue text-capitalize text-nowrap">{user.name}</p></td>
                                             <td className="tableItem"><p className="usersPage-id">{user?.primaryNumber}</p></td>
                                             {isAdmin(userType) && <td className="tableItem">
                                                 <Form.Select aria-label="Order Transfer" onChange={(data) => {
@@ -131,8 +146,10 @@ const UsersPage = () => {
                         {data?.franchises?.length === 0 && <div className="emptyTable">No Data Found</div>}
                         {data?.totalFranchises > 10 && <div className="d-flex justify-content-end">
                             <Pagination count={data.totalPages} shape="rounded" onChange={(_, value: number) => {
-                                console.log('value', value);
-                                SetPage(value);
+                                setSearchQuery({
+                                    ...searchQuery,
+                                    page: value,
+                                })
                             }} /></div>}
                     </Card.Body>
                 </Card>

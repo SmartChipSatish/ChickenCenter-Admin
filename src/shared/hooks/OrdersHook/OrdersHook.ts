@@ -4,10 +4,8 @@ import { UserTypeHook } from "../userTypeHook";
 import { FRANCHISETYPE } from "../../../shared/utils/appInterfaces";
 import { useSelector } from "react-redux";
 
-export const useGetAllOrders = ({ perPage, page }: {
-    perPage: number,
-    page: number
-}) => {
+export const useGetAllOrders = (params: any) => {
+    console.log('useGetAllOrders Hook Vishnu 1', params)
     const [getAllOrders, { data: allOrdersData, isLoading: allOrdersLoading, error: allOdersError }] = useLazyGetAllOrdersQuery();
     const [getAllFranchiceorders, { data: franchiseOrdersData, isLoading: franchiseOrdersLoading, error: franchiseOrdersError }] = useLazyGetOrderbyFranchiseQuery();
     const [isLoading, SetLoading] = useState<any>(null);
@@ -16,23 +14,23 @@ export const useGetAllOrders = ({ perPage, page }: {
     const userInfo = useSelector((state: any) => state?.userInfoSlice?.userInfo);
     const userType = UserTypeHook();
 
-    const getAllMyOrders = useCallback(() => {
+    const getAllMyOrders = () => {
+        SetLoading(true);
+        // SetData(null);
+        // SetError(null);
         if (userType === FRANCHISETYPE.FRANCHISE) {
             getAllFranchiceorders({
-                params: { franchiseId: userInfo?.id, perPage, page }
+                params: { franchiseId: userInfo?.id, ...params }
             });
         }
         if (userType === FRANCHISETYPE.ADMIN) {
-            getAllOrders({ params: { perPage, page } });
+            console.log('useGetAllOrders Hook Vishnu 2', params)
+            getAllOrders({ params });
         }
-    }, [userType, page])
-
-
-    useEffect(() => {
-        getAllMyOrders()
-    }, [userType, page]);
+    }
 
     useEffect(() => {
+        console.log('allOrdersData, , allOrdersLoading, allOdersError IsLoading', allOrdersData,  allOrdersLoading, allOdersError)
         SetLoading(allOrdersLoading)
         SetData(allOrdersData)
         SetError(allOdersError)
@@ -43,7 +41,9 @@ export const useGetAllOrders = ({ perPage, page }: {
         SetData(franchiseOrdersData)
         SetError(franchiseOrdersError)
     }, [franchiseOrdersData, , franchiseOrdersLoading, franchiseOrdersError])
-
-    return { isLoading, data, isError }
+    const triggerAPi = () => {
+        getAllMyOrders()
+    }
+    return { isLoading, data, isError, triggerAPi }
 
 }  

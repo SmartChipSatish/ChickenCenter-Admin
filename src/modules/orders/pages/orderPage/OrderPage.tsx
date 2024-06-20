@@ -1,27 +1,85 @@
 import './OrderPage.scss'
 import Card from "react-bootstrap/esm/Card";
-import {  useState } from "react";
+import { useEffect, useState } from "react";
 import { perPage } from "../../../../shared/utils/appConstants";
-import { useGetAllOrders } from "../../../../shared/hooks/OrdersHook/OrdersHook";
 import { AllOrdersListComponent } from "../../../../shared/components/AllOrdersList/AllOrdersListComponent";
-import { loadingState } from '../../../../shared/utils/appFunctions';
+
+import Form from 'react-bootstrap/esm/Form';
+import { ORDERSTATUS, PAYMENTSTATUS } from '../../util/ordersInterfaces';
+import { addDays } from 'date-fns';
+import { DateRangePickers } from '../../../../shared/components/DateRangePickers/DateRangePickers';
+import dayjs from 'dayjs';
+import { AppSearchBar } from '../../../../shared/components/AppSearchBar/AppSearchBar';
 
 const OrderPage = () => {
-    const [page] = useState(1);
+    const [queryParam, setQueryParams] = useState({});
+    const [dateRange, setDateRange] = useState({ startDate: addDays(new Date(), -30), endDate: new Date() });
+    const [search, SetSearch] = useState('');
 
-    const { data, isError, isLoading } = useGetAllOrders({
-        perPage, page
-    })
-    
+
+    const selectedDate = (dateArray: any) => {
+        setDateRange(dateArray)
+    }
+
+    useEffect(() => {
+        try {
+            const endDate = dayjs(dateRange?.endDate || '').add(23, 'hour').add(59, 'minutes').add(59, 'seconds')
+            const startDate = dayjs(dateRange.startDate).format('ddd, MMM D, YYYY');
+            setQueryParams({
+                ...queryParam,
+                ...{
+                    'date[gte]': startDate,
+                    'date[lte]': endDate
+                },
+                _id: search
+            })
+        } catch (err) {
+            console.log('err', err)
+        }
+
+    }, [dateRange, search])
 
     return (<>
         <div className="d-flex justify-content-between pageTitleSpace">
-            <p className="pageTile">Orders</p>
+            <p className="pageTile">Orders </p>
         </div>
         <div className="Orderpage">
             <Card className="h-100">
-                <Card.Body className={`${!loadingState(isLoading, isError, data?.orders) && 'appCard'}`}>
-                    <AllOrdersListComponent perPage={perPage} isPagination={true}></AllOrdersListComponent>
+                <div className='filters'>
+                    <div>
+                        <AppSearchBar searchFn={(searchKey) => {
+                            SetSearch(searchKey)
+                        }} placeholder="Search Order ID" isDirectValue={true} />
+                    </div>
+                    <div className='d-flex'>
+                        <Form.Group className="filterOption" style={{ width: '280px' }}>
+                            <DateRangePickers selectedDate={selectedDate} dateArray={dateRange} />
+                        </Form.Group>
+                        <Form.Select aria-label="Default select example" className='filterOption' style={{ width: '250px' }}
+                            onChange={(value) => {
+                                setQueryParams({ ...queryParam, orderStatus: value?.target?.value })
+                            }}>
+                            <option value=''>Order Status(All)</option>
+
+                            {Object.entries(ORDERSTATUS).map((key) => {
+                                return <option value={key[1]}>{key[0]}</option>
+                            })}
+
+                        </Form.Select>
+                        <Form.Select aria-label="Default select example" style={{ width: '250px' }}
+                            onChange={(value) => {
+                                setQueryParams({ ...queryParam, paymentStatus: value?.target?.value })
+                            }}>
+                            <option value=''>Payment Status(All)</option>
+                            {Object.entries(PAYMENTSTATUS).map((key) => {
+                                return <option value={key[1]}>{key[0]}</option>
+                            })}
+                        </Form.Select>
+                    </div>
+                </div>
+
+                <Card.Body >
+                    <AllOrdersListComponent perPage={perPage} isPagination={true} queryParams={queryParam}></AllOrdersListComponent>
                 </Card.Body>
             </Card>
 

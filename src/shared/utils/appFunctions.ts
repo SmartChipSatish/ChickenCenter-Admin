@@ -24,7 +24,10 @@ export const prepairQueryParams = (url: string, params: Object = {}) => {
         console.log('params', params)
         const searchParams = new URLSearchParams();
         Object.entries(params).forEach((param) => {
-            searchParams.append(param[0], param[1]);
+            if (!!param[1]) {
+                searchParams.append(param[0], param[1]);
+            }
+
         });
         return `${url}?${searchParams.toString()}`;
     } catch (err) {
@@ -43,6 +46,11 @@ export const getOrderSmallId = (orderId: string, full = false) => {
 export const hasKey = (formObj: Object, keyName: string) => {
     return Object.keys(formObj).some((key) => key === keyName);
 }
+
+export const makeSearchKey = (search: string = '', isDirectValue = false) => {
+    return !!search && !isDirectValue ? `%${search}` : search;
+}
+
 export const fileUpload = (photo: any) => {
     return new Promise((resolve, reject) => {
         const data = new FormData()
