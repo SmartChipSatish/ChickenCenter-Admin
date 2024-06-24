@@ -11,7 +11,7 @@ export const BranchesApi = createApi({
             Headers.set('Authorization', `${tocken}`);
         }
     }),
-    tagTypes: ['getAll'],
+    tagTypes: ['getAll', 'getFranchiseUsers'],
     endpoints: () => ({
 
     })

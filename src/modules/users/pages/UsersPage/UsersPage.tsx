@@ -43,8 +43,21 @@ const UsersPage = () => {
     });
     const deleteModalData = useRef<IAppDeleteModalRefType>();
 
-    const accept = (status: boolean, data: IUser) => {
-        console.log('deleteModalData.current', data)
+    const accept = async (status: boolean, user: IUser) => {
+        console.log('deleteModalData.current', user)
+        addIdToInProgress(user.id)
+        try {
+            const userAssigned = await update({
+                userId: user.id,
+                status: false
+
+            })
+            successToast('User deleted Successfully');
+            removeIdToInProgress(user.id)
+        } catch (err) {
+            errorToast('Try Again!');
+            removeIdToInProgress(user.id)
+        }
     };
     const createBranch = () => {
         navigation('create');

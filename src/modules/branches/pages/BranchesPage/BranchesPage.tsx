@@ -6,7 +6,7 @@ import Card from "react-bootstrap/esm/Card"
 import Button from "react-bootstrap/esm/Button"
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus"
 import { useNavigate } from "react-router-dom"
-import { useLazyGetAllFranchisesQuery } from "../../store/branchesEndPoint"
+import { useLazyGetAllFranchisesQuery, useUpdateFranchiseMutation } from "../../store/branchesEndPoint"
 import { useEffect, useRef, useState } from "react"
 import { IBranch } from "../../utils/BranchesInterfaces"
 import AppLoader from "../../../../shared/components/loader/loader"
@@ -18,10 +18,12 @@ import { AppDeleteModal } from "../../../../shared/components/AppDeleteModal/App
 import { IAppDeleteModalRefType } from '../../../../shared/utils/appInterfaces';
 import { AppSearchBar } from "../../../../shared/components/AppSearchBar/AppSearchBar"
 import { PageTitle } from "../../../../shared/components/PageTitle/PageTitle"
+import { successToast } from "../../../../shared/utils/appToaster"
 
 
 const BranchesPage = () => {
-    const [getAllFranchises, { data, isLoading, isError }] = useLazyGetAllFranchisesQuery()
+    const [getAllFranchises, { data, isLoading, isError }] = useLazyGetAllFranchisesQuery();
+    const [updateFranchise, { }] = useUpdateFranchiseMutation()
     const navigation = useNavigate();
     const deleteModalData = useRef<IAppDeleteModalRefType>();
     const [searchQuery, setSearchQuery] = useState<{ page: number, name: string }>({
@@ -32,7 +34,21 @@ const BranchesPage = () => {
         navigation(`update/${id}`)
     }
 
-    const accept = (status: boolean, data: IBranch) => {
+    const accept = async (status: boolean, branch: IBranch) => {
+        try {
+            const deleteBarnch = await updateFranchise({
+                params: {
+                    userId: branch.id
+                },
+                body: {
+                    status: false,
+                    userId: branch.id
+                }
+            })
+            successToast('Franchise deleted Successfully');
+        } catch (err) {
+            console.log('err', err)
+        }
         console.log('deleteModalData.current', data)
     };
 
