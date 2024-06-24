@@ -16,7 +16,7 @@ const getStatus = (type: string, status: string) => {
             if (status === ORDERSTATUS.Success) {
                 return 'OrederCompleted';
             }
-            if (status === ORDERSTATUS.Canceled) {
+            if ([ORDERSTATUS.Cancelled, ORDERSTATUS.Canceled].includes(status as ORDERSTATUS)) {
                 return 'OrderCanceled';
             }
             break;

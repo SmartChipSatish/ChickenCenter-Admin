@@ -14,7 +14,7 @@ import { IUser } from "../../utils/userInterfaces";
 import './UsersPage.scss';
 import { UserTypeHook } from "../../../../shared/hooks/userTypeHook"
 import { FRANCHISETYPE, IAppDeleteModalRefType } from "../../../../shared/utils/appInterfaces"
-import { isAdmin, loadingState } from "../../../../shared/utils/appFunctions"
+import { addIdToInProgress, hasInProgress, isAdmin, loadingState, removeIdToInProgress } from "../../../../shared/utils/appFunctions"
 import Form from "react-bootstrap/esm/Form"
 import { IBranch } from "../../../branches/utils/BranchesInterfaces"
 import { errorToast, successToast } from "../../../../shared/utils/appToaster"
@@ -50,14 +50,17 @@ const UsersPage = () => {
         navigation('create');
     }
     const updateUser = async (userId: string, franchiseId: string) => {
+        addIdToInProgress(userId)
         try {
             const userAssigned = await update({
                 userId,
                 franchiseId
             })
-            successToast('User Transfered Successfully')
+            successToast('User Transfered Successfully');
+            removeIdToInProgress(userId)
         } catch (err) {
-            errorToast('Try Again!')
+            errorToast('Try Again!');
+            removeIdToInProgress(userId)
         }
     }
     useEffect(() => {
@@ -66,12 +69,23 @@ const UsersPage = () => {
         }
         if (userType === FRANCHISETYPE.FRANCHISE) {
             getAllFranchisesUsers({
-                params: { franchiseId: userInfo?.id, userType: FRANCHISETYPE.DELIVERYAGENTS, perPage, page: searchQuery.page, name: searchQuery.name },
+                params: {
+                    franchiseId: userInfo?.id,
+                    userType: FRANCHISETYPE.DELIVERYAGENTS,
+                    perPage,
+                    page: searchQuery.page,
+                    name: searchQuery.name
+                },
             })
         }
         if (userType === FRANCHISETYPE.ADMIN) {
             getAllFranchisesUsers({
-                params: { userType: FRANCHISETYPE.DELIVERYAGENTS, perPage, page: searchQuery.page, name: searchQuery.name }
+                params: {
+                    userType: FRANCHISETYPE.DELIVERYAGENTS,
+                    perPage,
+                    page: searchQuery.page,
+                    name: searchQuery.name
+                }
             })
         }
 
@@ -122,10 +136,10 @@ const UsersPage = () => {
                                             {isAdmin(userType) && <td className="tableItem">
                                                 <Form.Select aria-label="Order Transfer" onChange={(data) => {
                                                     updateUser(user.id, data?.target?.value)
-                                                }}>
+                                                }} disabled={hasInProgress(user.id)}>
                                                     <option>Select Franchise</option>
                                                     {franchies && franchies?.franchises.map((branch: IBranch) => <option value={branch._id}
-                                                        selected={user?.franchiseId === branch._id}
+                                                        selected={user?.franchiseId?.franchiseId === branch._id}
                                                     >{branch?.name}</option>)}
                                                 </Form.Select>
                                             </td>}
