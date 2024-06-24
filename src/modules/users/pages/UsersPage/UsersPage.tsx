@@ -69,12 +69,23 @@ const UsersPage = () => {
         }
         if (userType === FRANCHISETYPE.FRANCHISE) {
             getAllFranchisesUsers({
-                params: { franchiseId: userInfo?.id, userType: FRANCHISETYPE.DELIVERYAGENTS, perPage, page: searchQuery.page, name: searchQuery.name },
+                params: {
+                    franchiseId: userInfo?.id,
+                    userType: FRANCHISETYPE.DELIVERYAGENTS,
+                    perPage,
+                    page: searchQuery.page,
+                    name: searchQuery.name
+                },
             })
         }
         if (userType === FRANCHISETYPE.ADMIN) {
             getAllFranchisesUsers({
-                params: { userType: FRANCHISETYPE.DELIVERYAGENTS, perPage, page: searchQuery.page, name: searchQuery.name }
+                params: {
+                    userType: FRANCHISETYPE.DELIVERYAGENTS,
+                    perPage,
+                    page: searchQuery.page,
+                    name: searchQuery.name
+                }
             })
         }
 
