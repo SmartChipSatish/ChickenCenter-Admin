@@ -44,9 +44,9 @@ p {
   /* overflow:scroll; */
 }
 
-.card-body {
-  /* overflow-y: scroll; */
-}
+/* .card-body {
+  overflow: scroll;
+} */
 
 .btn-outline-primary {
   --bs-btn-color: var(--appTheam);
@@ -250,4 +250,8 @@ option:hover {
   position: absolute;
   bottom: 2%;
   right: 2px;
+}
+.cardbodyCss{
+  overflow-x: overlay;
+
 }

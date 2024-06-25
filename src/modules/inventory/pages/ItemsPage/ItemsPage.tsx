@@ -96,7 +96,7 @@ const ItemsPage = () => {
                     </div>
                 </div>
 
-                <Card.Body className={`${!loadingState(isLoading, isError, data?.items) && 'appCard'}`} >
+                <Card.Body className="cardbodyCss" >
                     <Table hover>
                         <thead>
                             <tr>
@@ -130,7 +130,7 @@ const ItemsPage = () => {
                     {isError && <div className="emptyTable"><p>Something went wrong!</p></div>}
                     {isLoading && <div className="emptyTable"><AppLoader></AppLoader></div>}
                     {data?.items?.length === 0 && <div className="emptyTable">No Data Found</div>}
-                    {data?.totalItems > 10 && <div className="d-flex justify-content-end">
+                    {data?.totalItems > 10 && <div className="d-flex justify-content-end paginationdiv">
                         <Pagination count={data.totalPages}
                             shape="rounded" onChange={(_, value: number) => {
                                 setPage(value);

@@ -84,7 +84,7 @@ const BranchesPage = () => {
                             }} placeholder="Search Franchise" />
                         </div>
                     </div>
-                    <Card.Body className={`${!loadingState(isLoading, isError, data?.franchises) && 'appCard'}`}>
+                    <Card.Body className="cardbodyCss">
 
                         <Table hover>
                             <thead>
@@ -123,7 +123,7 @@ const BranchesPage = () => {
                         {isError && <div className="emptyTable"><p>Something went wrong!</p></div>}
                         {isLoading && <div className="emptyTable"><AppLoader></AppLoader></div>}
                         {data?.franchises?.length === 0 && <div className="emptyTable">No Data Found</div>}
-                        {data?.totalFranchises > 10 && <div className="d-flex justify-content-end">
+                        {data?.totalFranchises > 10 && <div className="d-flex justify-content-end paginationdiv">
                             <Pagination count={data.totalPages}
                                 shape="rounded" onChange={(_, value: number) => {
                                     setSearchQuery({

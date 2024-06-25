@@ -126,7 +126,7 @@ const UsersPage = () => {
                             }} placeholder="Search User" />
                         </div>
                     </div>
-                    <Card.Body className={`${!loadingState(isLoading, isError, data?.franchises) && 'appCard'}`}>
+                    <Card.Body className="cardbodyCss">
                         <Table hover >
                             <thead>
                                 <tr>
@@ -172,7 +172,7 @@ const UsersPage = () => {
                         {isError && <div className="emptyTable"><p>Something went wrong!</p></div>}
                         {isLoading && <div className="emptyTable"><AppLoader></AppLoader></div>}
                         {data?.franchises?.length === 0 && <div className="emptyTable">No Data Found</div>}
-                        {data?.totalFranchises > 10 && <div className="d-flex justify-content-end">
+                        {data?.totalFranchises > 10 && <div className="d-flex justify-content-end paginationdiv">
                             <Pagination count={data.totalPages} shape="rounded" onChange={(_, value: number) => {
                                 setSearchQuery({
                                     ...searchQuery,

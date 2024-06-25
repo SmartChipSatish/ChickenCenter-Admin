@@ -21,7 +21,7 @@ const CreateUserPage = () => {
         register,
         handleSubmit,
         reset,
-        formState: {touchedFields, errors }
+        formState: { touchedFields, errors }
     } = useForm<any>({});
 
     const [createUser, { isLoading }] = useCreateFranchisesOrUserMutation();
@@ -74,6 +74,12 @@ const CreateUserPage = () => {
                 successToast('User Updated Successfully');
             } else {
                 const branchCreaete = await createUser(user);
+
+                if (branchCreaete?.error) {
+                    errorToast(`somthing went wrong!`)
+                    return;
+                }
+                console.log('branchCreaete', branchCreaete);
                 successToast('User Create Successfully');
             }
 
@@ -165,7 +171,7 @@ const CreateUserPage = () => {
                         <Col>
                             <Form.Label className="fromLabel" >UserName</Form.Label>
                             <Form.Control type="text" placeholder="UserName" minLength={5} maxLength={20}
-                                {...register(UserForm.UserName, { required: true })} />
+                                {...register(UserForm.UserName, { required: true })} disabled={!!id}/>
                             {errors?.userName && hasKey(touchedFields, UserForm.UserName)
                                 && <p className="errorlabel">{getErrorMessage('User Name', errors.userName.type)}</p>}
                         </Col>

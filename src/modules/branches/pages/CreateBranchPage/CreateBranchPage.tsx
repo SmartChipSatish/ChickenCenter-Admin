@@ -39,7 +39,7 @@ const CreateBranchPage = () => {
                 name: data.name,
                 userName: data.userName,
                 password: data.password,
-                primaryNumber: data.primaryNumber,
+                primaryNumber: data.primaryNumber?.toString(),
                 createdBy: getItemFromLocalStorage(AppConstants.userId),
                 updatedBy: getItemFromLocalStorage(AppConstants.userId),
                 address: {
@@ -53,15 +53,25 @@ const CreateBranchPage = () => {
                 }
             }
             if (id) {
-                const branchUpdate = await updateFranchise({
-                    params: {
-                        userId: id
-                    },
-                    body: newBranchObj
-                });
+                try {
+                    delete newBranchObj.userName;
+                    const branchUpdate = await updateFranchise({
+                        params: {
+                            userId: id
+                        },
+                        body: newBranchObj
+                    });
+                } catch (err) {
+                    console.log('err', err)
+                }
                 successToast('Franchises Updated Successfully');
             } else {
                 const branchCreaete = await createBranch(newBranchObj);
+                if (branchCreaete?.error) {
+                    errorToast(`somthing went wrong!`)
+                    return;
+                }
+                console.log('branchCreaete', branchCreaete);
                 successToast('Franchises Create Successfully');
             }
 
@@ -132,7 +142,7 @@ const CreateBranchPage = () => {
                         </Col>
                         <Col>
                             <Form.Label className="fromLabel" >Phone</Form.Label>
-                            <Form.Control type="number" placeholder="Phone" minLength={10} maxLength={10} {...register(BranchFields.PrimaryNumber, { required: true })} />
+                            <Form.Control type="text" placeholder="Phone" minLength={10} maxLength={10} {...register(BranchFields.PrimaryNumber, { required: true })} />
                             {(errors?.primaryNumber && hasKey(touchedFields, BranchFields.PrimaryNumber))
                                 && <p className="errorlabel">{getErrorMessage('Phone Number', errors.primaryNumber.type! as string)}</p>}
                         </Col>
@@ -141,7 +151,7 @@ const CreateBranchPage = () => {
                     <Row>
                         <Col>
                             <Form.Label className="fromLabel" >User Name</Form.Label>
-                            <Form.Control type="text" placeholder="User name" minLength={5} maxLength={20} {...register(BranchFields.UserName, { required: true })} />
+                            <Form.Control type="text" placeholder="User name" minLength={5} maxLength={20} {...register(BranchFields.UserName, { required: true })} disabled={!!id} />
                             {errors?.userName && hasKey(touchedFields, BranchFields.UserName) && <p className="errorlabel">{getErrorMessage('userName', errors.userName.type! as string)}</p>}
 
                         </Col>
